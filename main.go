@@ -50,9 +50,18 @@ func main() {
 			// when complete assembler sends market data off and resets assembler
 
 			// Prototype stuff here
+			// https://doc.photonengine.com/zh-tw/realtime/current/reference/serialization-in-photon
+			// These two bytes detail the number of market entries in the response
 			numItems := udp.Payload[54:56]
 			fmt.Println(numItems)
 
+			// Skipping byte 56 actually, not sure what it does
+
+			// These two bytes seem to be a short and detail how many bytes are in the next entry
+			// This is repeated before each entry
+			// So should be able to take it, parse the next N bytes into a string, then repeat until the
+			// end of the packet. Continue to next packet and repeat until the we have recorded the number
+			// of market entries specified in the first packet.
 			firstEntryLength := udp.Payload[57:59]
 			fmt.Println(binary.BigEndian.Uint16(firstEntryLength))
 			fmt.Println(string(udp.Payload[59:59+binary.BigEndian.Uint16(firstEntryLength)]))
