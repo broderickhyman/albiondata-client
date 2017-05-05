@@ -11,7 +11,7 @@ func main() {
 	log.Print("Starting things...")
 	// Device set to "en0" for local development
 	// TODO: Make the device configurable
-	handle, err := pcap.OpenLive("en0", 1024, false, pcap.BlockForever)
+	handle, err := pcap.OpenLive("en0", 2048, false, pcap.BlockForever)
 	if err != nil {
 		log.Fatal(err)
 	}

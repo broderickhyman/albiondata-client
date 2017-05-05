@@ -5,58 +5,79 @@ import (
 	"github.com/google/gopacket/layers"
 	"reflect"
 	"fmt"
+	"regexp"
 	"encoding/binary"
+	"strings"
 )
 
+/*
+19    -> Indicator of if there is more packets
+20:24 -> Packet ID
+24:28 -> ID of first packet in the bundle
+28:32 -> Expected number of packets
+32:36 -> Packet ID in bundle
+44:54 -> Location of market response start indicator
+44:   -> Data when not first packet of market response
+55:   -> Data when first packet of market response
+ */
+
+
 var marketStartIndicator = []byte{243, 3, 1, 0, 0, 42, 0, 2, 0, 121}
+var morePacketsIndicator = byte(164)
 
 type MarketAssembler struct {
 	processing bool
-	marketJson string
 	itemCount int
+	itemsBuffer []byte
+
 }
 
 func NewMarketAssembler() *MarketAssembler {
 	return &MarketAssembler{}
 }
 
-func (ma MarketAssembler) ProcessPacket(packet gopacket.Packet) {
-	// We only care about UDP packets, hopefully that is all we are passed but lets verify
+func (ma *MarketAssembler) ProcessPacket(packet gopacket.Packet) {
 	udp := packet.Layer(layers.LayerTypeUDP)
 	if udp != nil {
 		udp := udp.(*layers.UDP)
 
-		if udp.Length < 55 {
+		if len(udp.Payload) < 56 {
 			return
 		}
 
-		// The 10 bytes starting at 44 are where we expect to find the marketStartIndicator.
 		marketHeader := udp.Payload[44:54]
 
-		if reflect.DeepEqual(marketHeader, marketStartIndicator) {
-			// TODO: Create assembler thing
-			// pass every packet to assembler
-			// assembler puts pieces together
-			// assembler detects new market response
-			// starts parsing market data
-			// when complete assembler sends market data off and resets assembler
+		if !ma.processing && reflect.DeepEqual(marketHeader, marketStartIndicator) {
+			ma.itemCount = int(binary.BigEndian.Uint16(udp.Payload[54:56]))
 
-			// Prototype stuff here
-			// https://doc.photonengine.com/zh-tw/realtime/current/reference/serialization-in-photon
-			// These two bytes detail the number of market entries in the response
-			numItems := udp.Payload[54:56]
-			fmt.Println(numItems)
 
-			// Skipping byte 56 actually, not sure what it does
+			ma.processing = true
+			ma.itemsBuffer = nil
+			ma.itemsBuffer = append(ma.itemsBuffer, udp.Payload[59:]...)
 
-			// These two bytes seem to be a short and detail how many bytes are in the next entry
-			// This is repeated before each entry
-			// So should be able to take it, parse the next N bytes into a string, then repeat until the
-			// end of the packet. Continue to next packet and repeat until the we have recorded the number
-			// of market entries specified in the first packet.
-			firstEntryLength := udp.Payload[57:59]
-			fmt.Println(binary.BigEndian.Uint16(firstEntryLength))
-			fmt.Println(string(udp.Payload[59:59+binary.BigEndian.Uint16(firstEntryLength)]))
+		} else if ma.processing {
+			ma.itemsBuffer = append(ma.itemsBuffer, udp.Payload[44:]...)
+
+			if udp.Payload[19] != morePacketsIndicator {
+				ma.processing = false
+				results := extractStrings(ma.itemsBuffer)
+				fmt.Println(results)
+				fmt.Println(len(results))
+				fmt.Println(ma.itemCount)
+
+				ma.itemsBuffer = nil
+			}
 		}
 	}
+}
+
+func extractStrings(payload []byte) []string {
+	var results []string
+	r, _ := regexp.Compile("\\{[^\\{\\}]*\\}")
+
+	for _, match :=  range r.FindAllStringSubmatch(string(payload), -1) {
+		results = append(results, strings.Join(match, ""))
+	}
+
+	return results
 }
