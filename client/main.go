@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/pcap"
-	"github.com/regner/amdr/client/assemblers"
+	"github.com/regner/albion-market-data-relay/client/assemblers"
 	"log"
 )
 

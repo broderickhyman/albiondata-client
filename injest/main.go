@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/nats-io/go-nats"
-	"github.com/regner/amdr/shared"
+	"github.com/regner/albion-market-data-relay/shared"
 	"os"
 )
 

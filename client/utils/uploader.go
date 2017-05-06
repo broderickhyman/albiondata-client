@@ -1,10 +1,10 @@
 package utils
 
 import (
-	"net/http"
-	"fmt"
-	"encoding/json"
 	"bytes"
+	"encoding/json"
+	"fmt"
+	"net/http"
 )
 
 type InjestRequest struct {
