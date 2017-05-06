@@ -17,7 +17,7 @@ func main() {
 	nc, _ := nats.Connect(natsURL)
 	r := gin.Default()
 
-	r.POST("/api/v1/injest/", func(c *gin.Context) {
+	r.POST("/api/v1/ingest/", func(c *gin.Context) {
 		var incomingRequest shared.InjestPostRequest
 		c.BindJSON(&incomingRequest)
 
@@ -31,7 +31,7 @@ func main() {
 
 		natsMsg, _ := json.Marshal(marketItems)
 
-		nc.Publish("amdr-injest", []byte(natsMsg))
+		nc.Publish("amdr-ingest", []byte(natsMsg))
 	})
 
 	r.Run(":8080")

@@ -11,7 +11,7 @@ type InjestRequest struct {
 	MarketItems []string
 }
 
-var injestUrl = "http://192.168.1.20:8080/api/v1/injest/"
+var injestUrl = "http://192.168.1.20:8080/api/v1/ingest/"
 
 func SendMarketItems(marketItems []string) {
 	client := &http.Client{}
