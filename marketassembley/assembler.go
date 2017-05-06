@@ -4,10 +4,10 @@ import (
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"reflect"
-	"fmt"
 	"regexp"
 	"encoding/binary"
 	"strings"
+	"github.com/regner/amdr-client/utils"
 )
 
 /*
@@ -53,7 +53,6 @@ func (ma *MarketAssembler) ProcessPacket(packet gopacket.Packet) {
 		marketHeader := udp.Payload[44:54]
 
 		if reflect.DeepEqual(marketHeader, marketStartIndicator) {
-			fmt.Println("Start of market")
 			// Ensure things are reset
 			ma.processing = true
 			ma.itemsBuffer = nil
@@ -78,9 +77,7 @@ func (ma *MarketAssembler) ProcessPacket(packet gopacket.Packet) {
 			ma.itemsBuffer = append(ma.itemsBuffer, udp.Payload[44:]...)
 
 			results := extractStrings(ma.itemsBuffer)
-			fmt.Println(results)
-			fmt.Println(len(results))
-			fmt.Println(ma.itemCount)
+			utils.SendMarketItems(results)
 
 			ma.processing = false
 		} else {
