@@ -3,15 +3,14 @@ package main
 import (
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/pcap"
+	"github.com/regner/amdr/client/assemblers"
 	"log"
-	"github.com/regner/amdr-client/marketassembley"
 )
 
 func main() {
-	log.Print("Starting things...")
 	// Device set to "en0" for local development
 	// TODO: Make the device configurable
-	handle, err := pcap.OpenLive("en0", 2048, false, pcap.BlockForever)
+	handle, err := pcap.OpenLive("eth0", 2048, false, pcap.BlockForever)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -27,9 +26,8 @@ func main() {
 	source := gopacket.NewPacketSource(handle, handle.LinkType())
 	source.NoCopy = true
 
-	assembler := marketassembley.NewMarketAssembler()
+	assembler := assemblers.NewMarketAssembler()
 
-	log.Println("Starting to read packets...")
 	for packet := range source.Packets() {
 		assembler.ProcessPacket(packet)
 	}

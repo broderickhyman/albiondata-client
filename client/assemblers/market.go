@@ -1,13 +1,13 @@
-package marketassembley
+package assemblers
 
 import (
+	"encoding/binary"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
+	"github.com/regner/amdr/client/utils"
 	"reflect"
 	"regexp"
-	"encoding/binary"
 	"strings"
-	"github.com/regner/amdr-client/utils"
 )
 
 /*
@@ -20,19 +20,17 @@ import (
 44:54 -> Location of market response start indicator
 54:56 -> Number of market items to be expected in total
 56:   -> Data when first packet of market response
- */
-
+*/
 
 var marketStartIndicator = []byte{243, 3, 1, 0, 0, 42, 0, 2, 0, 121}
 var morePacketsIndicator = byte(164)
 
 type MarketAssembler struct {
-	itemCount int
-	packetCount int
+	itemCount      int
+	packetCount    int
 	processedCount int
-	itemsBuffer []byte
-	processing bool
-
+	itemsBuffer    []byte
+	processing     bool
 }
 
 func NewMarketAssembler() *MarketAssembler {
@@ -90,7 +88,7 @@ func extractStrings(payload []byte) []string {
 	var results []string
 	r, _ := regexp.Compile("\\{[^\\{\\}]*\\}")
 
-	for _, match :=  range r.FindAllStringSubmatch(string(payload), -1) {
+	for _, match := range r.FindAllStringSubmatch(string(payload), -1) {
 		results = append(results, strings.Join(match, ""))
 	}
 
