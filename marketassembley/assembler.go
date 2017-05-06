@@ -11,14 +11,15 @@ import (
 )
 
 /*
-19    -> Indicator of if there is more packets
+19    -> Location of more packets indicator
 20:24 -> Packet ID
 24:28 -> ID of first packet in the bundle
 28:32 -> Expected number of packets
 32:36 -> Packet ID in bundle
-44:54 -> Location of market response start indicator
 44:   -> Data when not first packet of market response
-55:   -> Data when first packet of market response
+44:54 -> Location of market response start indicator
+54:56 -> Number of market items to be expected in total
+56:   -> Data when first packet of market response
  */
 
 
@@ -26,9 +27,11 @@ var marketStartIndicator = []byte{243, 3, 1, 0, 0, 42, 0, 2, 0, 121}
 var morePacketsIndicator = byte(164)
 
 type MarketAssembler struct {
-	processing bool
 	itemCount int
+	packetCount int
+	processedCount int
 	itemsBuffer []byte
+	processing bool
 
 }
 
@@ -45,28 +48,43 @@ func (ma *MarketAssembler) ProcessPacket(packet gopacket.Packet) {
 			return
 		}
 
+		morePackets := udp.Payload[19]
+		currentPacket := int(binary.BigEndian.Uint32(udp.Payload[32:36]))
 		marketHeader := udp.Payload[44:54]
 
-		if !ma.processing && reflect.DeepEqual(marketHeader, marketStartIndicator) {
-			ma.itemCount = int(binary.BigEndian.Uint16(udp.Payload[54:56]))
-
-
+		if reflect.DeepEqual(marketHeader, marketStartIndicator) {
+			fmt.Println("Start of market")
+			// Ensure things are reset
 			ma.processing = true
 			ma.itemsBuffer = nil
-			ma.itemsBuffer = append(ma.itemsBuffer, udp.Payload[59:]...)
+			ma.packetCount = 0
 
-		} else if ma.processing {
+			ma.itemCount = int(binary.BigEndian.Uint16(udp.Payload[54:56]))
+
+			// Minus 1 because packet counts themselves start at zero
+			ma.packetCount = int(binary.BigEndian.Uint32(udp.Payload[28:32])) - 1
+
+			ma.itemsBuffer = append(ma.itemsBuffer, udp.Payload[59:]...)
+		} else if !ma.processing {
+			// We are not processing so may as well ignore! :D
+			return
+		} else if morePackets != morePacketsIndicator && currentPacket != ma.packetCount {
+			// If we don't have the more packets indicator AND the current packet
+			// doesn't have a packet count matching the number of packets we expect
+			// move on, possibly got some other UDP packet we don't care about.
+			return
+		} else if morePackets != morePacketsIndicator && currentPacket == ma.packetCount {
+			// There are no more packets and this is confirmed as the last packet
 			ma.itemsBuffer = append(ma.itemsBuffer, udp.Payload[44:]...)
 
-			if udp.Payload[19] != morePacketsIndicator {
-				ma.processing = false
-				results := extractStrings(ma.itemsBuffer)
-				fmt.Println(results)
-				fmt.Println(len(results))
-				fmt.Println(ma.itemCount)
+			results := extractStrings(ma.itemsBuffer)
+			fmt.Println(results)
+			fmt.Println(len(results))
+			fmt.Println(ma.itemCount)
 
-				ma.itemsBuffer = nil
-			}
+			ma.processing = false
+		} else {
+			ma.itemsBuffer = append(ma.itemsBuffer, udp.Payload[44:]...)
 		}
 	}
 }
