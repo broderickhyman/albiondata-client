@@ -18,7 +18,7 @@ func main() {
 
 	defer handle.Close()
 
-	var filter string = "udp and src host 158.85.26.38"
+	var filter string = "udp"
 	err = handle.SetBPFFilter(filter)
 	if err != nil {
 		log.Fatal(err)
