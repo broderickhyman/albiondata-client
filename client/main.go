@@ -1,23 +1,24 @@
 package main
 
 import (
+	"flag"
+	"log"
+
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/pcap"
 	"github.com/regner/albion-market-data-relay/client/assemblers"
-	"log"
 )
 
 func main() {
-	// Device set to "en0" for local development
-	// TODO: Make the device configurable
-	handle, err := pcap.OpenLive("eth0", 2048, false, pcap.BlockForever)
+	deviceName := networkDeviceName()
+	handle, err := pcap.OpenLive(*deviceName, 2048, false, pcap.BlockForever)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	defer handle.Close()
 
-	var filter string = "udp"
+	var filter = "udp"
 	err = handle.SetBPFFilter(filter)
 	if err != nil {
 		log.Fatal(err)
@@ -31,4 +32,20 @@ func main() {
 	for packet := range source.Packets() {
 		assembler.ProcessPacket(packet)
 	}
+}
+
+func networkDeviceName() *string {
+	deviceName := flag.String("d", "", "Specifies the network device name. If not specified the first enumerated device will be used.")
+	flag.Parse()
+	if *deviceName == "" {
+		devs, err := pcap.FindAllDevs()
+		if err != nil {
+			log.Fatal(err)
+		}
+		if len(devs) == 0 {
+			log.Fatal("Unable to find network device.")
+		}
+		*deviceName = devs[0].Name
+	}
+	return deviceName
 }
