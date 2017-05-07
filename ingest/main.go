@@ -15,23 +15,24 @@ func main() {
 	}
 
 	nc, _ := nats.Connect(natsURL)
+	ec, _ := nats.NewEncodedConn(nc, nats.JSON_ENCODER)
+	defer ec.Close()
+
 	r := gin.Default()
 
 	r.POST("/api/v1/ingest/", func(c *gin.Context) {
 		var incomingRequest shared.InjestPostRequest
 		c.BindJSON(&incomingRequest)
 
-		var marketItems []shared.MarketItem
+		var marketUpdate shared.MarketUpdate
 		for _, v := range incomingRequest.MarketItems {
 			var item shared.MarketItem
 			json.Unmarshal([]byte(v), &item)
 
-			marketItems = append(marketItems, item)
+			marketUpdate.MarketItems = append(marketUpdate.MarketItems, item)
 		}
 
-		natsMsg, _ := json.Marshal(marketItems)
-
-		nc.Publish("amdr-ingest", []byte(natsMsg))
+		ec.Publish(shared.NatsTopic, marketUpdate)
 	})
 
 	r.Run(":8080")

@@ -4,6 +4,10 @@ type InjestPostRequest struct {
 	MarketItems []string `json:"marketItems"`
 }
 
+type MarketUpdate struct {
+	MarketItems []MarketItem `json:"MarketItems"`
+}
+
 type MarketItem struct {
 	ID               int    `json:"Id"`
 	UnitPrice        int    `json:"UnitPriceSilver"`

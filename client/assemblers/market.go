@@ -22,8 +22,10 @@ import (
 56:   -> Data when first packet of market response
 */
 
-var marketStartIndicator = []byte{243, 3, 1, 0, 0, 42, 0, 2, 0, 121}
-var morePacketsIndicator = byte(164)
+var (
+	marketStartIndicator = []byte{243, 3, 1, 0, 0, 42, 0, 2, 0, 121}
+	morePacketsIndicator = byte(164)
+)
 
 type MarketAssembler struct {
 	itemCount      int
