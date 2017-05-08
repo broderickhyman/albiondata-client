@@ -6,6 +6,7 @@ import (
 	"github.com/nats-io/go-nats"
 	"github.com/regner/albion-market-data-relay/shared"
 	"os"
+	"time"
 )
 
 func main() {
@@ -31,6 +32,8 @@ func main() {
 
 			marketUpdate.MarketItems = append(marketUpdate.MarketItems, item)
 		}
+
+		marketUpdate.IngestTime = time.Now().UTC()
 
 		ec.Publish(shared.NatsTopic, marketUpdate)
 	})
