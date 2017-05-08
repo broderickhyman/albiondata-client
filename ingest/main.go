@@ -21,7 +21,7 @@ func main() {
 
 	r := gin.Default()
 
-	r.POST("/api/v1/ingest/", func(c *gin.Context) {
+	r.POST("/amdr/ingest/", func(c *gin.Context) {
 		var incomingRequest shared.InjestPostRequest
 		c.BindJSON(&incomingRequest)
 

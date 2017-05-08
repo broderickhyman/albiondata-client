@@ -37,7 +37,7 @@ func main() {
 
 	r := gin.Default()
 
-	r.GET("/api/v1/announce/", func(c *gin.Context) {
+	r.GET("/amdr/announce/", func(c *gin.Context) {
 		conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 		if err != nil {
 			log.Println(err)
