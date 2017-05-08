@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
-	"github.com/regner/albion-market-data-relay/client/utils"
+	"github.com/regner/amdr-client/utils"
 	"reflect"
 	"regexp"
 	"strings"

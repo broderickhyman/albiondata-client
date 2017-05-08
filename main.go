@@ -6,8 +6,8 @@ import (
 
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/pcap"
-	"github.com/regner/albion-market-data-relay/client/assemblers"
-	"github.com/regner/albion-market-data-relay/client/utils"
+	"github.com/regner/amdr-client/assemblers"
+	"github.com/regner/amdr-client/utils"
 )
 
 func main() {
