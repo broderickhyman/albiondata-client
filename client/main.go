@@ -15,7 +15,7 @@ func main() {
 	config := utils.ClientConfig{}
 
 	flag.StringVar(&config.DeviceName, "d", "", "Specifies the network device name. If not specified the first enumerated device will be used.")
-	flag.StringVar(&config.IngestUrl, "i", "https://ingest.amdr.albion-market.com/api/v1/ingest/", "URL to send market data to.")
+	flag.StringVar(&config.IngestUrl, "i", "https://amdr.albion.regnerba.com/api/v1/ingest/", "URL to send market data to.")
 	flag.Parse()
 
 	config.DeviceName = networkDeviceName(config.DeviceName)
