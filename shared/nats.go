@@ -1,5 +1,5 @@
 package shared
 
 const (
-	NatsTopic = "amdr-ingest"
+	NatsTopic = "amdr-market-updates"
 )
