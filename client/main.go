@@ -7,12 +7,21 @@ import (
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/pcap"
 	"github.com/regner/albion-market-data-relay/client/assemblers"
+	"github.com/regner/albion-market-data-relay/client/utils"
 )
+
 
 func main() {
 	log.Print("Starting up AMDR client...")
-	deviceName := networkDeviceName()
-	handle, err := pcap.OpenLive(*deviceName, 2048, false, pcap.BlockForever)
+	config := utils.ClientConfig{}
+
+	flag.StringVar(&config.DeviceName, "d", "", "Specifies the network device name. If not specified the first enumerated device will be used.")
+	flag.StringVar(&config.IngestUrl, "i", "https://ingest.amdr.albion.regnerba.com/api/v1/ingest/", "URL to send market data to.")
+	flag.Parse()
+
+	config.DeviceName = networkDeviceName(config.DeviceName)
+
+	handle, err := pcap.OpenLive(config.DeviceName, 2048, false, pcap.BlockForever)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -28,7 +37,7 @@ func main() {
 	source := gopacket.NewPacketSource(handle, handle.LinkType())
 	source.NoCopy = true
 
-	assembler := assemblers.NewMarketAssembler()
+	assembler := assemblers.NewMarketAssembler(config)
 
 	log.Print("Starting to process packets...")
 	for packet := range source.Packets() {
@@ -36,10 +45,8 @@ func main() {
 	}
 }
 
-func networkDeviceName() *string {
-	deviceName := flag.String("d", "", "Specifies the network device name. If not specified the first enumerated device will be used.")
-	flag.Parse()
-	if *deviceName == "" {
+func networkDeviceName(deviceName string) string {
+	if deviceName == "" {
 		devs, err := pcap.FindAllDevs()
 		if err != nil {
 			log.Fatal(err)
@@ -47,7 +54,8 @@ func networkDeviceName() *string {
 		if len(devs) == 0 {
 			log.Fatal("Unable to find network device.")
 		}
-		*deviceName = devs[0].Name
+		deviceName = devs[0].Name
 	}
+
 	return deviceName
 }

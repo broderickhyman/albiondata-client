@@ -11,9 +11,7 @@ type InjestRequest struct {
 	MarketItems []string
 }
 
-var injestUrl = "http://192.168.1.20:8080/api/v1/ingest/"
-
-func SendMarketItems(marketItems []string) {
+func SendMarketItems(marketItems []string, ingestUrl string) {
 	client := &http.Client{}
 
 	injestRequest := InjestRequest{
@@ -23,11 +21,13 @@ func SendMarketItems(marketItems []string) {
 	data, err := json.Marshal(injestRequest)
 	if err != nil {
 		log.Printf("Error while marshalling payload: %v", err)
+		return
 	}
 
-	req, err := http.NewRequest("POST", injestUrl, bytes.NewBuffer([]byte(string(data))))
+	req, err := http.NewRequest("POST", ingestUrl, bytes.NewBuffer([]byte(string(data))))
 	if err != nil {
 		log.Printf("Error while create new reqest: %v", err)
+		return
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -35,6 +35,7 @@ func SendMarketItems(marketItems []string) {
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Printf("Error while sending market data: %v", err)
+		return
 	}
 
 	defer resp.Body.Close()

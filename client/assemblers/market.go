@@ -34,10 +34,13 @@ type MarketAssembler struct {
 	processedCount int
 	itemsBuffer    []byte
 	processing     bool
+	config         utils.ClientConfig
 }
 
-func NewMarketAssembler() *MarketAssembler {
-	return &MarketAssembler{}
+func NewMarketAssembler(config utils.ClientConfig) *MarketAssembler {
+	return &MarketAssembler{
+		config: config,
+	}
 }
 
 func (ma *MarketAssembler) ProcessPacket(packet gopacket.Packet) {
@@ -78,7 +81,7 @@ func (ma *MarketAssembler) ProcessPacket(packet gopacket.Packet) {
 			ma.itemsBuffer = append(ma.itemsBuffer, udp.Payload[44:]...)
 
 			results := extractStrings(ma.itemsBuffer)
-			utils.SendMarketItems(results)
+			utils.SendMarketItems(results, ma.config.IngestUrl)
 
 			log.Printf("Sent market payload with %v entries.", len(results))
 
