@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	log.Print("Starting up AMDR client...")
 	deviceName := networkDeviceName()
 	handle, err := pcap.OpenLive(*deviceName, 2048, false, pcap.BlockForever)
 	if err != nil {
@@ -29,6 +30,7 @@ func main() {
 
 	assembler := assemblers.NewMarketAssembler()
 
+	log.Print("Starting to process packets...")
 	for packet := range source.Packets() {
 		assembler.ProcessPacket(packet)
 	}

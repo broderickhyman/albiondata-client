@@ -3,7 +3,7 @@ package utils
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -22,19 +22,19 @@ func SendMarketItems(marketItems []string) {
 
 	data, err := json.Marshal(injestRequest)
 	if err != nil {
-		fmt.Println("SOMETHING BAD HAPPENED!")
+		log.Printf("Error while marshalling payload: %v", err)
 	}
 
 	req, err := http.NewRequest("POST", injestUrl, bytes.NewBuffer([]byte(string(data))))
 	if err != nil {
-		fmt.Println("SOMETHING BAD HAPPENED!")
+		log.Printf("Error while create new reqest: %v", err)
 	}
 
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println("SOMETHING BAD HAPPENED!")
+		log.Printf("Error while sending market data: %v", err)
 	}
 
 	defer resp.Body.Close()

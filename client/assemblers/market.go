@@ -8,6 +8,7 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
+	"log"
 )
 
 /*
@@ -78,6 +79,8 @@ func (ma *MarketAssembler) ProcessPacket(packet gopacket.Packet) {
 
 			results := extractStrings(ma.itemsBuffer)
 			utils.SendMarketItems(results)
+
+			log.Printf("Sent market payload with %v entries.", len(results))
 
 			ma.processing = false
 		} else {
