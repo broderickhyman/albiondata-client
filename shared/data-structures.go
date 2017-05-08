@@ -1,11 +1,14 @@
 package shared
 
+import "time"
+
 type InjestPostRequest struct {
 	MarketItems []string `json:"marketItems"`
 }
 
 type MarketUpdate struct {
 	MarketItems []MarketItem `json:"MarketItems"`
+	IngestTime  time.Time    `json:"IngestTime"`
 }
 
 type MarketItem struct {
