@@ -38,5 +38,7 @@ func SendMarketItems(marketItems []string, ingestUrl string) {
 		return
 	}
 
+	log.Printf("Sent market payload with %v entries.", len(marketItems))
+
 	defer resp.Body.Close()
 }
