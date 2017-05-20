@@ -9,13 +9,15 @@ import (
 
 type InjestRequest struct {
 	MarketItems []string
+	LocationId  int
 }
 
-func SendMarketItems(marketItems []string, ingestUrl string) {
+func SendMarketItems(marketItems []string, ingestUrl string, locationId int) {
 	client := &http.Client{}
 
 	injestRequest := InjestRequest{
 		MarketItems: marketItems,
+		LocationId: locationId,
 	}
 
 	data, err := json.Marshal(injestRequest)
@@ -35,6 +37,11 @@ func SendMarketItems(marketItems []string, ingestUrl string) {
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Printf("Error while sending market data: %v", err)
+		return
+	}
+
+	if resp.StatusCode != 201 {
+		log.Printf("Got bad response code: %v", resp.StatusCode)
 		return
 	}
 

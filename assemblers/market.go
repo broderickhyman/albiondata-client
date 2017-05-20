@@ -34,11 +34,13 @@ type MarketAssembler struct {
 	itemsBuffer    []byte
 	processing     bool
 	config         utils.ClientConfig
+	locationId     int
 }
 
 func NewMarketAssembler(config utils.ClientConfig) *MarketAssembler {
 	return &MarketAssembler{
 		config: config,
+		locationId: 0,
 	}
 }
 
@@ -80,7 +82,7 @@ func (ma *MarketAssembler) ProcessPacket(packet gopacket.Packet) {
 			ma.itemsBuffer = append(ma.itemsBuffer, udp.Payload[44:]...)
 
 			results := extractStrings(ma.itemsBuffer)
-			utils.SendMarketItems(results, ma.config.IngestUrl)
+			utils.SendMarketItems(results, ma.config.IngestUrl, ma.locationId)
 
 			ma.processing = false
 		} else {
