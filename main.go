@@ -59,10 +59,11 @@ func networkDeviceName(deviceName string) string {
 
 		if runtime.GOOS == "windows" {
 			for _, device := range devs {
-				log.Printf("Device: %v %v", device.Description, device.Name)
-				//if device.Description == "Ethernet adapter Ethernet"{
-				//	return device.Name
-				//}
+				// Quick and dirt hack around dealing with VirtualBox interfaces on windows
+				// as one of them is often the first in the device list
+				if device.Description != "Oracle"{
+					return device.Name
+				}
 			}
 		}
 
