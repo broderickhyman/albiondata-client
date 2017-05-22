@@ -16,7 +16,7 @@ install:
   - g++ --version
   - cinst winpcap
   - appveyor DownloadFile http://www.winpcap.org/install/bin/WpdPack_4_1_2.zip
-  - 7za x .\WpdPack_4_1_2.zip -oc:\
+  - 7z x .\WpdPack_4_1_2.zip -oc:\
 
 build_script:
   - go get
