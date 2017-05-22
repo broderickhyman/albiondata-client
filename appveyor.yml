@@ -30,7 +30,7 @@ build_script:
   - set GOARCH=amd64
   - set APPNAME=amdr
   - go build -o %APPNAME%.exe --ldflags "-X main.VERSION=development" main.go
-  - .\go-msi.exe make --msi %APPVEYOR_BUILD_FOLDER%\%APPNAME%-%GOARCH%.msi --version development --arch %GOARCH%
+  - go-msi.exe make --msi %APPVEYOR_BUILD_FOLDER%\%APPNAME%-%GOARCH%.msi --version development --arch %GOARCH%
 
 artifacts:
   - path: '*-amd64.msi'
