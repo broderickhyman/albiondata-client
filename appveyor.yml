@@ -1,0 +1,16 @@
+version: "{build}"
+os: Windows Server 2012 R2
+test: off
+
+environment:
+  GOPATH: c:\gopath
+  
+install:
+  - set PATH=%GOPATH%\bin;c:\go\bin;%PATH%
+  - go version
+  - go env
+
+build_script:
+  - go get
+  - set GOARCH=386
+  - go build -o amdr.exe --ldflags main.go
