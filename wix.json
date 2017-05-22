@@ -5,7 +5,7 @@
   "files": {
     "guid": "",
     "items": [
-      "build/amd64/amdr.exe"
+      "amdr.exe"
     ]
   },
   "hooks": [
