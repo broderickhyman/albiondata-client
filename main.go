@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"runtime"
 
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/pcap"
@@ -55,7 +56,16 @@ func networkDeviceName(deviceName string) string {
 		if len(devs) == 0 {
 			log.Fatal("Unable to find network device.")
 		}
-		deviceName = devs[0].Name
+
+		if runtime.GOOS == "windows" {
+			for _, device := range devs {
+				if device.Description == "Ethernet adapter Ethernet"{
+					return device.Name
+				}
+			}
+		}
+
+		return devs[0].Name
 	}
 
 	return deviceName
