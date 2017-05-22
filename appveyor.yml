@@ -14,14 +14,24 @@ install:
   - go env
   - gcc --version
   - g++ --version
-  - cinst winpcap
+  # WinPcap setup
+  - choco install winpcap
   - appveyor DownloadFile http://www.winpcap.org/install/bin/WpdPack_4_1_2.zip
   - 7z x .\WpdPack_4_1_2.zip -oc:\
-
+  # Wix setup
+  - curl -fsSL -o C:\wix310-binaries.zip http://static.wixtoolset.org/releases/v3.10.3.3007/wix310-binaries.zip
+  - 7z x C:\wix310-binaries.zip -y -r -oC:\wix310
+  - set PATH=C:\wix310;%PATH%
+  # Go-MSI setup
+  - choco install go-msi -y
+ 
 build_script:
   - go get
   - set GOARCH=amd64
-  - go build -o amdr.exe main.go
+  - set APPNAME=amdr
+  - go build -o %APPNAME%.exe --ldflags "-X main.VERSION=development" main.go
+  - .\go-msi.exe make --msi %APPVEYOR_BUILD_FOLDER%\%APPNAME%-%GOARCH%.msi --version development --arch %GOARCH%
 
 artifacts:
-  - path: 'amdr.exe'
+  - path: '*-amd64.msi'
+    name: msi-x64
