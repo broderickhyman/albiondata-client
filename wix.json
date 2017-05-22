@@ -1,9 +1,9 @@
 {
   "product": "amdr-client",
   "license": "LICENSE",
-  "upgrade-code": "",
+  "upgrade-code": "9de9e787-d91c-4105-86f7-7098805bc239",
   "files": {
-    "guid": "",
+    "guid": "4c1c318d-68de-4983-b9c1-2e95416c2404",
     "items": [
       "amdr.exe"
     ]
