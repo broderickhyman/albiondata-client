@@ -21,4 +21,4 @@ install:
 build_script:
   - go get
   - set GOARCH=amd64
-  - go build -o amdr.exe --ldflags main.go
+  - go build -o amdr.exe main.go
