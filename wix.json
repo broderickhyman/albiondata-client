@@ -2,16 +2,31 @@
   "product": "amdr-client",
   "company": "regner",
   "license": "LICENSE",
-  "upgrade-code": "9de9e787-d91c-4105-86f7-7098805bc239",
+  "upgrade-code": "fb84f987-1f64-4e74-b166-5b3d7a61a26f",
   "files": {
-    "guid": "4c1c318d-68de-4983-b9c1-2e95416c2404",
+    "guid": "d2c763e9-ad05-468c-889c-d4bd6964c0ca",
     "items": [
       "amdr.exe"
     ]
   },
+  "env": {
+    "guid": "",
+    "vars": null
+  },
+  "shortcuts": {},
+  "choco": {},
   "hooks": [
-    {"when": "install", "command": "sc.exe create AmdrSvc binPath=\"[INSTALLDIR]amdr.exe\" type=share start=auto DisplayName=\"AMDR\""},
-    {"when": "install", "command": "sc.exe start AmdrSvc"},
-    {"when": "uninstall", "command": "sc.exe delete AmdrSvc"}
+    {
+      "command": "sc.exe create AmdrSvc binPath=\"[INSTALLDIR]amdr.exe\" type=share start=auto DisplayName=\"AMDR\"",
+      "when": "install"
+    },
+    {
+      "command": "sc.exe start AmdrSvc",
+      "when": "install"
+    },
+    {
+      "command": "sc.exe delete AmdrSvc",
+      "when": "uninstall"
+    }
   ]
 }
