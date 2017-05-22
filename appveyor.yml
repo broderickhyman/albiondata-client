@@ -1,5 +1,6 @@
 version: "{build}"
-os: Windows Server 2012 R2
+platform:
+  - x64
 test: off
 
 clone_folder: c:\gopath\src\github.com\regner\amdr-client
@@ -11,8 +12,11 @@ install:
   - set PATH=%GOPATH%\bin;c:\go\bin;C:\msys64\mingw64\bin;%PATH%
   - go version
   - go env
+  - gcc --version
+  - g++ --version
+  - cinst winpcap
 
 build_script:
   - go get
-  - set GOARCH=386
+  - set GOARCH=amd64
   - go build -o amdr.exe --ldflags main.go
