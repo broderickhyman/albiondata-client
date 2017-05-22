@@ -13,20 +13,18 @@
     "guid": "",
     "vars": null
   },
-  "shortcuts": {},
-  "choco": {},
-  "hooks": [
-    {
-      "command": "sc.exe create AmdrSvc binPath=\"[INSTALLDIR]amdr.exe\" type=share start=auto DisplayName=\"AMDR\"",
-      "when": "install"
-    },
-    {
-      "command": "sc.exe start AmdrSvc",
-      "when": "install"
-    },
-    {
-      "command": "sc.exe delete AmdrSvc",
-      "when": "uninstall"
-    }
-  ]
+  "shortcuts": {
+    "guid": "c699feb4-419a-4d56-9803-4fa5e74fc113",
+    "items": [
+      {
+        "name": "amdr",
+        "description": "test",
+        "target": "[INSTALLDIR]\\amdr.exe",
+        "wdir": "INSTALLDIR",
+        "arguments": "",
+        "icon": "ico.ico"
+      }
+    ]
+  },
+  "choco": {}
 }
