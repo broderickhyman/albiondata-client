@@ -59,9 +59,10 @@ func networkDeviceName(deviceName string) string {
 
 		if runtime.GOOS == "windows" {
 			for _, device := range devs {
-				if device.Description == "Ethernet adapter Ethernet"{
-					return device.Name
-				}
+				log.Printf("Device: %v %v", device.Description, device.Name)
+				//if device.Description == "Ethernet adapter Ethernet"{
+				//	return device.Name
+				//}
 			}
 		}
 
