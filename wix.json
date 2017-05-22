@@ -1,0 +1,16 @@
+{
+  "product": "amdr-client",
+  "license": "MIT",
+  "upgrade-code": "",
+  "files": {
+    "guid": "",
+    "items": [
+      "build/amd64/amdr.exe"
+    ]
+  },
+  "hooks": [
+    {"when": "install", "command": "sc.exe create AmdrSvc binPath=\"[INSTALLDIR]amdr.exe\" type=share start=auto DisplayName=\"AMDR\""},
+    {"when": "install", "command": "sc.exe start AmdrSvc"},
+    {"when": "uninstall", "command": "sc.exe delete AmdrSvc"}
+  ]
+}
