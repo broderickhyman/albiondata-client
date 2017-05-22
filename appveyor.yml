@@ -8,7 +8,7 @@ environment:
   GOPATH: c:\gopath
   
 install:
-  - set PATH=%GOPATH%\bin;c:\go\bin;%PATH%
+  - set PATH=%GOPATH%\bin;c:\go\bin;C:\MinGW\bin;%PATH%
   - go version
   - go env
 
