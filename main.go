@@ -20,6 +20,8 @@ func main() {
 
 	config.DeviceName = networkDeviceName(config.DeviceName)
 
+	log.Printf("Using the following network device: %v", config.DeviceName)
+
 	handle, err := pcap.OpenLive(config.DeviceName, 2048, false, pcap.BlockForever)
 	if err != nil {
 		log.Fatal(err)
