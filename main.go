@@ -22,6 +22,7 @@ func main() {
 	config.DeviceName = networkDeviceName(config.DeviceName)
 
 	log.Printf("Using the following network device: %v", config.DeviceName)
+	log.Printf("Using the following ingest: %v", config.IngestUrl)
 
 	handle, err := pcap.OpenLive(config.DeviceName, 2048, false, pcap.BlockForever)
 	if err != nil {
