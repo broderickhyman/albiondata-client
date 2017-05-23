@@ -6,7 +6,8 @@
   "files": {
     "guid": "d2c763e9-ad05-468c-889c-d4bd6964c0ca",
     "items": [
-      "amdr.exe"
+      "amdr.exe",
+      "amdr.ico"
     ]
   },
   "env": {
@@ -22,7 +23,7 @@
         "target": "[INSTALLDIR]\\amdr.exe",
         "wdir": "INSTALLDIR",
         "arguments": "",
-        "icon": "ico.ico"
+        "icon": "amdr.ico"
       }
     ]
   },
