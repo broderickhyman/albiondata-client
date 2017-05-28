@@ -7,12 +7,12 @@ import (
 
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/pcap"
-	"github.com/regner/amdr-client/assemblers"
-	"github.com/regner/amdr-client/utils"
+	"github.com/regner/albionmarket-client/assemblers"
+	"github.com/regner/albionmarket-client/utils"
 )
 
 func main() {
-	log.Print("Starting up AMDR client...")
+	log.Print("Starting the Albion Market Client...")
 	config := utils.ClientConfig{}
 
 	flag.StringVar(&config.DeviceName, "d", "", "Specifies the network device name. If not specified the first enumerated device will be used.")

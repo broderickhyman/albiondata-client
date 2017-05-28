@@ -1,8 +1,19 @@
-# Albion Market Data Relay - Client
+# Albion Market - Client
+This client monitors local network traffic, identifies UDP packets
+that contain market data for Albion Online, and ships the raw JSON
+from the market packets off to an ingest server.
 
-# Documentation
-Documentation will come after getting a working version hosted and
-running.
+The client is not meant to parse the packets any more than what is
+required to pull the JSON out of them. Processing the JSON is done
+on the ingest server so that if an update is required to parse the
+JSON it does not require updating the distributed client.
+
+# TODO
+[] When installed auto start on boot
+[] Ignore market packets for the test server
+[] Identify where the character is located and set that location
+[] Deal with multiple running clients??
+[] Release clients for Mac and Linux
 
 # License
 This project, and all contributed code, are licensed under the MIT
