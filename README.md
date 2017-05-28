@@ -1,4 +1,7 @@
 # Albion Market - Client
+Distributed client for the [Albion Market](https://albion-market.com/)
+website.
+
 This client monitors local network traffic, identifies UDP packets
 that contain market data for Albion Online, and ships the raw JSON
 from the market packets off to an ingest server.
