@@ -9,11 +9,15 @@ on the ingest server so that if an update is required to parse the
 JSON it does not require updating the distributed client.
 
 # TODO
-[] When installed auto start on boot
-[] Ignore market packets for the test server
-[] Identify where the character is located and set that location
-[] Deal with multiple running clients??
-[] Release clients for Mac and Linux
+- [ ] When installed auto start on boot
+- [ ] Ignore market packets for the test server
+- [ ] Identify where the character is located and set that location
+- [ ] Deal with multiple running clients??
+- [ ] Release clients for Mac and Linux
+
+# Related Projects
+- [Albion Market - Backend](https://github.com/Regner/albionmarket-backend/)
+- [Albion Market - Frontend](https://github.com/Regner/albionmarket-frontend/)
 
 # License
 This project, and all contributed code, are licensed under the MIT
