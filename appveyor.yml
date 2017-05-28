@@ -37,14 +37,12 @@ build_script:
   - go-msi.exe make --msi %APPVEYOR_BUILD_FOLDER%\%APPNAME%-%GOARCH%.msi --version %APPVEYOR_REPO_TAG_NAME% --arch %GOARCH%
 
 artifacts:
-  - path: '*-386.msi'
-    name: msi-x86
   - path: '*-amd64.msi'
     name: msi-x64
 
 deploy:
   - provider: GitHub
-    artifact: msi-x86, msi-x64
+    artifact: msi-x64
     draft: false
     prerelease: false
     description: "Release {APPVEYOR_REPO_TAG_NAME}"
