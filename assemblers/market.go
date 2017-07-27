@@ -82,7 +82,15 @@ func (ma *MarketAssembler) ProcessPacket(packet gopacket.Packet) {
 			ma.itemsBuffer = append(ma.itemsBuffer, udp.Payload[44:]...)
 
 			results := extractStrings(ma.itemsBuffer)
-			utils.SendMarketItems(results, ma.config.IngestUrl, ma.locationId)
+
+			if !ma.config.DisableUpload {
+				utils.SendMarketItems(results, ma.config.IngestUrl, ma.locationId)
+			}
+
+			if ma.config.SaveLocally {
+				utils.SaveMarketItems(results)
+			}
+
 
 			ma.processing = false
 		} else {

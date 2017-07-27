@@ -16,9 +16,19 @@ func main() {
 	config := utils.ClientConfig{}
 
 	flag.StringVar(&config.IngestUrl, "i", "https://albion-market.com/api/v1/ingest/", "URL to send market data to.")
+	flag.BoolVar(&config.DisableUpload, "d", false, "If specified no attempts will be made to upload data to remote server.")
+	flag.BoolVar(&config.SaveLocally, "s", false, "If specified all market orders will be saved locally.")
 	flag.Parse()
 
-	log.Printf("Using the following ingest: %v", config.IngestUrl)
+	if config.DisableUpload {
+		log.Print("Remote upload of market orders is disabled!")
+	} else {
+		log.Printf("Using the following ingest: %v", config.IngestUrl)
+	}
+
+	if config.SaveLocally {
+		log.Print("Saving market orders locally.")
+	}
 	
 	devices, err := pcap.FindAllDevs()
 
