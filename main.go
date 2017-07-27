@@ -19,8 +19,7 @@ func main() {
 	flag.Parse()
 
 	log.Printf("Using the following ingest: %v", config.IngestUrl)
-
-
+	
 	devices, err := pcap.FindAllDevs()
 
 	if err != nil {
