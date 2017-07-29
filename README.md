@@ -31,3 +31,7 @@ JSON it does not require updating the distributed client.
 # License
 This project, and all contributed code, are licensed under the MIT
 License. A copy of the MIT License may be found in the repository.
+
+# Dev Setup
+- Install [Glide](https://github.com/Masterminds/glide) with `curl https://glide.sh/get | sh`
+- Install dependencies using `glide install`

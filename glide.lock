@@ -1,0 +1,14 @@
+hash: 968695031d6af1b343306f78a5b55982a5797beb98efbcae2cab6df0fcef9e8f
+updated: 2017-07-28T22:37:27.563785178-07:00
+imports:
+- name: github.com/google/gopacket
+  version: 8af772c0bcc826f671fd7c133917fec9686d720d
+  subpackages:
+  - layers
+  - pcap
+- name: github.com/regner/albionmarket-client
+  version: e38a085fad1eb74ba8a3be150f5e34977bfefab7
+  subpackages:
+  - assemblers
+  - utils
+testImports: []
