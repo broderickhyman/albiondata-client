@@ -1,3 +1,3 @@
 
 fmt:
-	goimports -w $(go list -f {{.Dir}} ./... | grep -v /vendor/)
+	scripts/fmt.sh
