@@ -2,7 +2,6 @@ package assemblers
 
 import (
 	"encoding/binary"
-	"log"
 	"reflect"
 	"regexp"
 	"strings"
