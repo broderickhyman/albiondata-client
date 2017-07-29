@@ -1,7 +1,7 @@
 package utils
 
 type ClientConfig struct {
-	IngestUrl string
+	IngestUrl     string
 	DisableUpload bool
-	SaveLocally bool
+	SaveLocally   bool
 }

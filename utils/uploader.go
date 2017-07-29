@@ -17,7 +17,7 @@ func SendMarketItems(marketItems []string, ingestUrl string, locationId int) {
 
 	injestRequest := InjestRequest{
 		MarketItems: marketItems,
-		LocationId: locationId,
+		LocationId:  locationId,
 	}
 
 	data, err := json.Marshal(injestRequest)

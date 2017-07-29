@@ -29,7 +29,7 @@ func main() {
 	if config.SaveLocally {
 		log.Print("Saving market orders locally.")
 	}
-	
+
 	devices, err := pcap.FindAllDevs()
 
 	if err != nil {

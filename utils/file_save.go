@@ -1,10 +1,10 @@
 package utils
 
 import (
-	"os"
-	"time"
 	"fmt"
 	"log"
+	"os"
+	"time"
 )
 
 func SaveMarketItems(marketItems []string) {
@@ -12,7 +12,7 @@ func SaveMarketItems(marketItems []string) {
 	filename := fmt.Sprintf("marketorder-%v.txt", date)
 
 	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0666)
-	if err != nil{
+	if err != nil {
 		log.Printf("Error opeing file for saving: %v", err)
 		return
 	}
