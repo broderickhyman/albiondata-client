@@ -1,0 +1,10 @@
+package: .
+import:
+- package: github.com/google/gopacket
+  subpackages:
+  - layers
+  - pcap
+- package: github.com/regner/albionmarket-client
+  subpackages:
+  - assemblers
+  - utils
