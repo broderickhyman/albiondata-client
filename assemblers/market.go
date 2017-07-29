@@ -2,12 +2,13 @@ package assemblers
 
 import (
 	"encoding/binary"
-	"github.com/google/gopacket"
-	"github.com/google/gopacket/layers"
-	"github.com/regner/albionmarket-client/utils"
 	"reflect"
 	"regexp"
 	"strings"
+
+	"github.com/google/gopacket"
+	"github.com/google/gopacket/layers"
+	"github.com/regner/albionmarket-client/utils"
 )
 
 /*
@@ -39,7 +40,7 @@ type MarketAssembler struct {
 
 func NewMarketAssembler(config utils.ClientConfig) *MarketAssembler {
 	return &MarketAssembler{
-		config: config,
+		config:     config,
 		locationId: 0,
 	}
 }
@@ -90,7 +91,6 @@ func (ma *MarketAssembler) ProcessPacket(packet gopacket.Packet) {
 			if ma.config.SaveLocally {
 				utils.SaveMarketItems(results)
 			}
-
 
 			ma.processing = false
 		} else {

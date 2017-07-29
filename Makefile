@@ -1,0 +1,3 @@
+
+fmt:
+	scripts/fmt.sh
