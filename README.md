@@ -24,10 +24,15 @@ JSON it does not require updating the distributed client.
 - [Albion Market - Frontend](https://github.com/Regner/albionmarket-frontend/)
 
 # Dev Setup
+
+### Mac/Linux Setup
 - Install [Glide](https://github.com/Masterminds/glide)
   - Linux or Mac: `curl https://glide.sh/get | sh`
   - Mac with Homebrew: `brew install glide`
 - Install dependencies using `glide install`
+
+### Windows Setup
+[Windows Setup Guide](building_in_windows.md)
 
 # License
 This project, and all contributed code, are licensed under the MIT
