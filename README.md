@@ -1,4 +1,4 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/Regner/albionmarket-client)](https://goreportcard.com/report/github.com/Regner/albionmarket-client)
+[![CircleCI](https://circleci.com/gh/Regner/albionmarket-client.svg?style=svg)](https://circleci.com/gh/Regner/albionmarket-client) [![Go Report Card](https://goreportcard.com/badge/github.com/Regner/albionmarket-client)](https://goreportcard.com/report/github.com/Regner/albionmarket-client)
 
 # Albion Market - Client
 Distributed client for the [Albion Market](https://albion-market.com/)
