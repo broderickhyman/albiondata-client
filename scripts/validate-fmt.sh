@@ -20,4 +20,6 @@ else
     echo "Please reformat the above files. Use \"make fmt\" and commit the results."
     echo
   }
+
+  false
 fi

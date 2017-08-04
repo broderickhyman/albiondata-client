@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 set -e
 
-go run main.go -r fixtures/refresh-market-02.pcap
+go run cmd/albionmarket-client/albionmarket-client.go -o fixtures/refresh-market-02.pcap
