@@ -1,16 +1,13 @@
-hash: 94994c8ee7d7b6b349f6cd19641b5af4897e4bc73fa4c8e8e228fc8c8578057d
-updated: 2017-08-03T22:50:31.75758105-07:00
+hash: e30d6b9d42f7ad5aac9971e11149fce70d7c5d59c1f2c388da1a271916468360
+updated: 2017-08-04T18:53:18.924485025-07:00
 imports:
 - name: github.com/google/gopacket
   version: 8af772c0bcc826f671fd7c133917fec9686d720d
   subpackages:
   - layers
   - pcap
-- name: github.com/hmadison/ao_spectator
-  version: 432ca79d7f27055dfce78905d34a925ee950505d
-  subpackages:
-  - albion
-  - photon
+- name: github.com/hmadison/photon_spectator
+  version: 73b24beeae720ceaeb737b6e17b6dc966d0c9e1d
 - name: github.com/mitchellh/go-ps
   version: 4fdf99ab29366514c69ccccddab5dc58b8d84062
 - name: github.com/mitchellh/mapstructure

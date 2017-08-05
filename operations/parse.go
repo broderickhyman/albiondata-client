@@ -1,7 +1,6 @@
 package operations
 
 import (
-	"github.com/hmadison/ao_spectator/photon"
 	"github.com/mitchellh/mapstructure"
 )
 

@@ -12,8 +12,7 @@ import (
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/pcap"
-	"github.com/hmadison/ao_spectator/albion"
-	"github.com/hmadison/ao_spectator/photon"
+	photon "github.com/hmadison/photon_spectator"
 )
 
 var onOperationSend chan interface{} = make(chan interface{})
@@ -148,7 +147,7 @@ func listenToSource(source *gopacket.PacketSource, quit chan bool) {
 
 func onReliableCommand(command *photon.PhotonCommand) {
 	msg, _ := command.ReliableMessage()
-	params, _ := albion.DecodeReliableMessage(msg)
+	params, _ := photon.DecodeReliableMessage(msg)
 	operation := operations.Decode(params)
 
 	if operation != nil {
