@@ -4,10 +4,6 @@ import:
   subpackages:
   - layers
   - pcap
-- package: github.com/hmadison/ao_spectator
-  subpackages:
-  - albion
-  - photon
 - package: github.com/mitchellh/go-ps
 - package: github.com/mitchellh/mapstructure
 - package: github.com/shirou/gopsutil
@@ -17,3 +13,5 @@ import:
 - package: golang.org/x/tools
   subpackages:
   - container/intsets
+- package: github.com/hmadison/photon_spectator
+  version: 0.1.0-pre.0
