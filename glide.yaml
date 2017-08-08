@@ -7,7 +7,8 @@ import:
 - package: github.com/mitchellh/go-ps
 - package: github.com/mitchellh/mapstructure
 - package: github.com/shirou/gopsutil
-  version: v2.17.07
+  repo: https://github.com/gradiuscypher/gopsutil.git
+  vcs: git
   subpackages:
   - net
 - package: golang.org/x/tools
