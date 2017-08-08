@@ -2,8 +2,8 @@ package client
 
 import (
 	"log"
-	"time"
 	"runtime"
+	"time"
 )
 
 type processesWatcher struct {
