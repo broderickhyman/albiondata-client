@@ -21,7 +21,7 @@ func (pw *processesWatcher) run() {
 	log.Print("Watching processes for Albion to start...")
 
 	for {
-		process_string := ""
+		var process_string string
 
 		if runtime.GOOS == "windows" {
 			process_string = "Albion-Online.exe"
