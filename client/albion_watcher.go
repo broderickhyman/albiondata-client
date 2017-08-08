@@ -26,7 +26,7 @@ func newAlbionProcessWatcher(pid int) *albionProcessWatcher {
 
 func (apw *albionProcessWatcher) run() {
 	log.Printf("Watching Albion process with PID \"%d\"...", apw.pid)
-	apw.r.run()
+	go apw.r.run()
 
 	for {
 		select {
