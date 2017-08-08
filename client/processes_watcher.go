@@ -3,6 +3,7 @@ package client
 import (
 	"log"
 	"time"
+	"runtime"
 )
 
 type processesWatcher struct {
@@ -20,7 +21,16 @@ func (pw *processesWatcher) run() {
 	log.Print("Watching processes for Albion to start...")
 
 	for {
-		current := findProcess("Albion-Online")
+		process_string := ""
+
+		if runtime.GOOS == "windows" {
+			process_string = "Albion-Online.exe"
+		} else {
+			process_string = "Albion-Online"
+		}
+
+		current := findProcess(process_string)
+
 		added, removed := diffIntSets(pw.knownAlbions, current)
 
 		for _, pid := range added {
