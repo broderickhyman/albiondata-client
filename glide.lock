@@ -1,5 +1,5 @@
-hash: e30d6b9d42f7ad5aac9971e11149fce70d7c5d59c1f2c388da1a271916468360
-updated: 2017-08-04T18:53:18.924485025-07:00
+hash: 9dd05dc2f1c7ea9ec598e08a1a1f484e726e559bb02c012ffb601711b4100482
+updated: 2017-08-08T12:16:43.3469604-07:00
 imports:
 - name: github.com/google/gopacket
   version: 8af772c0bcc826f671fd7c133917fec9686d720d
@@ -13,7 +13,9 @@ imports:
 - name: github.com/mitchellh/mapstructure
   version: d0303fe809921458f417bcf828397a65db30a7e4
 - name: github.com/shirou/gopsutil
-  version: 114c78c777eb86b58e40910cbd3fc451829c366d
+  version: d573c8e3f1c5337585b0e285214e80df7429d8b5
+  repo: https://github.com/gradiuscypher/gopsutil.git
+  vcs: git
   subpackages:
   - internal/common
   - net
@@ -23,7 +25,7 @@ imports:
   - unix
   - windows
 - name: golang.org/x/tools
-  version: a237aba5f578100f4f8419bbda73189b8e6dbae5
+  version: f03b3350b7d6cb09e4221e7f2ecffaf41f89fce1
   subpackages:
   - container/intsets
 testImports: []
