@@ -40,14 +40,11 @@ func (l *listener) run() {
 			if packet != nil {
 				l.processPacket(packet)
 			}
-		default:
 		}
 	}
 }
 
 func (l *listener) processPacket(packet gopacket.Packet) {
-	log.Print("Processing a packet...")
-
 	layer := packet.Layer(photon.PhotonLayerType)
 
 	if layer == nil {

@@ -84,6 +84,25 @@ func (apw *albionProcessWatcher) updateListeners() {
 func getDevices() []pcap.Interface {
 	devices, err := pcap.FindAllDevs()
 
+	// Filter out devices that we aren't able to listen to.
+	// they bring error's like "NFLOG link-layer type filtering not implemented"
+	blacklisted := []string{"nflog", "nfqueue", "usbmon1", "usbmon2", "usbmon3", "usbmon4"}
+
+	for _, bl := range blacklisted {
+		found := false
+		id1 := -1
+		for id2, device := range devices {
+			if device.Name == bl {
+				found = true
+				id1 = id2
+				break
+			}
+		}
+		if found {
+			devices = append(devices[:id1], devices[id1+1:]...)
+		}
+	}
+
 	if err != nil {
 		log.Fatal(err)
 	}
