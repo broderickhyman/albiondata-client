@@ -5,20 +5,17 @@ import (
 )
 
 type Client struct {
-	config *Config
 }
 
-func NewClient(config *Config) *Client {
-	return &Client{
-		config: config,
-	}
+func NewClient() *Client {
+	return &Client{}
 }
 
 func (client *Client) Run() {
 	log.Print("Starting the Albion Market Client...")
 
-	if client.config.Offline {
-		proccessOfflinePcap(client.config.OfflinePath)
+	if GlobalConfiguration.Offline {
+		proccessOfflinePcap(GlobalConfiguration.OfflinePath)
 	} else {
 		pw := newProcessWatcher()
 		go pw.run()

@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	options = &client.Config{}
+	options = client.GlobalConfiguration
 )
 
 func init() {
@@ -47,6 +47,6 @@ func main() {
 		options.Offline = true
 	}
 
-	c := client.NewClient(options)
+	c := client.NewClient()
 	c.Run()
 }
