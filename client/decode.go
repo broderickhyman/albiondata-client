@@ -2,6 +2,7 @@ package client
 
 import (
 	"github.com/mitchellh/mapstructure"
+	"github.com/regner/albionmarket-client/client/operations"
 )
 
 func decode(params map[string]interface{}) operation {
@@ -13,7 +14,7 @@ func decode(params map[string]interface{}) operation {
 
 	switch code {
 	case 67:
-		operation := requestBuyOrders{}
+		operation := operations.RequestBuyOrders{}
 		mapstructure.Decode(params, &operation)
 
 		return operation
