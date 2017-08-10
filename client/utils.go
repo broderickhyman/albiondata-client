@@ -6,10 +6,6 @@ import (
 	"golang.org/x/tools/container/intsets"
 )
 
-func blockForever() {
-	select {}
-}
-
 func findProcess(processName string) []int {
 	var results []int
 	var processes, _ = ps.Processes()
@@ -24,7 +20,7 @@ func findProcess(processName string) []int {
 }
 
 func getProcessPorts(pid int) []int {
-	var connections, _ = net.ConnectionsPid("any", int32(pid))
+	var connections, _ = net.ConnectionsPid("all", int32(pid))
 	var result = make([]int, len(connections))
 
 	for i, c := range connections {

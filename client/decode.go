@@ -18,7 +18,7 @@ func decode(params map[string]interface{}) operation {
 		mapstructure.Decode(params, &operation)
 
 		return operation
-	default:
-		return nil
 	}
+
+	return nil
 }
