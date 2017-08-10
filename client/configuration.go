@@ -7,3 +7,5 @@ type Config struct {
 	OfflinePath   string
 	Offline       bool
 }
+
+var GlobalConfiguration = &Config{}
