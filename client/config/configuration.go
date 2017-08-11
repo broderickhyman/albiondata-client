@@ -1,4 +1,4 @@
-package client
+package config
 
 type Config struct {
 	IngestUrl     string
