@@ -25,6 +25,11 @@ func decodeRequest(params map[string]interface{}) operation {
 		mapstructure.Decode(params, &operation)
 
 		return operation
+	case 217:
+		operation := operations.GoldMarketGetAverageInfo{}
+		mapstructure.Decode(params, &operation)
+
+		return operation
 	}
 
 	return nil
@@ -41,6 +46,11 @@ func decodeResponse(params map[string]interface{}) operation {
 	switch code {
 	case 67:
 		operation := operations.AuctionGetOffersResponse{}
+		mapstructure.Decode(params, &operation)
+
+		return operation
+	case 217:
+		operation := operations.GoldMarketGetAverageInfoResponse{}
 		mapstructure.Decode(params, &operation)
 
 		return operation
