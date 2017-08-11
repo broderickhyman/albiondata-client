@@ -16,3 +16,5 @@ import:
   - container/intsets
 - package: github.com/hmadison/photon_spectator
   version: 0.1.0-pre.0
+- package: github.com/Sirupsen/logrus
+  version: ^1.0.2

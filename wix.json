@@ -7,7 +7,8 @@
     "guid": "d2c763e9-ad05-468c-889c-d4bd6964c0ca",
     "items": [
       "albionmarket-client.exe",
-      "albionmarket-client.ico"
+      "albionmarket-client.ico",
+      "thirdparty/WinPcap_4_1_3.exe"
     ]
   },
   "env": {
@@ -27,5 +28,8 @@
       }
     ]
   },
-  "choco": {}
+  "choco": {},
+  "hooks": [
+    {"when": "install", "command": "[INSTALLDIR]/thirdparty/WinPcap_4_1_3.exe"}
+  ]
 }

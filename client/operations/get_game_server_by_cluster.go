@@ -1,14 +1,14 @@
 package operations
 
 import (
-	"log"
 	"strconv"
 	"strings"
+
+	"github.com/regner/albionmarket-client/log"
 
 	"github.com/regner/albionmarket-client/client/albionstate"
 )
 
-//10
 type GetGameServerByCluster struct {
 	ZoneID               string `mapstructure:"0"`
 	NrZoneChangesSession int32  `mapstructure:"255"`
