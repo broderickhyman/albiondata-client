@@ -24,7 +24,7 @@ func (r *Router) run() {
 	for {
 		select {
 		case <-r.quit:
-			log.Print("Closing router...")
+			log.Debug("Closing router...")
 			return
 		case op := <-r.newOperation:
 			op.Process(r.albionstate)

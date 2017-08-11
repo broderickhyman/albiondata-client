@@ -15,6 +15,8 @@ type GetGameServerByCluster struct {
 }
 
 func (op GetGameServerByCluster) Process(state *albionstate.AlbionState) {
+	log.Debug("Got GetGameServerByCluster operation...")
+
 	// By having a "." it means this zone is an instance, such as an island.
 	if strings.Contains(op.ZoneID, ".") {
 		return
@@ -22,9 +24,9 @@ func (op GetGameServerByCluster) Process(state *albionstate.AlbionState) {
 
 	zoneInt, err := strconv.Atoi(op.ZoneID)
 	if err != nil {
-		log.Printf("Unable to convert zoneID to int. This is bad. ZoneID: %v", op.ZoneID)
+		log.Errorf("Unable to convert zoneID to int. This is bad. ZoneID: %v", op.ZoneID)
 	}
 
-	log.Printf("Updating player location to %v.", zoneInt)
+	log.Debugf("Updating player location to %v.", zoneInt)
 	state.LocationId = zoneInt
 }

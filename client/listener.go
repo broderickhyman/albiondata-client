@@ -27,12 +27,12 @@ func newListener(source *gopacket.PacketSource, router *Router) *listener {
 }
 
 func (l *listener) run() {
-	log.Printf("Starting listener...")
+	log.Debug("Starting listener...")
 
 	for {
 		select {
 		case <-l.quit:
-			log.Printf("Listener shutting down...")
+			log.Debug("Listener shutting down...")
 
 			return
 		case packet := <-l.source.Packets():

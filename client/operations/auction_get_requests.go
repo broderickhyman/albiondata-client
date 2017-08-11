@@ -14,10 +14,10 @@ type AuctionGetRequestsResponse struct {
 }
 
 func (op AuctionGetRequestsResponse) Process(state *albionstate.AlbionState) {
-	log.Print("Got response to AuctionGetOffers operation...")
+	log.Debug("Got response to AuctionGetOffers operation...")
 
 	if state.LocationId == 0 {
-		log.Printf("The players location has not yet been set. Pleas transition zones so the location can be identified.")
+		log.Warn("The players location has not yet been set. Pleas transition zones so the location can be identified.")
 		return
 	}
 
@@ -28,7 +28,7 @@ func (op AuctionGetRequestsResponse) Process(state *albionstate.AlbionState) {
 
 		err := json.Unmarshal([]byte(v), order)
 		if err != nil {
-			log.Printf("Problem converting market order to internal struct: %v", err)
+			log.Errorf("Problem converting market order to internal struct: %v", err)
 		}
 
 		orders = append(orders, order)
@@ -42,7 +42,7 @@ func (op AuctionGetRequestsResponse) Process(state *albionstate.AlbionState) {
 
 		data, err := json.Marshal(ingestRequest)
 		if err != nil {
-			log.Printf("Error while marshalling payload for market orders: %v", err)
+			log.Errorf("Error while marshalling payload for market orders: %v", err)
 			return
 		}
 

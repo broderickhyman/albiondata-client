@@ -9,8 +9,8 @@ import (
 	photon "github.com/hmadison/photon_spectator"
 )
 
-func proccessOfflinePcap(path string) {
-	log.Print("Beginning offline process...")
+func processOfflinePcap(path string) {
+	log.Info("Beginning offline process...")
 
 	r := newRouter()
 	go r.run()
