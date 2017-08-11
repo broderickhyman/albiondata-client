@@ -9,43 +9,11 @@ import (
 	"github.com/regner/albionmarket-client/client/uploader"
 )
 
-type AuctionGetOffers struct {
-	Category         string   `mapstructure:"1"`
-	SubCategory      string   `mapstructure:"2"`
-	Quality          string   `mapstructure:"3"`
-	Enchantment      uint32   `mapstructure:"4"`
-	EnchantmentLevel string   `mapstructure:"8"`
-	ItemIds          []uint16 `mapstructure:"6"`
-	MaxResults       uint32   `mapstructure:"9"`
-	IsAscendingOrder bool     `mapstructure:"11"`
-}
-
-func (op AuctionGetOffers) Process(state *albionstate.AlbionState) {
-	log.Print("Got AuctionGetOffers operation...")
-}
-
-type AuctionGetOffersResponse struct {
+type AuctionGetRequestsResponse struct {
 	MarketOrders []string `mapstructure:"0"`
 }
 
-type marketOrder struct {
-	ID               int    `json:"Id"`
-	ItemID           string `json:"ItemTypeId"`
-	LocationID       int    `json:"LocationId"`
-	QualityLevel     int    `json:"QualityLevel"`
-	EnchantmentLevel int    `json:"EnchantmentLevel"`
-	Price            int    `json:"UnitPriceSilver"`
-	Amount           int    `json:"Amount"`
-	AuctionType      string `json:"AuctionType"`
-	Expires          string `json:"Expires"`
-}
-
-type marketUpload struct {
-	Orders     []*marketOrder
-	LocationID int
-}
-
-func (op AuctionGetOffersResponse) Process(state *albionstate.AlbionState) {
+func (op AuctionGetRequestsResponse) Process(state *albionstate.AlbionState) {
 	log.Print("Got response to AuctionGetOffers operation...")
 
 	if state.LocationId == 0 {

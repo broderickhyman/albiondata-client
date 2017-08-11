@@ -1,8 +1,6 @@
 package client
 
 import (
-	"log"
-
 	"github.com/mitchellh/mapstructure"
 	"github.com/regner/albionmarket-client/client/operations"
 )
@@ -41,11 +39,15 @@ func decodeResponse(params map[string]interface{}) operation {
 	}
 
 	code := params["253"].(int16)
-	log.Printf("Got response with code %v", code)
 
 	switch code {
 	case 67:
 		operation := operations.AuctionGetOffersResponse{}
+		mapstructure.Decode(params, &operation)
+
+		return operation
+	case 68:
+		operation := operations.AuctionGetRequestsResponse{}
 		mapstructure.Decode(params, &operation)
 
 		return operation
