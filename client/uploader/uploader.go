@@ -30,7 +30,7 @@ func SendToIngest(body []byte, url string) {
 		return
 	}
 
-	log.Printf("Sucesfully sent ingest request to %v", config.GlobalConfiguration.IngestUrl)
+	log.Printf("Successfully sent ingest request to %v", config.GlobalConfiguration.IngestUrl)
 
 	defer resp.Body.Close()
 }
