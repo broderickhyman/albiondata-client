@@ -6,7 +6,7 @@ import (
 	"github.com/regner/albionmarket-client/client/albionstate"
 )
 
-type RequestBuyOrders struct {
+type AuctionGetOffers struct {
 	Category         string   `mapstructure:"1"`
 	SubCategory      string   `mapstructure:"2"`
 	Quality          string   `mapstructure:"3"`
@@ -18,6 +18,6 @@ type RequestBuyOrders struct {
 	IsAscendingOrder bool     `mapstructure:"11"`
 }
 
-func (op RequestBuyOrders) Process(state *albionstate.AlbionState) {
-	log.Print("Got requestBuyOrders operation...")
+func (op AuctionGetOffers) Process(state *albionstate.AlbionState) {
+	log.Print("Got AuctionGetOffers operation...")
 }

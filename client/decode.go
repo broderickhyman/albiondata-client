@@ -13,8 +13,13 @@ func decode(params map[string]interface{}) operation {
 	code := params["253"].(int16)
 
 	switch code {
+	case 10:
+		operation := operations.GetGameServerByCluster{}
+		mapstructure.Decode(params, &operation)
+
+		return operation
 	case 67:
-		operation := operations.RequestBuyOrders{}
+		operation := operations.AuctionGetOffers{}
 		mapstructure.Decode(params, &operation)
 
 		return operation
