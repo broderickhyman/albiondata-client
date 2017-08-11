@@ -2,11 +2,11 @@ package operations
 
 import (
 	"encoding/json"
-	"log"
 
 	"github.com/regner/albionmarket-client/client/albionstate"
 	"github.com/regner/albionmarket-client/client/config"
 	"github.com/regner/albionmarket-client/client/uploader"
+	"github.com/regner/albionmarket-client/log"
 )
 
 type AuctionGetOffers struct {
@@ -21,7 +21,7 @@ type AuctionGetOffers struct {
 }
 
 func (op AuctionGetOffers) Process(state *albionstate.AlbionState) {
-	log.Print("Got AuctionGetOffers operation...")
+	log.Debug("Got AuctionGetOffers operation...")
 }
 
 type AuctionGetOffersResponse struct {

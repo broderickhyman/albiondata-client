@@ -1,7 +1,7 @@
 package client
 
 import (
-	"log"
+	"github.com/regner/albionmarket-client/log"
 	"time"
 
 	"github.com/google/gopacket/pcap"

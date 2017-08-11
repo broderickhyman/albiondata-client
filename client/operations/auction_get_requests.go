@@ -2,7 +2,7 @@ package operations
 
 import (
 	"encoding/json"
-	"log"
+	"github.com/regner/albionmarket-client/log"
 
 	"github.com/regner/albionmarket-client/client/albionstate"
 	"github.com/regner/albionmarket-client/client/config"

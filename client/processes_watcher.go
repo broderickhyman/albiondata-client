@@ -1,9 +1,10 @@
 package client
 
 import (
-	"log"
 	"runtime"
 	"time"
+
+	"github.com/regner/albionmarket-client/log"
 )
 
 type processesWatcher struct {

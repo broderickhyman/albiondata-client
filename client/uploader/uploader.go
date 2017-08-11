@@ -2,7 +2,7 @@ package uploader
 
 import (
 	"bytes"
-	"log"
+	"github.com/regner/albionmarket-client/log"
 	"net/http"
 
 	"github.com/regner/albionmarket-client/client/config"

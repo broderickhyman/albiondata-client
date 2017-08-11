@@ -1,7 +1,7 @@
 package client
 
 import (
-	"log"
+	"github.com/regner/albionmarket-client/log"
 
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"

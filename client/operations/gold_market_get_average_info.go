@@ -1,7 +1,7 @@
 package operations
 
 import (
-	"log"
+	"github.com/regner/albionmarket-client/log"
 
 	"github.com/regner/albionmarket-client/client/albionstate"
 )
