@@ -2,11 +2,11 @@ package operations
 
 import (
 	"encoding/json"
-	"github.com/regner/albionmarket-client/log"
 
 	"github.com/regner/albionmarket-client/client/albionstate"
 	"github.com/regner/albionmarket-client/client/config"
 	"github.com/regner/albionmarket-client/client/uploader"
+	"github.com/regner/albionmarket-client/log"
 )
 
 type AuctionGetRequestsResponse struct {

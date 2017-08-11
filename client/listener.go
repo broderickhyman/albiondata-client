@@ -2,12 +2,12 @@ package client
 
 import (
 	"fmt"
-	"github.com/regner/albionmarket-client/log"
 
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/pcap"
 	photon "github.com/hmadison/photon_spectator"
+	"github.com/regner/albionmarket-client/log"
 )
 
 type listener struct {

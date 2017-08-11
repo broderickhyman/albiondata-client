@@ -1,10 +1,10 @@
 package client
 
 import (
-	"github.com/regner/albionmarket-client/log"
 	"time"
 
 	"github.com/google/gopacket/pcap"
+	"github.com/regner/albionmarket-client/log"
 )
 
 type albionProcessWatcher struct {

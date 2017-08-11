@@ -2,10 +2,10 @@ package uploader
 
 import (
 	"bytes"
-	"github.com/regner/albionmarket-client/log"
 	"net/http"
 
 	"github.com/regner/albionmarket-client/client/config"
+	"github.com/regner/albionmarket-client/log"
 )
 
 func SendToIngest(body []byte, url string) {
