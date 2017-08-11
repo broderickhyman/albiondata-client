@@ -4,11 +4,18 @@
 Distributed client for the [Albion Market](https://albion-market.com/)
 website.
 
-> A quick note on the legality of this application and if it
-ciolates the Terms and Conditions for Albion Online: The Technical
-Lead for Sanbox Interactive confirmed that looking at network
-packets, but not touching is fine. He confirmed this publicly on
-the forums. You can find the post here: https://forum.albiononline.com/index.php/Thread/51604-Is-it-allowed-to-scan-your-internet-trafic-and-pick-up-logs/?postID=512670#post512670
+A quick note on the legality of this application and if it
+violates the Terms and Conditions for Albion Online. Here is
+the response from SBI when asked if we are allowed to do
+monitor network packets relating to Albion Online:
+> Our position is quite simple. As long as you just look and
+analyze we are ok with it. The moment you modify or manipulate
+something or somehow interfere with our services we will react
+(e.g. perma-ban, take legal action, whatever).
+
+~ MadDave - Technical Lead for Albion Online
+
+Source: https://forum.albiononline.com/index.php/Thread/51604-Is-it-allowed-to-scan-your-internet-trafic-and-pick-up-logs/?postID=512670#post512670
 
 This client monitors local network traffic, identifies UDP packets
 that contain market data for Albion Online, and ships the raw JSON
