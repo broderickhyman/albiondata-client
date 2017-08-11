@@ -10,7 +10,7 @@ type GoldMarketGetAverageInfo struct {
 }
 
 func (op GoldMarketGetAverageInfo) Process(state *albionstate.AlbionState) {
-	log.Print("Got GoldMarketGetAverageInfo operation...")
+	log.Debug("Got GoldMarketGetAverageInfo operation...")
 }
 
 type GoldMarketGetAverageInfoResponse struct {
@@ -24,5 +24,5 @@ type goldInfoUpload struct {
 }
 
 func (op GoldMarketGetAverageInfoResponse) Process(state *albionstate.AlbionState) {
-	log.Print("Got response to GoldMarketGetAverageInfo operation...")
+	log.Debug("Got response to GoldMarketGetAverageInfo operation...")
 }

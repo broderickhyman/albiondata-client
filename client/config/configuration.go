@@ -11,5 +11,5 @@ type Config struct {
 }
 
 var GlobalConfiguration = &Config{
-	LogLevel: "ERROR",
+	LogLevel: "INFO",
 }

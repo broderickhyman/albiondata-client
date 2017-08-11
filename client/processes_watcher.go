@@ -19,7 +19,7 @@ func newProcessWatcher() *processesWatcher {
 }
 
 func (pw *processesWatcher) run() {
-	log.Print("Watching processes for Albion to start...")
+	log.Debug("Watching processes for Albion to start...")
 
 	for {
 		var process_string string

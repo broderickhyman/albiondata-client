@@ -13,7 +13,7 @@ func SendToIngest(body []byte, url string) {
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
 	if err != nil {
-		log.Printf("Error while create new reqest: %v", err)
+		log.Errorf("Error while create new request: %v", err)
 		return
 	}
 
@@ -21,16 +21,16 @@ func SendToIngest(body []byte, url string) {
 
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Printf("Error while sending ingest with data: %v", err)
+		log.Errorf("Error while sending ingest with data: %v", err)
 		return
 	}
 
 	if resp.StatusCode != 200 {
-		log.Printf("Got bad response code: %v", resp.StatusCode)
+		log.Errorf("Got bad response code: %v", resp.StatusCode)
 		return
 	}
 
-	log.Printf("Successfully sent ingest request to %v", config.GlobalConfiguration.IngestUrl)
+	log.Infof("Successfully sent ingest request to %v", config.GlobalConfiguration.IngestUrl)
 
 	defer resp.Body.Close()
 }
