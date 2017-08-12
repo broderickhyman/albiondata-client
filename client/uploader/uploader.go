@@ -9,9 +9,17 @@ import (
 )
 
 func SendToIngest(body []byte, url string) {
+	if config.GlobalConfiguration.DisableUpload {
+		return
+	}
+
 	client := &http.Client{}
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
+	log.Debug(url)
+	fullUrl := config.GlobalConfiguration.IngestBaseUrl + url
+	log.Debug(fullUrl)
+
+	req, err := http.NewRequest("POST", fullUrl, bytes.NewBuffer(body))
 	if err != nil {
 		log.Errorf("Error while create new request: %v", err)
 		return
@@ -30,7 +38,7 @@ func SendToIngest(body []byte, url string) {
 		return
 	}
 
-	log.Infof("Successfully sent ingest request to %v", config.GlobalConfiguration.IngestUrl)
+	log.Infof("Successfully sent ingest request to %v", config.GlobalConfiguration.IngestBaseUrl)
 
 	defer resp.Body.Close()
 }

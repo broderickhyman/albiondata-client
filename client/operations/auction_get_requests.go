@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 
 	"github.com/regner/albionmarket-client/client/albionstate"
-	"github.com/regner/albionmarket-client/client/config"
 	"github.com/regner/albionmarket-client/client/uploader"
 	"github.com/regner/albionmarket-client/log"
 )
@@ -46,8 +45,6 @@ func (op AuctionGetRequestsResponse) Process(state *albionstate.AlbionState) {
 			return
 		}
 
-		if !config.GlobalConfiguration.DisableUpload {
-			uploader.SendToIngest([]byte(string(data)), config.GlobalConfiguration.IngestUrl)
-		}
+		uploader.SendToIngest([]byte(string(data)), "marketorders")
 	}
 }

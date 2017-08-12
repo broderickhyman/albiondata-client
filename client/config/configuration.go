@@ -1,7 +1,7 @@
 package config
 
 type Config struct {
-	IngestUrl     string
+	IngestBaseUrl string
 	DisableUpload bool
 	SaveLocally   bool
 	OfflinePath   string
