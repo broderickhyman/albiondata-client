@@ -9,3 +9,6 @@ fmt:
 
 validate-fmt:
 	scripts/validate-fmt.sh
+
+build-windows:
+	scripts/build-windows.sh
