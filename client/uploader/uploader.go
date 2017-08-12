@@ -15,9 +15,7 @@ func SendToIngest(body []byte, url string) {
 
 	client := &http.Client{}
 
-	log.Debug(url)
 	fullUrl := config.GlobalConfiguration.IngestBaseUrl + url
-	log.Debug(fullUrl)
 
 	req, err := http.NewRequest("POST", fullUrl, bytes.NewBuffer(body))
 	if err != nil {
