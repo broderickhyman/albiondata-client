@@ -2,4 +2,4 @@
 
 set -e
 
-go run cmd/albionmarket-client/albionmarket-client.go
+go run -ldflags="-w -s -X main.version=dev" cmd/albionmarket-client/albionmarket-client.go

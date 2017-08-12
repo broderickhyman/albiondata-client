@@ -3,12 +3,16 @@ package main
 import (
 	"flag"
 	"strings"
+	"time"
 
 	"github.com/Sirupsen/logrus"
+	"github.com/pcdummy/go-githubupdate/updater"
 	"github.com/regner/albionmarket-client/client"
 	"github.com/regner/albionmarket-client/client/config"
 	"github.com/regner/albionmarket-client/log"
 )
+
+var version string
 
 func init() {
 	flag.StringVar(
@@ -63,6 +67,43 @@ func main() {
 
 	if config.GlobalConfiguration.OfflinePath != "" {
 		config.GlobalConfiguration.Offline = true
+	}
+
+	// Updater
+	if version != "" && !strings.Contains(version, "dev") {
+		u := updater.NewUpdater(
+			version,
+			"regner",
+			"albionmarket-client",
+			"update-",
+		)
+
+		go func() {
+			for {
+				available, err := u.CheckUpdateAvailable()
+				if err != nil {
+					log.Errorf("%v", err)
+					return
+				}
+
+				log.Infof("A new update %s is available", available)
+				if available != "" {
+					err := u.Update()
+					if err != nil {
+						log.Errorf("%v", err)
+						return
+					}
+
+					log.Infof(
+						"The update %s has been installed, please restart albionmarket-client.",
+						available,
+					)
+				}
+
+				// Check again in 2 hours
+				time.Sleep(time.Hour * 2)
+			}
+		}()
 	}
 
 	c := client.NewClient()

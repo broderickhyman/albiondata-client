@@ -1,5 +1,5 @@
-hash: 6665fb51ab93b9eb827a4607c266c9d963c93e511c6aa02efb62a348f0f6fac1
-updated: 2017-08-10T22:09:25.7573853-07:00
+hash: 650ea2727592cb83308f56973f526e8cf012a8b59f89d455b1fa9feddaf0675c
+updated: 2017-08-12T23:08:58.457531541+02:00
 imports:
 - name: github.com/google/gopacket
   version: 8af772c0bcc826f671fd7c133917fec9686d720d
@@ -12,6 +12,10 @@ imports:
   version: 4fdf99ab29366514c69ccccddab5dc58b8d84062
 - name: github.com/mitchellh/mapstructure
   version: d0303fe809921458f417bcf828397a65db30a7e4
+- name: github.com/pcdummy/go-githubupdate
+  version: 254d343bc0ec7869462798ee14740dc365ddadb1
+  subpackages:
+  - updater
 - name: github.com/shirou/gopsutil
   version: d573c8e3f1c5337585b0e285214e80df7429d8b5
   repo: https://github.com/gradiuscypher/gopsutil.git
