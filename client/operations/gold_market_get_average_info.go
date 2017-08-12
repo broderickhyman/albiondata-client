@@ -1,9 +1,11 @@
 package operations
 
 import (
-	"github.com/regner/albionmarket-client/log"
+	"encoding/json"
 
 	"github.com/regner/albionmarket-client/client/albionstate"
+	"github.com/regner/albionmarket-client/client/uploader"
+	"github.com/regner/albionmarket-client/log"
 )
 
 type GoldMarketGetAverageInfo struct {
@@ -25,4 +27,12 @@ type goldInfoUpload struct {
 
 func (op GoldMarketGetAverageInfoResponse) Process(state *albionstate.AlbionState) {
 	log.Debug("Got response to GoldMarketGetAverageInfo operation...")
+
+	data, err := json.Marshal(op)
+	if err != nil {
+		log.Errorf("Error while marshalling payload for gold prices: %v", err)
+		return
+	}
+
+	uploader.SendToIngest([]byte(string(data)), "goldprices")
 }

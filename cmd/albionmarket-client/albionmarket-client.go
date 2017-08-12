@@ -12,10 +12,10 @@ import (
 
 func init() {
 	flag.StringVar(
-		&config.GlobalConfiguration.IngestUrl,
+		&config.GlobalConfiguration.IngestBaseUrl,
 		"i",
 		"https://albion-market.com/api/v1/ingest/",
-		"URL to send market data to.",
+		"Base URL to send data to.",
 	)
 
 	flag.BoolVar(
