@@ -1,21 +1,20 @@
-package uploader
+package client
 
 import (
 	"bytes"
 	"net/http"
 
-	"github.com/regner/albionmarket-client/client/config"
 	"github.com/regner/albionmarket-client/log"
 )
 
-func SendToIngest(body []byte, url string) {
-	if config.GlobalConfiguration.DisableUpload {
+func uploaderSendToIngest(body []byte, url string) {
+	if ConfigGlobal.DisableUpload {
 		return
 	}
 
 	client := &http.Client{}
 
-	fullUrl := config.GlobalConfiguration.IngestBaseUrl + url
+	fullUrl := ConfigGlobal.IngestBaseUrl + url
 
 	req, err := http.NewRequest("POST", fullUrl, bytes.NewBuffer(body))
 	if err != nil {
@@ -36,7 +35,7 @@ func SendToIngest(body []byte, url string) {
 		return
 	}
 
-	log.Infof("Successfully sent ingest request to %v", config.GlobalConfiguration.IngestBaseUrl)
+	log.Infof("Successfully sent ingest request to %v", ConfigGlobal.IngestBaseUrl)
 
 	defer resp.Body.Close()
 }

@@ -1,14 +1,12 @@
-package operations
+package client
 
 import (
 	"encoding/json"
 
-	"github.com/regner/albionmarket-client/client/albionstate"
-	"github.com/regner/albionmarket-client/client/uploader"
 	"github.com/regner/albionmarket-client/log"
 )
 
-type AuctionGetOffers struct {
+type operationAuctionGetOffers struct {
 	Category         string   `mapstructure:"1"`
 	SubCategory      string   `mapstructure:"2"`
 	Quality          string   `mapstructure:"3"`
@@ -19,11 +17,11 @@ type AuctionGetOffers struct {
 	IsAscendingOrder bool     `mapstructure:"11"`
 }
 
-func (op AuctionGetOffers) Process(state *albionstate.AlbionState) {
+func (op operationAuctionGetOffers) Process(state *albionState) {
 	log.Debug("Got AuctionGetOffers operation...")
 }
 
-type AuctionGetOffersResponse struct {
+type operationAuctionGetOffersResponse struct {
 	MarketOrders []string `mapstructure:"0"`
 }
 
@@ -44,7 +42,7 @@ type marketUpload struct {
 	LocationID int
 }
 
-func (op AuctionGetOffersResponse) Process(state *albionstate.AlbionState) {
+func (op operationAuctionGetOffersResponse) Process(state *albionState) {
 	log.Debug("Got response to AuctionGetOffers operation...")
 
 	if state.LocationId == 0 {
@@ -77,6 +75,6 @@ func (op AuctionGetOffersResponse) Process(state *albionstate.AlbionState) {
 			return
 		}
 
-		uploader.SendToIngest([]byte(string(data)), "marketorders")
+		uploaderSendToIngest([]byte(string(data)), "marketorders")
 	}
 }

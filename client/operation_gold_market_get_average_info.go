@@ -1,21 +1,19 @@
-package operations
+package client
 
 import (
 	"encoding/json"
 
-	"github.com/regner/albionmarket-client/client/albionstate"
-	"github.com/regner/albionmarket-client/client/uploader"
 	"github.com/regner/albionmarket-client/log"
 )
 
-type GoldMarketGetAverageInfo struct {
+type operationGoldMarketGetAverageInfo struct {
 }
 
-func (op GoldMarketGetAverageInfo) Process(state *albionstate.AlbionState) {
+func (op operationGoldMarketGetAverageInfo) Process(state *albionState) {
 	log.Debug("Got GoldMarketGetAverageInfo operation...")
 }
 
-type GoldMarketGetAverageInfoResponse struct {
+type operationGoldMarketGetAverageInfoResponse struct {
 	GoldPrices []int `mapstructure:"0"`
 	TimeStamps []int `mapstructure:"1"`
 }
@@ -25,7 +23,7 @@ type goldInfoUpload struct {
 	TimeStamps []int
 }
 
-func (op GoldMarketGetAverageInfoResponse) Process(state *albionstate.AlbionState) {
+func (op operationGoldMarketGetAverageInfoResponse) Process(state *albionState) {
 	log.Debug("Got response to GoldMarketGetAverageInfo operation...")
 
 	data, err := json.Marshal(op)
@@ -34,5 +32,5 @@ func (op GoldMarketGetAverageInfoResponse) Process(state *albionstate.AlbionStat
 		return
 	}
 
-	uploader.SendToIngest([]byte(string(data)), "goldprices")
+	uploaderSendToIngest([]byte(string(data)), "goldprices")
 }

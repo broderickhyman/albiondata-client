@@ -1,6 +1,6 @@
-package config
+package client
 
-type Config struct {
+type config struct {
 	IngestBaseUrl string
 	DisableUpload bool
 	SaveLocally   bool
@@ -11,6 +11,6 @@ type Config struct {
 	VersionDump   bool
 }
 
-var GlobalConfiguration = &Config{
+var ConfigGlobal = &config{
 	LogLevel: "INFO",
 }
