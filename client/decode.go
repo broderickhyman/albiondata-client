@@ -2,7 +2,6 @@ package client
 
 import (
 	"github.com/mitchellh/mapstructure"
-	"github.com/regner/albionmarket-client/client/operations"
 )
 
 func decodeRequest(params map[string]interface{}) operation {
@@ -14,17 +13,17 @@ func decodeRequest(params map[string]interface{}) operation {
 
 	switch code {
 	case 10:
-		operation := operations.GetGameServerByCluster{}
+		operation := operationGetGameServerByCluster{}
 		mapstructure.Decode(params, &operation)
 
 		return operation
 	case 67:
-		operation := operations.AuctionGetOffers{}
+		operation := operationAuctionGetOffers{}
 		mapstructure.Decode(params, &operation)
 
 		return operation
 	case 217:
-		operation := operations.GoldMarketGetAverageInfo{}
+		operation := operationGoldMarketGetAverageInfo{}
 		mapstructure.Decode(params, &operation)
 
 		return operation
@@ -42,17 +41,17 @@ func decodeResponse(params map[string]interface{}) operation {
 
 	switch code {
 	case 67:
-		operation := operations.AuctionGetOffersResponse{}
+		operation := operationAuctionGetOffersResponse{}
 		mapstructure.Decode(params, &operation)
 
 		return operation
 	case 68:
-		operation := operations.AuctionGetRequestsResponse{}
+		operation := operationAuctionGetRequestsResponse{}
 		mapstructure.Decode(params, &operation)
 
 		return operation
 	case 217:
-		operation := operations.GoldMarketGetAverageInfoResponse{}
+		operation := operationGoldMarketGetAverageInfoResponse{}
 		mapstructure.Decode(params, &operation)
 
 		return operation

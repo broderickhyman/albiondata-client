@@ -1,20 +1,18 @@
-package operations
+package client
 
 import (
 	"strconv"
 	"strings"
 
 	"github.com/regner/albionmarket-client/log"
-
-	"github.com/regner/albionmarket-client/client/albionstate"
 )
 
-type GetGameServerByCluster struct {
+type operationGetGameServerByCluster struct {
 	ZoneID               string `mapstructure:"0"`
 	NrZoneChangesSession int32  `mapstructure:"255"`
 }
 
-func (op GetGameServerByCluster) Process(state *albionstate.AlbionState) {
+func (op operationGetGameServerByCluster) Process(state *albionState) {
 	log.Debug("Got GetGameServerByCluster operation...")
 
 	// By having a "." it means this zone is an instance, such as an island.

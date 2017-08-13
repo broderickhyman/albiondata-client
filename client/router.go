@@ -2,19 +2,17 @@ package client
 
 import (
 	"github.com/regner/albionmarket-client/log"
-
-	"github.com/regner/albionmarket-client/client/albionstate"
 )
 
 type Router struct {
-	albionstate  *albionstate.AlbionState
+	albionstate  *albionState
 	newOperation chan operation
 	quit         chan bool
 }
 
 func newRouter() *Router {
 	return &Router{
-		albionstate:  &albionstate.AlbionState{},
+		albionstate:  &albionState{},
 		newOperation: make(chan operation, 1000),
 		quit:         make(chan bool),
 	}
