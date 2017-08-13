@@ -40,19 +40,31 @@ func init() {
 		&config.GlobalConfiguration.OfflinePath,
 		"o",
 		"",
-		"Parses a local file instead of checking albion ports",
+		"Parses a local file instead of checking albion ports.",
 	)
 
 	flag.BoolVar(
 		&config.GlobalConfiguration.Debug,
 		"debug",
 		false,
-		"Enable debug logging",
+		"Enable debug logging.",
+	)
+
+	flag.BoolVar(
+		&config.GlobalConfiguration.VersionDump,
+		"version",
+		false,
+		"Print the current version.",
 	)
 }
 
 func main() {
 	flag.Parse()
+
+	if config.GlobalConfiguration.VersionDump {
+		log.Infof("albionmarket-client version: %v", version)
+		return
+	}
 
 	if config.GlobalConfiguration.Debug {
 		config.GlobalConfiguration.LogLevel = "DEBUG"

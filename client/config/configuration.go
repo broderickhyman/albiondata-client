@@ -8,6 +8,7 @@ type Config struct {
 	Offline       bool
 	Debug         bool
 	LogLevel      string
+	VersionDump   bool
 }
 
 var GlobalConfiguration = &Config{
