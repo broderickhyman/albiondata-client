@@ -1,30 +1,40 @@
 # Building the Client in Windows
-These instructions are specific to Windows 10 but should work in earlier versions with a minor bit of tweaking.
+These instructions are specific to Windows 10 but should work in
+earlier versions with a minor bit of tweaking.
 
 ## Installing Git
 [Git Download Link](https://git-scm.com/download/win)
 
-Download and install the Git software from the Download Link. Choose to use Git in Git Bash only.
+Download and install the Git software from the Download Link.
+Choose to use Git in Git Bash only.
 
 ## Installing and Configuring Go
 ### Downloading and Installing
 [Go Download Link](https://golang.org/doc/install#windows)
 
-Grab the Microsoft Windows installer from the Download Link page. Install via the MSI. After installation, open up Git Bash and run `go version` to ensure a proper response.
+Grab the Microsoft Windows installer from the Download Link page.
+Install via the MSI. After installation, open up Git Bash and run
+`go version` to ensure a proper response.
 
 ### Testing Go
 [Go Getting Started](https://golang.org/doc/install)
 
-Follow the guide on this page for testing the install. In Windows 10, I had to create the `\go` directory in `%userprofile%\go`. Other than that, the instructions should be followed completely. Once that works, we're ready to move on.
+Follow the guide on this page for testing the install. In Windows
+10, I had to create the `\go` directory in `%userprofile%\go`.
+Other than that, the instructions should be followed completely.
+Once that works, we're ready to move on.
 
 ## Installing Glide
 Glide will help us pull in all of the dependencies for the project.
 
 [Glide Download](https://github.com/Masterminds/glide/releases)
 
-In the Download link above, find the most recent 64 bit release for Windows. Extract the ZIP file and copy the glide.exe to your Go executable path. Typically that is `C:\Go\bin`
+In the Download link above, find the most recent 64 bit release for
+Windows. Extract the ZIP file and copy the glide.exe to your Go
+executable path. Typically that is `C:\Go\bin`
 
-Test Glide in Git Bash by typing `glide --version`. You should be presented with a version string.
+Test Glide in Git Bash by typing `glide --version`. You should be
+presented with a version string.
 
 ## Supporting Software
 
@@ -34,7 +44,9 @@ Used for building required libraries
 #### Download and Install
 [Download](https://sourceforge.net/projects/mingw-w64/files/latest/download)
 
-**NOTE**: Ensure that when installing you select "Architecture: x86_64". If you do not, you will get errors when trying to compile software during the `go get` steps.
+**NOTE**: Ensure that when installing you select "Architecture: x86_64".
+If you do not, you will get errors when trying to compile software during
+the later steps.
 
 #### Add to Windows PATH
 * Right click Start and select System
@@ -50,7 +62,8 @@ Used for building required libraries
 
 Download the WinPcap developer files. Extract the file contents to `C:\WpdPack`
 
-**NOTE**: Ensure there is not a secondary WpdPack folder nested within `C:\WpdPack` or your `go get` command will fail with a `pcap.h` warning.
+**NOTE**: Ensure there is not a secondary WpdPack folder nested within
+`C:\WpdPack` or your `go get` command will fail with a `pcap.h` warning.
 
 ## Building the Client
 
@@ -82,7 +95,8 @@ glide install
 go build
 ```
 
-You should now be the proud owner of a new `albionmarket-client.exe` executable! To fully test this, execute the command in Git Bash:
+You should now be the proud owner of a new `albionmarket-client.exe` executable!
+To fully test this, execute the command in Git Bash:
 
 ```
 $ ./albionmarket-client.exe --help

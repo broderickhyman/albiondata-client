@@ -15,9 +15,11 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get install -y build-essential mingw-w64
-      - run: curl https://glide.sh/get | sh
-      - run: glide install
+      - run: go get -u github.com/golang/dep/cmd/dep
+      - run: dep ensure
       - run: make build-windows
+      - store_artifacts:
+          path: /go/src/github.com/regner/albionmarket-client/albionmarket-client.exe
       - persist_to_workspace:
           root: /go/src/github.com/regner/albionmarket-client
           paths:

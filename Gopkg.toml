@@ -1,0 +1,27 @@
+[[constraint]]
+  name = "github.com/Sirupsen/logrus"
+  version = "1.0.2"
+
+[[constraint]]
+  name = "github.com/google/gopacket"
+
+[[constraint]]
+  name = "github.com/hmadison/photon_spectator"
+  version = "0.1.0-pre.0"
+
+[[constraint]]
+  name = "github.com/mitchellh/go-ps"
+
+[[constraint]]
+  name = "github.com/mitchellh/mapstructure"
+
+[[constraint]]
+  name = "github.com/pcdummy/go-githubupdate"
+  version = "0.0.3"
+
+[[constraint]]
+  name = "github.com/shirou/gopsutil"
+  source = "https://github.com/gradiuscypher/gopsutil.git"
+
+[[constraint]]
+  name = "golang.org/x/tools"

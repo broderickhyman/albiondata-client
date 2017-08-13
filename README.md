@@ -33,10 +33,10 @@ JSON it does not require updating the distributed client.
 # Dev Setup
 
 ### Mac/Linux Setup
-- Install [Glide](https://github.com/Masterminds/glide)
-  - Linux or Mac: `curl https://glide.sh/get | sh`
-  - Mac with Homebrew: `brew install glide`
-- Install dependencies using `glide install`
+- Install [Dep](https://github.com/golang/dep)
+  - Any OS: `go get -u github.com/golang/dep/cmd/dep`
+  - Mac with Homebrew: `brew install dep`
+- Install dependencies using `dep ensure`
 
 ### Windows Setup
 [Windows Setup Guide](building_in_windows.md)
