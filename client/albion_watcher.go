@@ -1,6 +1,7 @@
 package client
 
 import (
+	"strings"
 	"time"
 
 	"github.com/google/gopacket/pcap"
@@ -28,7 +29,11 @@ func newAlbionProcessWatcher(pid int) *albionProcessWatcher {
 
 func (apw *albionProcessWatcher) run() {
 	log.Printf("Watching Albion process with PID \"%d\"...", apw.pid)
-	apw.devices = apw.getDevices()
+	if ConfigGlobal.ListenDevices != "" {
+		apw.devices = strings.Split(ConfigGlobal.ListenDevices, ",")
+	} else {
+		apw.devices = apw.getDevices()
+	}
 	go apw.r.run()
 
 	for {
