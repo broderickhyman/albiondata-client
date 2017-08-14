@@ -62,9 +62,8 @@ func (apw *albionProcessWatcher) updateListeners() {
 		devices := getDevices()
 
 		for _, device := range devices {
-			s := createOnlineSource(device.Name, port)
-			l := newListener(s, apw.r)
-			go l.run()
+			l := newListener(apw.r)
+			go l.startOnline(device.Name, port)
 
 			apw.listeners[port] = append(apw.listeners[port], l)
 		}
