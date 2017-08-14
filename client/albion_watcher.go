@@ -10,20 +10,19 @@ import (
 
 type albionProcessWatcher struct {
 	pid       int
-	listeners map[string]*listener
+	known     []int
+	devices   []string
+	listeners map[int][]*listener
 	quit      chan bool
 	r         *Router
-	devices   []string
-	lastPorts []int
 }
 
 func newAlbionProcessWatcher(pid int) *albionProcessWatcher {
 	return &albionProcessWatcher{
 		pid:       pid,
-		listeners: make(map[string]*listener),
+		listeners: make(map[int][]*listener),
 		quit:      make(chan bool),
 		r:         newRouter(),
-		lastPorts: []int{},
 	}
 }
 
@@ -51,51 +50,48 @@ func (apw *albionProcessWatcher) run() {
 func (apw *albionProcessWatcher) closeWatcher() {
 	log.Printf("Albion watcher closed for PID \"%d\"...", apw.pid)
 
-	for _, l := range apw.listeners {
-		l.stop()
-	}
+	for port := range apw.listeners {
+		for _, l := range apw.listeners[port] {
+			l.quit <- true
+		}
 
-	for _, device := range apw.devices {
-		delete(apw.listeners, device)
+		delete(apw.listeners, port)
 	}
 
 	apw.r.quit <- true
 }
 
 func (apw *albionProcessWatcher) updateListeners() {
-	ports := getProcessPorts(apw.pid)
-
-	myPorts := []int{}
-	for _, p := range ports {
-		if p > 0 {
-			myPorts = append(myPorts, p)
+	current := getProcessPorts(apw.pid)
+	filtered := []int{}
+	for _, port := range current {
+		if port == 0 {
+			continue
 		}
+
+		filtered = append(filtered, port)
 	}
 
-	// No need to change ports if they didn't change
-	added, removed := diffIntSets(myPorts, apw.lastPorts)
-	if len(added) == 0 && len(removed) == 0 {
-		return
-	}
-	apw.lastPorts = myPorts
+	added, removed := diffIntSets(apw.known, filtered)
 
-	for _, device := range apw.devices {
-		if _, ok := apw.listeners[device]; !ok {
+	for _, port := range added {
+		for _, device := range apw.devices {
 			l := newListener(apw.r)
-			l.createOnline(device)
+			go l.startOnline(device, port)
 
-			apw.listeners[device] = l
+			apw.listeners[port] = append(apw.listeners[port], l)
 		}
-
-		l, _ := apw.listeners[device]
-
-		if len(myPorts) > 0 {
-			go l.setPortsAndRun(device, myPorts)
-		} else {
-			l.stop()
-		}
-
 	}
+
+	for _, port := range removed {
+		for _, l := range apw.listeners[port] {
+			l.quit <- true
+		}
+
+		delete(apw.listeners, port)
+	}
+
+	apw.known = current
 }
 
 func (apw *albionProcessWatcher) getDevices() []string {
@@ -127,10 +123,10 @@ func (apw *albionProcessWatcher) getDevices() []string {
 		log.Fatal("Unable to find network device.")
 	}
 
-	s := []string{}
+	strDevices := []string{}
 	for _, dev := range devices {
-		s = append(s, dev.Name)
+		strDevices = append(strDevices, dev.Name)
 	}
 
-	return s
+	return strDevices
 }
