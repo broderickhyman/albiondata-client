@@ -85,7 +85,7 @@ func getDevices() []pcap.Interface {
 
 	// Filter out devices that we aren't able to listen to.
 	// they bring error's like "NFLOG link-layer type filtering not implemented"
-	blacklisted := []string{"nflog", "nfqueue", "usbmon1", "usbmon2", "usbmon3", "usbmon4"}
+	blacklisted := []string{"nflog", "nfqueue", "usbmon1", "usbmon2", "usbmon3", "usbmon4", "oracle"}
 
 	for _, bl := range blacklisted {
 		found := false
