@@ -11,28 +11,64 @@ import (
 )
 
 type listener struct {
-	source    *gopacket.PacketSource
-	fragments *photon.FragmentBuffer
-	quit      chan bool
-	router    *Router
+	handle      *pcap.Handle
+	source      *gopacket.PacketSource
+	displayName string
+	fragments   *photon.FragmentBuffer
+	quit        chan bool
+	router      *Router
 }
 
-func newListener(source *gopacket.PacketSource, router *Router) *listener {
+func newListener(router *Router) *listener {
 	return &listener{
-		source:    source,
 		fragments: photon.NewFragmentBuffer(),
 		quit:      make(chan bool),
 		router:    router,
 	}
 }
 
+func (l *listener) startOnline(device string, port int) {
+	handle, err := pcap.OpenLive(device, 2048, false, pcap.BlockForever)
+	if err != nil {
+		log.Fatal(err)
+	}
+	l.handle = handle
+
+	err = l.handle.SetBPFFilter(fmt.Sprintf("tcp port %d || udp port %d", port, port))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	layers.RegisterUDPPortLayerType(layers.UDPPort(port), photon.PhotonLayerType)
+	layers.RegisterTCPPortLayerType(layers.TCPPort(port), photon.PhotonLayerType)
+	l.source = gopacket.NewPacketSource(l.handle, l.handle.LinkType())
+
+	l.displayName = fmt.Sprintf("online: %s:%d", device, port)
+	l.run()
+}
+
+func (l *listener) startOffline(path string) {
+	handle, err := pcap.OpenOffline(path)
+	if err != err {
+		log.Fatalf("Problem creating offline source. Error: %v", err)
+	}
+	l.handle = handle
+
+	layers.RegisterUDPPortLayerType(5056, photon.PhotonLayerType)
+	l.source = gopacket.NewPacketSource(handle, handle.LinkType())
+
+	l.displayName = fmt.Sprintf("offline: %s", path)
+	l.run()
+}
+
 func (l *listener) run() {
-	log.Debug("Starting listener...")
+	log.Debugf("Starting listener (%s)...", l.displayName)
 
 	for {
 		select {
 		case <-l.quit:
-			log.Debug("Listener shutting down...")
+			log.Debugf("Listener shutting down (%s)...", l.displayName)
+			l.handle.Close()
 
 			return
 		case packet := <-l.source.Packets():
@@ -85,20 +121,4 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 			l.router.newOperation <- operation
 		}
 	}
-}
-
-func createOnlineSource(device string, port int) *gopacket.PacketSource {
-	handle, err := pcap.OpenLive(device, 2048, false, pcap.BlockForever)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = handle.SetBPFFilter(fmt.Sprintf("tcp port %d || udp port %d", port, port))
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	layers.RegisterUDPPortLayerType(layers.UDPPort(port), photon.PhotonLayerType)
-	layers.RegisterTCPPortLayerType(layers.TCPPort(port), photon.PhotonLayerType)
-	return gopacket.NewPacketSource(handle, handle.LinkType())
 }
