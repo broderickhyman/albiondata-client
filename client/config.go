@@ -9,6 +9,7 @@ type config struct {
 	Debug         bool
 	LogLevel      string
 	VersionDump   bool
+	ListenDevices string
 }
 
 var ConfigGlobal = &config{

@@ -55,6 +55,13 @@ func init() {
 		false,
 		"Print the current version.",
 	)
+
+	flag.StringVar(
+		&client.ConfigGlobal.ListenDevices,
+		"l",
+		"",
+		"Listen on this comma seperated devices instead of all available",
+	)
 }
 
 func main() {
