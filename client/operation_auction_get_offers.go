@@ -17,7 +17,7 @@ type operationAuctionGetOffers struct {
 	IsAscendingOrder bool     `mapstructure:"11"`
 }
 
-func (op operationAuctionGetOffers) Process(state *albionState) {
+func (op operationAuctionGetOffers) Process(state *albionState, uploader *uploader) {
 	log.Debug("Got AuctionGetOffers operation...")
 }
 
@@ -42,7 +42,7 @@ type marketUpload struct {
 	LocationID int
 }
 
-func (op operationAuctionGetOffersResponse) Process(state *albionState) {
+func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader *uploader) {
 	log.Debug("Got response to AuctionGetOffers operation...")
 
 	if state.LocationId == 0 {
@@ -80,5 +80,5 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState) {
 		return
 	}
 
-	uploaderSendToIngest([]byte(string(data)), "marketorders")
+	uploader.sendToIngest([]byte(string(data)), "marketorders")
 }
