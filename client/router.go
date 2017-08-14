@@ -14,7 +14,7 @@ func newRouter() *Router {
 	return &Router{
 		albionstate:  &albionState{},
 		newOperation: make(chan operation, 1000),
-		quit:         make(chan bool),
+		quit:         make(chan bool, 1),
 	}
 }
 
@@ -25,7 +25,7 @@ func (r *Router) run() {
 			log.Debug("Closing router...")
 			return
 		case op := <-r.newOperation:
-			op.Process(r.albionstate)
+			go op.Process(r.albionstate)
 		}
 	}
 }

@@ -14,7 +14,7 @@ func (op operationAuctionGetRequestsResponse) Process(state *albionState) {
 	log.Debug("Got response to AuctionGetOffers operation...")
 
 	if state.LocationId == 0 {
-		log.Warn("The players location has not yet been set. Pleas transition zones so the location can be identified.")
+		log.Warn("The players location has not yet been set. Please transition zones so the location can be identified.")
 		return
 	}
 
@@ -31,18 +31,22 @@ func (op operationAuctionGetRequestsResponse) Process(state *albionState) {
 		orders = append(orders, order)
 	}
 
-	if len(orders) > 0 {
-		ingestRequest := marketUpload{
-			Orders:     orders,
-			LocationID: state.LocationId,
-		}
-
-		data, err := json.Marshal(ingestRequest)
-		if err != nil {
-			log.Errorf("Error while marshalling payload for market orders: %v", err)
-			return
-		}
-
-		uploaderSendToIngest([]byte(string(data)), "marketorders")
+	if len(orders) < 1 {
+		return
 	}
+
+	log.Debugf("Sending %d market requests to ingest", len(orders))
+
+	ingestRequest := marketUpload{
+		Orders:     orders,
+		LocationID: state.LocationId,
+	}
+
+	data, err := json.Marshal(ingestRequest)
+	if err != nil {
+		log.Errorf("Error while marshalling payload for market orders: %v", err)
+		return
+	}
+
+	uploaderSendToIngest([]byte(string(data)), "marketorders")
 }
