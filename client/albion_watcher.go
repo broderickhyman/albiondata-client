@@ -9,23 +9,26 @@ import (
 
 type albionProcessWatcher struct {
 	pid       int
-	known     []int
-	listeners map[int][]*listener
+	listeners map[string]*listener
 	quit      chan bool
 	r         *Router
+	devices   []string
+	lastPorts []int
 }
 
 func newAlbionProcessWatcher(pid int) *albionProcessWatcher {
 	return &albionProcessWatcher{
 		pid:       pid,
-		listeners: make(map[int][]*listener),
+		listeners: make(map[string]*listener),
 		quit:      make(chan bool),
 		r:         newRouter(),
+		lastPorts: []int{},
 	}
 }
 
 func (apw *albionProcessWatcher) run() {
 	log.Printf("Watching Albion process with PID \"%d\"...", apw.pid)
+	apw.devices = apw.getDevices()
 	go apw.r.run()
 
 	for {
@@ -43,44 +46,54 @@ func (apw *albionProcessWatcher) run() {
 func (apw *albionProcessWatcher) closeWatcher() {
 	log.Printf("Albion watcher closed for PID \"%d\"...", apw.pid)
 
-	for port := range apw.listeners {
-		for _, l := range apw.listeners[port] {
-			l.quit <- true
-		}
+	for _, l := range apw.listeners {
+		l.stop()
+	}
 
-		delete(apw.listeners, port)
+	for _, device := range apw.devices {
+		delete(apw.listeners, device)
 	}
 
 	apw.r.quit <- true
 }
 
 func (apw *albionProcessWatcher) updateListeners() {
-	current := getProcessPorts(apw.pid)
-	added, removed := diffIntSets(apw.known, current)
+	ports := getProcessPorts(apw.pid)
 
-	for _, port := range added {
-		devices := getDevices()
+	myPorts := []int{}
+	for _, p := range ports {
+		if p > 0 {
+			myPorts = append(myPorts, p)
+		}
+	}
 
-		for _, device := range devices {
+	// No need to change ports if they didn't change
+	added, removed := diffIntSets(myPorts, apw.lastPorts)
+	if len(added) == 0 && len(removed) == 0 {
+		return
+	}
+	apw.lastPorts = myPorts
+
+	for _, device := range apw.devices {
+		if _, ok := apw.listeners[device]; !ok {
 			l := newListener(apw.r)
-			go l.startOnline(device.Name, port)
+			l.createOnline(device)
 
-			apw.listeners[port] = append(apw.listeners[port], l)
-		}
-	}
-
-	for _, port := range removed {
-		for _, l := range apw.listeners[port] {
-			l.quit <- true
+			apw.listeners[device] = l
 		}
 
-		delete(apw.listeners, port)
-	}
+		l, _ := apw.listeners[device]
 
-	apw.known = current
+		if len(myPorts) > 0 {
+			go l.setPortsAndRun(device, myPorts)
+		} else {
+			l.stop()
+		}
+
+	}
 }
 
-func getDevices() []pcap.Interface {
+func (apw *albionProcessWatcher) getDevices() []string {
 	devices, err := pcap.FindAllDevs()
 
 	// Filter out devices that we aren't able to listen to.
@@ -109,5 +122,10 @@ func getDevices() []pcap.Interface {
 		log.Fatal("Unable to find network device.")
 	}
 
-	return devices
+	s := []string{}
+	for _, dev := range devices {
+		s = append(s, dev.Name)
+	}
+
+	return s
 }
