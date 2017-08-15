@@ -1,6 +1,8 @@
 package client
 
 import (
+	"strings"
+
 	"github.com/regner/albionmarket-client/log"
 )
 
@@ -14,10 +16,20 @@ type Router struct {
 func newRouter() *Router {
 	uploader := iuploader(&noopUploader{})
 	if !ConfigGlobal.DisableUpload {
-		if ConfigGlobal.IngestBaseUrl[0:4] == "http" {
-			uploader = newHTTPUploader(ConfigGlobal.IngestBaseUrl)
-		} else if ConfigGlobal.IngestBaseUrl[0:4] == "nats" {
-			uploader = newNATSUploader(ConfigGlobal.IngestBaseUrl)
+		urls := strings.Split(ConfigGlobal.IngestBaseUrl, ",")
+		uploaders := []iuploader{}
+		for _, url := range urls {
+			if url[0:4] == "http" {
+				uploaders = append(uploaders, newHTTPUploader(url))
+			} else if url[0:4] == "nats" {
+				uploaders = append(uploaders, newNATSUploader(url))
+			}
+		}
+
+		if len(uploaders) > 1 {
+			uploader = newMultiUploader(uploaders)
+		} else {
+			uploader = uploaders[0]
 		}
 	}
 

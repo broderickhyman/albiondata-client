@@ -1,8 +1,8 @@
 package client
 
 import (
-	"github.com/labstack/gommon/log"
 	"github.com/nats-io/go-nats"
+	"github.com/regner/albionmarket-client/log"
 )
 
 type natsUploader struct {

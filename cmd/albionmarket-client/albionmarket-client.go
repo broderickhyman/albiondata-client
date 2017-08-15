@@ -17,8 +17,8 @@ func init() {
 	flag.StringVar(
 		&client.ConfigGlobal.IngestBaseUrl,
 		"i",
-		"https://albion-market.com/api/v1/ingest/",
-		"Base URL to send data to.",
+		"nats://albion-data.com:4222/",
+		"Base URL to send data to, can be 'nats://', 'http://' and can have multiple uploaders comma seperated.",
 	)
 
 	flag.BoolVar(
