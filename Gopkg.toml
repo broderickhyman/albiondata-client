@@ -25,3 +25,7 @@
 
 [[constraint]]
   name = "golang.org/x/tools"
+
+[[constraint]]
+  name = "github.com/nats-io/go-nats"
+  version = "1.3.0"
