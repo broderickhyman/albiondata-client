@@ -9,7 +9,7 @@ import (
 type operationGoldMarketGetAverageInfo struct {
 }
 
-func (op operationGoldMarketGetAverageInfo) Process(state *albionState) {
+func (op operationGoldMarketGetAverageInfo) Process(state *albionState, uploader *uploader) {
 	log.Debug("Got GoldMarketGetAverageInfo operation...")
 }
 
@@ -23,7 +23,7 @@ type goldInfoUpload struct {
 	TimeStamps []int
 }
 
-func (op operationGoldMarketGetAverageInfoResponse) Process(state *albionState) {
+func (op operationGoldMarketGetAverageInfoResponse) Process(state *albionState, uploader *uploader) {
 	log.Debug("Got response to GoldMarketGetAverageInfo operation...")
 
 	data, err := json.Marshal(op)
@@ -32,5 +32,5 @@ func (op operationGoldMarketGetAverageInfoResponse) Process(state *albionState) 
 		return
 	}
 
-	uploaderSendToIngest([]byte(string(data)), "goldprices")
+	uploader.sendToIngest([]byte(string(data)), "goldprices")
 }

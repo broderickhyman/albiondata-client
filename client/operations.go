@@ -1,5 +1,5 @@
 package client
 
 type operation interface {
-	Process(state *albionState)
+	Process(state *albionState, uploader *uploader)
 }

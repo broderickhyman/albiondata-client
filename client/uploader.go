@@ -2,17 +2,29 @@ package client
 
 import (
 	"bytes"
+	"io"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/regner/albionmarket-client/log"
 )
 
-func uploaderSendToIngest(body []byte, url string) {
+type uploader struct {
+	transport *http.Transport
+}
+
+func newUploader() *uploader {
+	return &uploader{
+		transport: &http.Transport{},
+	}
+}
+
+func (u *uploader) sendToIngest(body []byte, url string) {
 	if ConfigGlobal.DisableUpload {
 		return
 	}
 
-	client := &http.Client{}
+	client := &http.Client{Transport: u.transport}
 
 	fullUrl := ConfigGlobal.IngestBaseUrl + url
 
@@ -34,6 +46,9 @@ func uploaderSendToIngest(body []byte, url string) {
 		log.Errorf("Got bad response code (%v) when uploading to: %v", resp.StatusCode, fullUrl)
 		return
 	}
+
+	// See: https://stackoverflow.com/questions/17948827/reusing-http-connections-in-golang
+	io.Copy(ioutil.Discard, resp.Body)
 
 	log.Infof("Successfully sent ingest request to %v", ConfigGlobal.IngestBaseUrl)
 

@@ -52,13 +52,15 @@ func (apw *albionProcessWatcher) closeWatcher() {
 
 	for port := range apw.listeners {
 		for _, l := range apw.listeners[port] {
-			l.quit <- true
+			l.stop()
 		}
 
 		delete(apw.listeners, port)
 	}
 
 	apw.r.quit <- true
+
+	log.Printf("Albion watcher closed for PID \"%d\"...", apw.pid)
 }
 
 func (apw *albionProcessWatcher) updateListeners() {

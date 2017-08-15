@@ -22,7 +22,7 @@ type listener struct {
 func newListener(router *Router) *listener {
 	return &listener{
 		fragments: photon.NewFragmentBuffer(),
-		quit:      make(chan bool),
+		quit:      make(chan bool, 1),
 		router:    router,
 	}
 }
@@ -54,7 +54,10 @@ func (l *listener) startOffline(path string) {
 	}
 	l.handle = handle
 
-	layers.RegisterUDPPortLayerType(5056, photon.PhotonLayerType)
+	for _, port := range []int{5055, 5056} {
+		layers.RegisterUDPPortLayerType(layers.UDPPort(port), photon.PhotonLayerType)
+		layers.RegisterTCPPortLayerType(layers.TCPPort(port), photon.PhotonLayerType)
+	}
 	l.source = gopacket.NewPacketSource(handle, handle.LinkType())
 
 	l.displayName = fmt.Sprintf("offline: %s", path)
@@ -72,12 +75,20 @@ func (l *listener) run() {
 
 			return
 		case packet := <-l.source.Packets():
-			// Why can a packet be nil!?
 			if packet != nil {
 				l.processPacket(packet)
+			} else {
+				// MUST only happen with the offline processor.
+				l.handle.Close()
+				return
 			}
 		}
 	}
+}
+
+func (l *listener) stop() {
+	l.quit <- true
+	l.handle.Close()
 }
 
 func (l *listener) processPacket(packet gopacket.Packet) {
@@ -120,5 +131,6 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 		if operation != nil {
 			l.router.newOperation <- operation
 		}
+	case photon.EventDataType:
 	}
 }
