@@ -14,12 +14,7 @@ jobs:
       - image: regner/golang
     steps:
       - checkout
-      - run: apt-get update && apt-get install -y build-essential mingw-w64
-      - run: go get -u github.com/golang/dep/cmd/dep
-      - run: dep ensure
       - run: make build-windows
-      - run: gzip -9 albionmarket-client.exe
-      - run: mv albionmarket-client.exe.gz update-windows-amd64.exe.gz
       - store_artifacts:
           path: /go/src/github.com/regner/albionmarket-client/update-windows-amd64.exe.gz
       - persist_to_workspace:
@@ -32,12 +27,7 @@ jobs:
       - image: circleci/golang:1.8
     steps:
       - checkout
-      - run: sudo apt-get install -y libpcap-dev
-      - run: go get -u github.com/golang/dep/cmd/dep
-      - run: dep ensure
-      - run: go build -ldflags "-s -w -X main.version=`git describe --tags`" cmd/albionmarket-client/albionmarket-client.go      
-      - run: gzip -9 albionmarket-client
-      - run: mv albionmarket-client.gz update-linux-amd64.gz
+      - run: make build-linux
       - store_artifacts:
           path: /go/src/github.com/regner/albionmarket-client/update-linux-amd64.gz
       - persist_to_workspace:
@@ -50,18 +40,13 @@ jobs:
       - image: pcdummy/crossbuild-golang:1.8.3
     steps:
       - checkout
-      - run: apt-get update && apt-get install -y libpcap-dev
-      - run: go get -u github.com/golang/dep/cmd/dep
-      - run: dep ensure
-      - run: env OSXCROSS_NO_INCLUDE_PATH_WARNINGS=1 MACOSX_DEPLOYMENT_TARGET=10.6 CC=/usr/osxcross/bin/o64-clang CXX=/usr/osxcross/bin/o64-clang++ GOOS=darwin GOARCH=amd64 CGO_ENABLED=1 go build -ldflags "-s -w -X main.version=`git describe --tags`" cmd/albionmarket-client/albionmarket-client.go      
-      - run: gzip -9 albionmarket-client
-      - run: mv albionmarket-client.gz update-darwin-amd64.gz
+      - run: make build-darwin
       - store_artifacts:
           path: /go/src/github.com/regner/albionmarket-client/update-darwin-amd64.gz
       - persist_to_workspace:
           root: /go/src/github.com/regner/albionmarket-client
           paths:
-            - update-darwin-amd64.gz            
+            - update-darwin-amd64.gz
   deploy:
     working_directory: /tmp/workspace
     docker:
