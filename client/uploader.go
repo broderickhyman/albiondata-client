@@ -31,7 +31,7 @@ func uploaderSendToIngest(body []byte, url string) {
 	}
 
 	if resp.StatusCode != 200 {
-		log.Errorf("Got bad response code: %v", resp.StatusCode)
+		log.Errorf("Got bad response code (%v) when uploading to: %v", resp.StatusCode, fullUrl)
 		return
 	}
 
