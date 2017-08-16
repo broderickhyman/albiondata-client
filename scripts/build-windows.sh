@@ -11,7 +11,7 @@ export GOARCH=amd64
 export CGO_ENABLED=1
 export CXX=x86_64-w64-mingw32-g++
 export CC=x86_64-w64-mingw32-gcc
-go build -ldflags "-s -w -X main.version=`git describe --tags`" -o albionmarket-client.exe -v -x cmd/albionmarket-client/albionmarket-client.go
+go build -ldflags "-s -w -X main.version=$CIRCLE_TAG" -o albionmarket-client.exe -v -x cmd/albionmarket-client/albionmarket-client.go
 
 gzip -9 albionmarket-client.exe
 mv albionmarket-client.exe.gz update-windows-amd64.exe.gz
