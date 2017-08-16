@@ -60,7 +60,7 @@ workflows:
   version: 2
   test_build_release:
     jobs:
-      - test
+      - test:
           filters:
             tags:
               only: /.*/
