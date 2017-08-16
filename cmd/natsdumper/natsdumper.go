@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	nats "github.com/nats-io/go-nats"
-	"github.com/regner/albionmarket-client/client"
+	"github.com/regner/albionmarket-client/lib"
 )
 
 var natsURL string
@@ -21,7 +21,7 @@ func init() {
 }
 
 func dumpMarketOrders(m *nats.Msg) {
-	morders := &client.MarketUpload{}
+	morders := &lib.MarketUpload{}
 	if err := json.Unmarshal(m.Data, morders); err != nil {
 		fmt.Printf("%v\n", err)
 	}

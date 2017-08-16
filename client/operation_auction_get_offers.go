@@ -3,6 +3,7 @@ package client
 import (
 	"encoding/json"
 
+	"github.com/regner/albionmarket-client/lib"
 	"github.com/regner/albionmarket-client/log"
 )
 
@@ -25,25 +26,6 @@ type operationAuctionGetOffersResponse struct {
 	MarketOrders []string `mapstructure:"0"`
 }
 
-// MarketOrder contains an order (offer or request)
-type MarketOrder struct {
-	ID               int    `json:"Id"`
-	ItemID           string `json:"ItemTypeId"`
-	LocationID       int    `json:"LocationId"`
-	QualityLevel     int    `json:"QualityLevel"`
-	EnchantmentLevel int    `json:"EnchantmentLevel"`
-	Price            int    `json:"UnitPriceSilver"`
-	Amount           int    `json:"Amount"`
-	AuctionType      string `json:"AuctionType"`
-	Expires          string `json:"Expires"`
-}
-
-// MarketUpload contains a list of orders and the location where the orders are from
-type MarketUpload struct {
-	Orders     []*MarketOrder
-	LocationID int
-}
-
 func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader iuploader) {
 	log.Debug("Got response to AuctionGetOffers operation...")
 
@@ -52,10 +34,10 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader
 		return
 	}
 
-	orders := []*MarketOrder{}
+	orders := []*lib.MarketOrder{}
 
 	for _, v := range op.MarketOrders {
-		order := &MarketOrder{}
+		order := &lib.MarketOrder{}
 
 		err := json.Unmarshal([]byte(v), order)
 		if err != nil {
@@ -71,7 +53,7 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader
 
 	log.Debugf("Sending %d market offers to ingest", len(orders))
 
-	ingestRequest := MarketUpload{
+	ingestRequest := lib.MarketUpload{
 		Orders:     orders,
 		LocationID: state.LocationId,
 	}

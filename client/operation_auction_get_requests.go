@@ -3,6 +3,7 @@ package client
 import (
 	"encoding/json"
 
+	"github.com/regner/albionmarket-client/lib"
 	"github.com/regner/albionmarket-client/log"
 )
 
@@ -18,10 +19,10 @@ func (op operationAuctionGetRequestsResponse) Process(state *albionState, upload
 		return
 	}
 
-	orders := []*MarketOrder{}
+	orders := []*lib.MarketOrder{}
 
 	for _, v := range op.MarketOrders {
-		order := &MarketOrder{}
+		order := &lib.MarketOrder{}
 
 		err := json.Unmarshal([]byte(v), order)
 		if err != nil {
@@ -37,7 +38,7 @@ func (op operationAuctionGetRequestsResponse) Process(state *albionState, upload
 
 	log.Debugf("Sending %d market requests to ingest", len(orders))
 
-	ingestRequest := MarketUpload{
+	ingestRequest := lib.MarketUpload{
 		Orders:     orders,
 		LocationID: state.LocationId,
 	}

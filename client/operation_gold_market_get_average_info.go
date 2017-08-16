@@ -14,13 +14,8 @@ func (op operationGoldMarketGetAverageInfo) Process(state *albionState, uploader
 }
 
 type operationGoldMarketGetAverageInfoResponse struct {
-	GoldPrices []int `mapstructure:"0"`
-	TimeStamps []int `mapstructure:"1"`
-}
-
-type goldInfoUpload struct {
-	Prices     []int
-	TimeStamps []int
+	GoldPrices []int `mapstructure:"0" json:"prices"`
+	TimeStamps []int `mapstructure:"1" json:"timestamps"`
 }
 
 func (op operationGoldMarketGetAverageInfoResponse) Process(state *albionState, uploader iuploader) {
