@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
+echo $CIRCLE_TAG
 
 IFS=$'\n'
 badFiles=($(goimports -l $(go list -f {{.Dir}} ./... | grep -v /vendor/)))
