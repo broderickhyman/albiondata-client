@@ -17,7 +17,7 @@ type operationAuctionGetOffers struct {
 	IsAscendingOrder bool     `mapstructure:"11"`
 }
 
-func (op operationAuctionGetOffers) Process(state *albionState, uploader *uploader) {
+func (op operationAuctionGetOffers) Process(state *albionState, uploader iuploader) {
 	log.Debug("Got AuctionGetOffers operation...")
 }
 
@@ -25,7 +25,8 @@ type operationAuctionGetOffersResponse struct {
 	MarketOrders []string `mapstructure:"0"`
 }
 
-type marketOrder struct {
+// MarketOrder contains an order (offer or request)
+type MarketOrder struct {
 	ID               int    `json:"Id"`
 	ItemID           string `json:"ItemTypeId"`
 	LocationID       int    `json:"LocationId"`
@@ -37,12 +38,13 @@ type marketOrder struct {
 	Expires          string `json:"Expires"`
 }
 
-type marketUpload struct {
-	Orders     []*marketOrder
+// MarketUpload contains a list of orders and the location where the orders are from
+type MarketUpload struct {
+	Orders     []*MarketOrder
 	LocationID int
 }
 
-func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader *uploader) {
+func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader iuploader) {
 	log.Debug("Got response to AuctionGetOffers operation...")
 
 	if state.LocationId == 0 {
@@ -50,10 +52,10 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader
 		return
 	}
 
-	orders := []*marketOrder{}
+	orders := []*MarketOrder{}
 
 	for _, v := range op.MarketOrders {
-		order := &marketOrder{}
+		order := &MarketOrder{}
 
 		err := json.Unmarshal([]byte(v), order)
 		if err != nil {
@@ -69,7 +71,7 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader
 
 	log.Debugf("Sending %d market offers to ingest", len(orders))
 
-	ingestRequest := marketUpload{
+	ingestRequest := MarketUpload{
 		Orders:     orders,
 		LocationID: state.LocationId,
 	}
@@ -80,5 +82,5 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader
 		return
 	}
 
-	uploader.sendToIngest([]byte(string(data)), "marketorders")
+	uploader.sendToIngest(data, "marketorders")
 }

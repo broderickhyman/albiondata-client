@@ -12,7 +12,7 @@ type operationGetGameServerByCluster struct {
 	NrZoneChangesSession int32  `mapstructure:"255"`
 }
 
-func (op operationGetGameServerByCluster) Process(state *albionState, uploader *uploader) {
+func (op operationGetGameServerByCluster) Process(state *albionState, uploader iuploader) {
 	log.Debug("Got GetGameServerByCluster operation...")
 
 	// By having a "." it means this zone is an instance, such as an island.

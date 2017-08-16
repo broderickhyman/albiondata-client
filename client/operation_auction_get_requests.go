@@ -10,7 +10,7 @@ type operationAuctionGetRequestsResponse struct {
 	MarketOrders []string `mapstructure:"0"`
 }
 
-func (op operationAuctionGetRequestsResponse) Process(state *albionState, uploader *uploader) {
+func (op operationAuctionGetRequestsResponse) Process(state *albionState, uploader iuploader) {
 	log.Debug("Got response to AuctionGetOffers operation...")
 
 	if state.LocationId == 0 {
@@ -18,10 +18,10 @@ func (op operationAuctionGetRequestsResponse) Process(state *albionState, upload
 		return
 	}
 
-	orders := []*marketOrder{}
+	orders := []*MarketOrder{}
 
 	for _, v := range op.MarketOrders {
-		order := &marketOrder{}
+		order := &MarketOrder{}
 
 		err := json.Unmarshal([]byte(v), order)
 		if err != nil {
@@ -37,7 +37,7 @@ func (op operationAuctionGetRequestsResponse) Process(state *albionState, upload
 
 	log.Debugf("Sending %d market requests to ingest", len(orders))
 
-	ingestRequest := marketUpload{
+	ingestRequest := MarketUpload{
 		Orders:     orders,
 		LocationID: state.LocationId,
 	}
@@ -48,5 +48,5 @@ func (op operationAuctionGetRequestsResponse) Process(state *albionState, upload
 		return
 	}
 
-	uploader.sendToIngest([]byte(string(data)), "marketorders")
+	uploader.sendToIngest(data, "marketorders")
 }
