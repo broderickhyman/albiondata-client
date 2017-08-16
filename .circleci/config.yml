@@ -64,12 +64,21 @@ workflows:
       - build_windows:
           requires:
             - test
+          filters:
+            tags:
+              only: /.*/
       - build_linux:
           requires:
             - test
+          filters:
+            tags:
+              only: /.*/
       - build_darwin:
           requires:
             - test
+          filters:
+            tags:
+              only: /.*/
       - deploy:
           requires:
             - build_windows
@@ -78,4 +87,6 @@ workflows:
           filters:
             tags:
               only: /^\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
 
