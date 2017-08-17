@@ -43,7 +43,7 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader
 		if err != nil {
 			log.Errorf("Problem converting market order to internal struct: %v", err)
 		}
-
+		order.LocationID = state.LocationId
 		orders = append(orders, order)
 	}
 
