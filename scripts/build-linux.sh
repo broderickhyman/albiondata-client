@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eo pipefail
+
 sudo apt-get install -y libpcap-dev
 go get -u github.com/golang/dep/cmd/dep
 dep ensure
