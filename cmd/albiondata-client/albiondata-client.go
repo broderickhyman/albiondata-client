@@ -7,8 +7,8 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/pcdummy/go-githubupdate/updater"
-	"github.com/regner/albionmarket-client/client"
-	"github.com/regner/albionmarket-client/log"
+	"github.com/regner/albiondata-client/client"
+	"github.com/regner/albiondata-client/log"
 )
 
 var version string
@@ -18,7 +18,7 @@ func init() {
 		&client.ConfigGlobal.IngestBaseUrl,
 		"i",
 		"nats://albion-data.com:4222/",
-		"Base URL to send data to, can be 'nats://', 'http://' and can have multiple uploaders comma seperated.",
+		"Base URL to send data to, can be 'nats://', 'http://' and can have multiple uploaders comma separated.",
 	)
 
 	flag.BoolVar(
@@ -32,7 +32,7 @@ func init() {
 		&client.ConfigGlobal.SaveLocally,
 		"s",
 		false,
-		"If specified all market orders will be saved locally.",
+		"If specified all uploads will be saved locally.",
 	)
 
 	flag.StringVar(
@@ -68,7 +68,7 @@ func main() {
 	flag.Parse()
 
 	if client.ConfigGlobal.VersionDump {
-		log.Infof("albionmarket-client version: %v", version)
+		log.Infof("albiondata-client version: %v", version)
 		return
 	}
 
@@ -92,7 +92,7 @@ func main() {
 		u := updater.NewUpdater(
 			version,
 			"regner",
-			"albionmarket-client",
+			"albiondata-client",
 			"update-",
 		)
 
@@ -113,7 +113,7 @@ func main() {
 					}
 
 					log.Infof(
-						"The update %s has been installed, please restart albionmarket-client.",
+						"The update %s has been installed, please restart albiondata-client.",
 						available,
 					)
 				}

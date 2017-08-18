@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/google/gopacket/pcap"
-	"github.com/regner/albionmarket-client/log"
+	"github.com/regner/albiondata-client/log"
 )
 
 type albionProcessWatcher struct {

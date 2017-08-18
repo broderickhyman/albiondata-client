@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	nats "github.com/nats-io/go-nats"
-	"github.com/regner/albionmarket-client/lib"
+	"github.com/regner/albiondata-client/lib"
 )
 
 var natsURL string
@@ -28,7 +28,7 @@ func dumpMarketOrders(m *nats.Msg) {
 
 	for _, order := range morders.Orders {
 		jb, _ := json.Marshal(order)
-		fmt.Printf("%d %s\n", morders.LocationID, string(jb))
+		fmt.Printf("%d %s\n", order.LocationID, string(jb))
 	}
 }
 

@@ -3,8 +3,8 @@ package client
 import (
 	"encoding/json"
 
-	"github.com/regner/albionmarket-client/lib"
-	"github.com/regner/albionmarket-client/log"
+	"github.com/regner/albiondata-client/lib"
+	"github.com/regner/albiondata-client/log"
 )
 
 type operationAuctionGetOffers struct {

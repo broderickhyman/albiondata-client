@@ -1,5 +1,5 @@
-; This file is part of AlbionData-client
-; Copyright (c) 2017    The AlbionData Project
+; This file is part of Albion Data Client
+; Copyright (c) 2017    The Albion Data Project
 ;
 ; See the LICENSE file in the root folder (MIT).
 ;
@@ -23,17 +23,17 @@ InstallDir "$PROGRAMFILES64\${PACKAGE_NAME}"
 ;Get installation folder from registry if available
 InstallDirRegKey HKLM "Software\${PACKAGE_NAME}" ""
 ;Request application privileges for Windows Vista
-RequestExecutionLevel admin 
+RequestExecutionLevel admin
 
 ;--------------------------------
 ;Versioninfo
 
 VIProductVersion "${PACKAGE_VERSION}.0"
-VIAddVersionKey "CompanyName"	"The AlbionData Project"
+VIAddVersionKey "CompanyName"	"The Albion Data Project"
 VIAddVersionKey "FileDescription"	"${PACKAGE_NAME} Installer"
 VIAddVersionKey "FileVersion"		"${PACKAGE_VERSION}"
 VIAddVersionKey "InternalName"	"${PACKAGE_NAME}"
-VIAddVersionKey "LegalCopyright"	"Copyright (c) 2017 The AlbionData Project"
+VIAddVersionKey "LegalCopyright"	"Copyright (c) 2017 The Albion Data Project"
 VIAddVersionKey "OriginalFilename"	"${PACKAGE}-${PACKAGE_VERSION}-installer.exe"
 VIAddVersionKey "ProductName"	"${PACKAGE_NAME}"
 VIAddVersionKey "ProductVersion"	"${PACKAGE_VERSION}"
@@ -41,8 +41,8 @@ VIAddVersionKey "ProductVersion"	"${PACKAGE_VERSION}"
 ;--------------------------------
 
 ;Interface Settings
-!define MUI_ICON "${TOP_SRCDIR}\albionmarket-client.ico"
-!define MUI_UNICON "${TOP_SRCDIR}\albionmarket-client.ico"
+!define MUI_ICON "${TOP_SRCDIR}\albiondata-client.ico"
+!define MUI_UNICON "${TOP_SRCDIR}\albiondata-client.ico"
 
 ;--------------------------------
 ;Variables
@@ -120,7 +120,7 @@ Section $(TEXT_SecBase) SecBase
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PACKAGE_NAME}" "DisplayName" "${PACKAGE_NAME}"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PACKAGE_NAME}" "DisplayVersion" "${PACKAGE_VERSION}"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PACKAGE_NAME}" "DisplayIcon" "$INSTDIR\${PACKAGE}.exe,0"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PACKAGE_NAME}" "Publisher" "The Albiondata Project"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PACKAGE_NAME}" "Publisher" "The Albion Data Project"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PACKAGE_NAME}" "URLInfoAbout" "${PACKAGE_BUGREPORT}"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PACKAGE_NAME}" "InstallLocation" "$INSTDIR"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PACKAGE_NAME}" "UninstallString" "$INSTDIR\uninstall.exe"
@@ -150,7 +150,7 @@ SectionEnd
 
 
 ;--------------------------------
-; unix2dos 
+; unix2dos
 Function unix2dos
     ; strips all CRs and then converts all LFs into CRLFs
     ; (this is roughly equivalent to "cat file | dos2unix | unix2dos")
