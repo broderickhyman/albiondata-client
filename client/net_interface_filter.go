@@ -3,7 +3,7 @@ package client
 import (
 	"net"
 	"strings"
-	
+
 	"github.com/regner/albionmarket-client/log"
 )
 
