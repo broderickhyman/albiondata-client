@@ -1,9 +1,9 @@
 package utils
 
 import (
-	"github.com/regner/albionmarket-client/log"
 	"net"
 	"strings"
+	"github.com/regner/albionmarket-client/log"
 )
 
 // Mac Address parts to look for, and identify non physical devices. There may be more, update me!
