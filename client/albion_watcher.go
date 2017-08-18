@@ -32,6 +32,7 @@ func (apw *albionProcessWatcher) run() {
 		apw.devices = strings.Split(ConfigGlobal.ListenDevices, ",")
 	} else {
 		apw.devices = apw.getDevices()
+		log.Debugf("Will listen to these devices: %v", apw.devices)
 	}
 	go apw.r.run()
 

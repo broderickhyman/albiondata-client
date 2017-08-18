@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-apt-get update && apt-get install -y build-essential mingw-w64
+set -eo pipefail
+
+apt-get update && apt-get install -y build-essential mingw-w64 nsis
 go get -u github.com/golang/dep/cmd/dep
 dep ensure
 
@@ -12,6 +14,11 @@ export CGO_ENABLED=1
 export CXX=x86_64-w64-mingw32-g++
 export CC=x86_64-w64-mingw32-gcc
 go build -ldflags "-s -w -X main.version=$CIRCLE_TAG" -o albionmarket-client.exe -v -x cmd/albionmarket-client/albionmarket-client.go
+
+# Make the NSIS Installer
+cd pkg/nsis
+make nsis
+cd ../..
 
 gzip -9 albionmarket-client.exe
 mv albionmarket-client.exe.gz update-windows-amd64.exe.gz

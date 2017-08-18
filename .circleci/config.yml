@@ -17,10 +17,15 @@ jobs:
       - run: make build-windows
       - store_artifacts:
           path: /go/src/github.com/regner/albionmarket-client/update-windows-amd64.exe.gz
+          destination: update-windows-amd64.exe.gz
+      - store_artifacts:
+          path: /go/src/github.com/regner/albionmarket-client/albiondata-client-amd64-installer.exe
+          destination: albiondata-client-amd64-installer.exe
       - persist_to_workspace:
           root: /go/src/github.com/regner/albionmarket-client
           paths:
             - update-windows-amd64.exe.gz
+            - albiondata-client-amd64-installer.exe
   build_linux:
     working_directory: /go/src/github.com/regner/albionmarket-client
     docker:
@@ -30,6 +35,7 @@ jobs:
       - run: make build-linux
       - store_artifacts:
           path: /go/src/github.com/regner/albionmarket-client/update-linux-amd64.gz
+          destination: update-linux-amd64.gz
       - persist_to_workspace:
           root: /go/src/github.com/regner/albionmarket-client
           paths:
@@ -43,6 +49,7 @@ jobs:
       - run: make build-darwin
       - store_artifacts:
           path: /go/src/github.com/regner/albionmarket-client/update-darwin-amd64.gz
+          destination: update-darwin-amd64.gz
       - persist_to_workspace:
           root: /go/src/github.com/regner/albionmarket-client
           paths:
