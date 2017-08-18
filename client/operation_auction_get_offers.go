@@ -55,7 +55,6 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader
 
 	ingestRequest := lib.MarketUpload{
 		Orders:     orders,
-		LocationID: state.LocationId,
 	}
 
 	data, err := json.Marshal(ingestRequest)

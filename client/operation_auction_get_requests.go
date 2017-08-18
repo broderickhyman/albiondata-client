@@ -40,7 +40,6 @@ func (op operationAuctionGetRequestsResponse) Process(state *albionState, upload
 
 	ingestRequest := lib.MarketUpload{
 		Orders:     orders,
-		LocationID: state.LocationId,
 	}
 
 	data, err := json.Marshal(ingestRequest)
