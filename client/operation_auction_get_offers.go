@@ -43,7 +43,7 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader
 		if err != nil {
 			log.Errorf("Problem converting market order to internal struct: %v", err)
 		}
-
+		order.LocationID = state.LocationId
 		orders = append(orders, order)
 	}
 
@@ -54,8 +54,7 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader
 	log.Debugf("Sending %d market offers to ingest", len(orders))
 
 	ingestRequest := lib.MarketUpload{
-		Orders:     orders,
-		LocationID: state.LocationId,
+		Orders: orders,
 	}
 
 	data, err := json.Marshal(ingestRequest)
