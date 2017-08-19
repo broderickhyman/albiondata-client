@@ -21,7 +21,7 @@ func newNATSUploader(url string) iuploader {
 }
 
 func (u *natsUploader) sendToIngest(body []byte, queue string) {
-	rawQueue := queue + ".raw"
+	rawQueue := queue + ".ingest"
 
 	if err := u.nc.Publish(rawQueue, body); err != nil {
 		log.Errorf("Error while sending ingest to nats with data: %v", err)
