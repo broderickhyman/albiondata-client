@@ -15,5 +15,5 @@ type MarketOrder struct {
 
 // MarketUpload contains a list of orders and the location where the orders are from
 type MarketUpload struct {
-	Orders []*MarketOrder
+	Orders []*MarketOrder `json:"Orders"`
 }
