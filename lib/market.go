@@ -13,7 +13,7 @@ type MarketOrder struct {
 	Expires          string `json:"Expires"`
 }
 
-// MarketUpload contains a list of orders and the location where the orders are from
+// MarketUpload contains a list of orders
 type MarketUpload struct {
 	Orders []*MarketOrder `json:"Orders"`
 }
