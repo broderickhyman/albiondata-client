@@ -1,8 +1,8 @@
 package lib
 
 const (
-	GoldPricesIngest    = "goldprices.ingest"
-	GoldPricesDeduped   = "goldprices.deduped"
-	MarketOrdersIngest  = "marketorders.ingest"
-	MarketOrdersDeduped = "marketorders.deduped"
+	NatsGoldPricesIngest    = "goldprices.ingest"
+	NatsGoldPricesDeduped   = "goldprices.deduped"
+	NatsMarketOrdersIngest  = "marketorders.ingest"
+	NatsMarketOrdersDeduped = "marketorders.deduped"
 )

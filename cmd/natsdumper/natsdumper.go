@@ -39,7 +39,7 @@ func main() {
 	defer nc.Close()
 
 	marketCh := make(chan *nats.Msg, 64)
-	marketSub, err := nc.ChanSubscribe(lib.GoldPricesDeduped, marketCh)
+	marketSub, err := nc.ChanSubscribe(lib.NatsGoldPricesDeduped, marketCh)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return
