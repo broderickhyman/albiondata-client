@@ -15,7 +15,7 @@ func init() {
 	flag.StringVar(
 		&natsURL,
 		"i",
-		"nats://localhost:2222",
+		"nats://ingest.albion-data.com:4222",
 		"NATS URL to subscribe to.",
 	)
 }
@@ -39,7 +39,7 @@ func main() {
 	defer nc.Close()
 
 	marketCh := make(chan *nats.Msg, 64)
-	marketSub, err := nc.ChanSubscribe("marketorders", marketCh)
+	marketSub, err := nc.ChanSubscribe("marketorders.ingest", marketCh)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return
