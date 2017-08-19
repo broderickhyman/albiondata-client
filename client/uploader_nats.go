@@ -10,7 +10,7 @@ type natsUploader struct {
 	nc  *nats.Conn
 }
 
-// newNATSUploader create a new NATS uploader :)
+// newNATSUploader creates a new NATS uploader :)
 func newNATSUploader(url string) iuploader {
 	nc, _ := nats.Connect(url)
 
@@ -21,7 +21,9 @@ func newNATSUploader(url string) iuploader {
 }
 
 func (u *natsUploader) sendToIngest(body []byte, queue string) {
-	if err := u.nc.Publish(queue, body); err != nil {
+	rawQueue := queue + ".raw"
+
+	if err := u.nc.Publish(rawQueue, body); err != nil {
 		log.Errorf("Error while sending ingest to nats with data: %v", err)
 	}
 }
