@@ -1,6 +1,6 @@
 TOP_SRCDIR = ../..
 PACKAGE = albiondata-client
-PACKAGE_NAME = AlbionData Client
+PACKAGE_NAME = Albion Data Client
 PACKAGE_BUGREPORT = https://github.com/Regner/albiondata-client/issues
 INSTALLER_COMPRESSION = lzma
 PACKAGE_EXE = albiondata-client.exe
