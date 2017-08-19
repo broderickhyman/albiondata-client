@@ -1,7 +1,7 @@
 package client
 
 import (
-	"github.com/regner/albionmarket-client/log"
+	"github.com/regner/albiondata-client/log"
 )
 
 type iuploader interface {

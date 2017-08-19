@@ -6,7 +6,7 @@ sudo apt-get install -y libpcap-dev
 go get -u github.com/golang/dep/cmd/dep
 dep ensure
 
-go build -ldflags "-s -w -X main.version=$CIRCLE_TAG" cmd/albionmarket-client/albionmarket-client.go
+go build -ldflags "-s -w -X main.version=$CIRCLE_TAG" cmd/albiondata-client/albiondata-client.go
 
-gzip -9 albionmarket-client
-mv albionmarket-client.gz update-linux-amd64.gz
+gzip -9 albiondata-client
+mv albiondata-client.gz update-linux-amd64.gz

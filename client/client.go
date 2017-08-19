@@ -2,7 +2,7 @@ package client
 
 import (
 	"github.com/Sirupsen/logrus"
-	"github.com/regner/albionmarket-client/log"
+	"github.com/regner/albiondata-client/log"
 )
 
 type Client struct {
@@ -15,7 +15,7 @@ func NewClient() *Client {
 func (client *Client) Run() {
 	log.SetFormatter(&logrus.TextFormatter{FullTimestamp: true, DisableSorting: true})
 
-	log.Info("Starting the Albion Market Client...")
+	log.Info("Starting the Albion Data Client...")
 
 	if ConfigGlobal.Offline {
 		processOfflinePcap(ConfigGlobal.OfflinePath)

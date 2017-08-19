@@ -1,7 +1,7 @@
 version: 2
 jobs:
   test:
-    working_directory: /go/src/github.com/regner/albionmarket-client
+    working_directory: /go/src/github.com/regner/albiondata-client
     docker:
       - image: circleci/golang:1.8
     steps:
@@ -9,49 +9,49 @@ jobs:
       - run: go get golang.org/x/tools/cmd/goimports
       - run: make validate-fmt
   build_windows:
-    working_directory: /go/src/github.com/regner/albionmarket-client
+    working_directory: /go/src/github.com/regner/albiondata-client
     docker:
       - image: regner/golang
     steps:
       - checkout
       - run: make build-windows
       - store_artifacts:
-          path: /go/src/github.com/regner/albionmarket-client/update-windows-amd64.exe.gz
+          path: /go/src/github.com/regner/albiondata-client/update-windows-amd64.exe.gz
           destination: update-windows-amd64.exe.gz
       - store_artifacts:
-          path: /go/src/github.com/regner/albionmarket-client/albiondata-client-amd64-installer.exe
+          path: /go/src/github.com/regner/albiondata-client/albiondata-client-amd64-installer.exe
           destination: albiondata-client-amd64-installer.exe
       - persist_to_workspace:
-          root: /go/src/github.com/regner/albionmarket-client
+          root: /go/src/github.com/regner/albiondata-client
           paths:
             - update-windows-amd64.exe.gz
             - albiondata-client-amd64-installer.exe
   build_linux:
-    working_directory: /go/src/github.com/regner/albionmarket-client
+    working_directory: /go/src/github.com/regner/albiondata-client
     docker:
       - image: circleci/golang:1.8
     steps:
       - checkout
       - run: make build-linux
       - store_artifacts:
-          path: /go/src/github.com/regner/albionmarket-client/update-linux-amd64.gz
+          path: /go/src/github.com/regner/albiondata-client/update-linux-amd64.gz
           destination: update-linux-amd64.gz
       - persist_to_workspace:
-          root: /go/src/github.com/regner/albionmarket-client
+          root: /go/src/github.com/regner/albiondata-client
           paths:
             - update-linux-amd64.gz
   build_darwin:
-    working_directory: /go/src/github.com/regner/albionmarket-client
+    working_directory: /go/src/github.com/regner/albiondata-client
     docker:
       - image: pcdummy/crossbuild-golang:1.8.3
     steps:
       - checkout
       - run: make build-darwin
       - store_artifacts:
-          path: /go/src/github.com/regner/albionmarket-client/update-darwin-amd64.gz
+          path: /go/src/github.com/regner/albiondata-client/update-darwin-amd64.gz
           destination: update-darwin-amd64.gz
       - persist_to_workspace:
-          root: /go/src/github.com/regner/albionmarket-client
+          root: /go/src/github.com/regner/albiondata-client
           paths:
             - update-darwin-amd64.gz
   deploy:
@@ -62,7 +62,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run: go get github.com/tcnksm/ghr
-      - run: ghr -t $GITHUB_TOKEN -u regner -r albionmarket-client $CIRCLE_TAG /tmp/workspace
+      - run: ghr -t $GITHUB_TOKEN -u regner -r albiondata-client $CIRCLE_TAG /tmp/workspace
 workflows:
   version: 2
   test_build_release:

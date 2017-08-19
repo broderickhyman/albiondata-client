@@ -80,12 +80,12 @@ cd src/github.com/regner
 
 Clone the repo
 
-`git clone https://github.com/Regner/albionmarket-client.git`
+`git clone https://github.com/regner/albiondata-client.git`
 
 ### Fetch supporting Libraries
 
 ```
-cd albionmarket-client/
+cd albiondata-client/
 glide install
 ```
 
@@ -95,26 +95,4 @@ glide install
 go build
 ```
 
-You should now be the proud owner of a new `albionmarket-client.exe` executable!
-To fully test this, execute the command in Git Bash:
-
-```
-$ ./albionmarket-client.exe --help
-2017/08/02 11:27:44 Starting the Albion Market Client...
-Usage of C:\Users\gradius\go\src\github.com\regner\albionmarket-client\albionmarket-client.exe:
-  -d    If specified no attempts will be made to upload data to remote server.
-  -i string
-        URL to send market data to. (default "https://albion-market.com/api/v1/ingest/")
-  -s    If specified all market orders will be saved locally.
-```
-
-```
-$ ./albionmarket-client.exe -d
-2017/08/02 11:27:50 Starting the Albion Market Client...
-2017/08/02 11:27:50 Remote upload of market orders is disabled!
-2017/08/02 11:27:50 Starting to process packets for \Device\NPF_{D12AF2A9-59A3-4F52-B02B-8FEB632BFD8A}...
-2017/08/02 11:27:50 Starting to process packets for \Device\NPF_{A27D7BDC-CE6A-455C-BECC-64A67DB49CED}...
-2017/08/02 11:27:50 Starting to process packets for \Device\NPF_{B8EAF629-F885-4CA5-9A47-FA72CFE4AD87}...
-2017/08/02 11:27:50 Starting to process packets for \Device\NPF_{B5F5E997-D211-40D2-9A56-9C977AF5112C}...
-```
-
+You should now be the proud owner of a new `albiondata-client.exe` executable!
