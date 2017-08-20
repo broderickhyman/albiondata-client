@@ -104,8 +104,9 @@ func main() {
 					return
 				}
 
-				log.Infof("A new update %s is available", available)
 				if available != "" {
+					log.Infof("A new update %s is available", available)
+
 					err := u.Update()
 					if err != nil {
 						log.Errorf("%v", err)
