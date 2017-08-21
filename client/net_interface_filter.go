@@ -1,10 +1,7 @@
 package client
 
 import (
-	"net"
 	"strings"
-
-	"github.com/regner/albiondata-client/log"
 )
 
 // Mac Address parts to look for, and identify non physical devices. There may be more, update me!
@@ -24,50 +21,12 @@ var macAddrPartsToFilter []string = []string{
 
 // Filters the possible physical interface address by comparing it to known popular VM Software adresses
 // and Teredo Tunneling Pseudo-Interface.
-func isPhysicalInterface(addr *net.HardwareAddr) bool {
+func isPhysicalInterface(addr string) bool {
 	for _, macPart := range macAddrPartsToFilter {
-		if strings.HasPrefix(strings.ToLower((*addr).String()), strings.ToLower(macPart)) {
+		if strings.HasPrefix(strings.ToLower(addr), strings.ToLower(macPart)) {
 			return false
 		}
 	}
 
 	return true
-}
-
-// Gets the first physical interface based on filter results, ignoring all VM, Loopback and Tunnel interfaces
-func GetFirstPhysicalInterface() *net.Interface {
-	ifaces, err := net.Interfaces()
-
-	if err != nil {
-		log.Fatal(err)
-		return nil
-	}
-
-	for _, element := range ifaces {
-		if element.Flags&net.FlagLoopback == 0 && isPhysicalInterface(&element.HardwareAddr) {
-			return &element
-		}
-	}
-
-	return nil
-}
-
-// Gets all physical interfaces based on filter results, ignoring all VM, Loopback and Tunnel interfaces.
-func GetAllPhysicalInterface() *[]net.Interface {
-	ifaces, err := net.Interfaces()
-
-	if err != nil {
-		log.Fatal(err)
-		return nil
-	}
-
-	var outInterfaces []net.Interface
-
-	for _, element := range ifaces {
-		if element.Flags&net.FlagLoopback == 0 && isPhysicalInterface(&element.HardwareAddr) {
-			outInterfaces = append(outInterfaces, element)
-		}
-	}
-
-	return &outInterfaces
 }
