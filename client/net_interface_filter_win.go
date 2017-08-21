@@ -5,6 +5,7 @@ package client
 import (
 	"os"
 	"syscall"
+	"unicode/utf16"
 	"unsafe"
 
 	"golang.org/x/sys/windows"
@@ -13,6 +14,7 @@ import (
 const (
 	IfOperStatusUp            = 1
 	IF_TYPE_SOFTWARE_LOOPBACK = 24
+	IF_TYPE_TUNNEL            = 131
 )
 
 const hexDigit = "0123456789abcdef"
@@ -67,6 +69,20 @@ func physicalAddrToString(physAddr [8]byte) string {
 	return string(buf)
 }
 
+func cStringToString(cs *uint16) (s string) {
+	if cs != nil {
+		us := make([]uint16, 0, 256)
+		for p := uintptr(unsafe.Pointer(cs)); ; p += 2 {
+			u := *(*uint16)(unsafe.Pointer(p))
+			if u == 0 {
+				return string(utf16.Decode(us))
+			}
+			us = append(us, u)
+		}
+	}
+	return ""
+}
+
 // Gets all physical interfaces based on filter results, ignoring all VM, Loopback and Tunnel interfaces.
 func getAllPhysicalInterface() []string {
 	aa, _ := adapterAddresses()
@@ -76,9 +92,9 @@ func getAllPhysicalInterface() []string {
 	for _, pa := range aa {
 		mac := physicalAddrToString(pa.PhysicalAddress)
 		name := "\\Device\\NPF_" + bytePtrToString(pa.AdapterName)
-		var flags uint32 = pa.Flags
 
-		if flags&uint32(IF_TYPE_SOFTWARE_LOOPBACK) == 0 && flags&uint32(IfOperStatusUp) == 1 && isPhysicalInterface(mac) {
+		if pa.IfType != uint32(IF_TYPE_SOFTWARE_LOOPBACK) && pa.IfType != uint32(IF_TYPE_TUNNEL) &&
+			pa.OperStatus == uint32(IfOperStatusUp) && isPhysicalInterface(mac) {
 			outInterfaces = append(outInterfaces, name)
 		}
 	}
