@@ -30,7 +30,7 @@ func (apw *albionProcessWatcher) run() {
 	if ConfigGlobal.ListenDevices != "" {
 		apw.devices = strings.Split(ConfigGlobal.ListenDevices, ",")
 	} else {
-		apw.devices = apw.getDevices()
+		apw.devices = getAllPhysicalInterface()
 		log.Debugf("Will listen to these devices: %v", apw.devices)
 	}
 	go apw.r.run()
@@ -94,10 +94,4 @@ func (apw *albionProcessWatcher) updateListeners() {
 	}
 
 	apw.known = current
-}
-
-func (apw *albionProcessWatcher) getDevices() []string {
-	nIfaces := GetAllPhysicalInterface()
-
-	return nIfaces
 }

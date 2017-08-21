@@ -67,25 +67,8 @@ func physicalAddrToString(physAddr [8]byte) string {
 	return string(buf)
 }
 
-// Gets the first physical interface based on filter results, ignoring all VM, Loopback and Tunnel interfaces
-func GetFirstPhysicalInterface() string {
-	aa, _ := adapterAddresses()
-
-	for _, pa := range aa {
-		mac := physicalAddrToString(pa.PhysicalAddress)
-		name := "\\Device\\NPF_" + bytePtrToString(pa.AdapterName)
-		var flags uint32 = pa.Flags
-
-		if flags&uint32(IF_TYPE_SOFTWARE_LOOPBACK) == 0 && flags&uint32(IfOperStatusUp) == 1 && isPhysicalInterface(mac) {
-			return name
-		}
-	}
-
-	return ""
-}
-
 // Gets all physical interfaces based on filter results, ignoring all VM, Loopback and Tunnel interfaces.
-func GetAllPhysicalInterface() []string {
+func getAllPhysicalInterface() []string {
 	aa, _ := adapterAddresses()
 
 	var outInterfaces []string
