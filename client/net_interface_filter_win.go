@@ -92,7 +92,6 @@ func getAllPhysicalInterface() []string {
 	for _, pa := range aa {
 		mac := physicalAddrToString(pa.PhysicalAddress)
 		name := "\\Device\\NPF_" + bytePtrToString(pa.AdapterName)
-		fname := cStringToString(pa.FriendlyName)
 
 		if pa.IfType != uint32(IF_TYPE_SOFTWARE_LOOPBACK) && pa.IfType != uint32(IF_TYPE_TUNNEL) &&
 			pa.OperStatus == uint32(IfOperStatusUp) && isPhysicalInterface(mac) {
