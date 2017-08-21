@@ -3,9 +3,7 @@
 package client
 
 import (
-	"fmt"
 	"os"
-	"strconv"
 	"syscall"
 	"unicode/utf16"
 	"unsafe"
