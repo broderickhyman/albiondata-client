@@ -32,5 +32,6 @@ func (op operationGoldMarketGetAverageInfoResponse) Process(state *albionState, 
 		return
 	}
 
+	log.Info("Sending gold prices to ingest")
 	uploader.sendToIngest(data, lib.NatsGoldPricesIngest)
 }
