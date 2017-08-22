@@ -16,6 +16,7 @@ func (client *Client) Run() {
 	log.SetFormatter(&logrus.TextFormatter{FullTimestamp: true, DisableSorting: true})
 
 	log.Info("Starting the Albion Data Client...")
+	log.Info("This is a third-party application and is in no way affiliated with Sandbox Interactive or Albion Online.")
 
 	if ConfigGlobal.Offline {
 		processOfflinePcap(ConfigGlobal.OfflinePath)
