@@ -116,7 +116,10 @@ func (l *listener) processPacket(packet gopacket.Packet) {
 
 func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 	msg, _ := command.ReliableMessage()
-	params, _ := photon.DecodeReliableMessage(msg)
+	params, err := photon.DecodeReliableMessage(msg)
+	if err != nil {
+		log.Debugf("Error while decoding parameters: %v", err)
+	}
 
 	switch msg.Type {
 	case photon.OperationRequest:
