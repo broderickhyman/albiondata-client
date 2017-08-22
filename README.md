@@ -30,7 +30,7 @@ off to a central NATS server that anyone can subscribe to.
 - Install dependencies using `dep ensure`
 
 ### Windows Setup
-[Windows Setup Guide](building_in_windows.md)
+[Windows Setup Guide](docs/building_in_windows.md)
 
 # License
 This project, and all contributed code, are licensed under the MIT
