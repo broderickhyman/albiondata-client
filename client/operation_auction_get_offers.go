@@ -51,7 +51,7 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader
 		return
 	}
 
-	log.Debugf("Sending %d market offers to ingest", len(orders))
+	log.Infof("Sending %d market offers to ingest", len(orders))
 
 	ingestRequest := lib.MarketUpload{
 		Orders: orders,
