@@ -24,16 +24,12 @@ Follow the guide on this page for testing the install. In Windows
 Other than that, the instructions should be followed completely.
 Once that works, we're ready to move on.
 
-## Installing Glide
-Glide will help us pull in all of the dependencies for the project.
+## Installing Dep
+Dep will help us pull in all of the dependencies for the project.
 
-[Glide Download](https://github.com/Masterminds/glide/releases)
+Open a shell and run `go get -u github.com/golang/dep/cmd/dep`.
 
-In the Download link above, find the most recent 64 bit release for
-Windows. Extract the ZIP file and copy the glide.exe to your Go
-executable path. Typically that is `C:\Go\bin`
-
-Test Glide in Git Bash by typing `glide --version`. You should be
+Test Dep in Git Bash by typing `dep --version`. You should be
 presented with a version string.
 
 ## Supporting Software
@@ -86,13 +82,13 @@ Clone the repo
 
 ```
 cd albiondata-client/
-glide install
+dep ensure
 ```
 
 ### Build the Client
 
 ```
-go build
+go build cmd/albiondata-client/albiondata-client.go
 ```
 
 You should now be the proud owner of a new `albiondata-client.exe` executable!
