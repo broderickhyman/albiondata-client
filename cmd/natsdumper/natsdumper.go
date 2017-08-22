@@ -27,7 +27,7 @@ func init() {
 		&natsChannels,
 		"c",
 		fmt.Sprintf("%s,%s", lib.NatsMarketOrdersDeduped, lib.NatsGoldPricesDeduped),
-		fmt.Sprintf("NATS channels to connect to, comma seperated. Can be '%s', '%s', '%s', '%s'",
+		fmt.Sprintf("NATS channels to connect to, comma saperated. Can be '%s', '%s', '%s', '%s'",
 			lib.NatsMarketOrdersDeduped, lib.NatsGoldPricesDeduped, lib.NatsMarketOrdersIngest, lib.NatsGoldPricesIngest,
 		),
 	)

@@ -60,7 +60,7 @@ func init() {
 		&client.ConfigGlobal.ListenDevices,
 		"l",
 		"",
-		"Listen on this comma seperated devices instead of all available",
+		"Listen on this comma separated devices instead of all available",
 	)
 }
 
