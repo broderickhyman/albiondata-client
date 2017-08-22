@@ -7,7 +7,7 @@
 
 [[constraint]]
   name = "github.com/hmadison/photon_spectator"
-  version = "0.1.0-pre.0"
+  version = "1.0.0"
 
 [[constraint]]
   name = "github.com/mitchellh/go-ps"
