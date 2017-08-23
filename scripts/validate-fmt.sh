@@ -15,6 +15,9 @@ else
 
     for f in "${badFiles[@]}"; do
       echo " - $f"
+      echo "ERROR is: "
+      goimports -d "${badFiles[@]}"
+      echo
     done
 
     echo

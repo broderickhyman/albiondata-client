@@ -3,7 +3,6 @@ package client
 type config struct {
 	IngestBaseUrl string
 	DisableUpload bool
-	SaveLocally   bool
 	OfflinePath   string
 	Offline       bool
 	Debug         bool

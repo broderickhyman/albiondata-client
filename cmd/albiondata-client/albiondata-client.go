@@ -28,13 +28,6 @@ func init() {
 		"If specified no attempts will be made to upload data to remote server.",
 	)
 
-	flag.BoolVar(
-		&client.ConfigGlobal.SaveLocally,
-		"s",
-		false,
-		"If specified all uploads will be saved locally.",
-	)
-
 	flag.StringVar(
 		&client.ConfigGlobal.OfflinePath,
 		"o",
