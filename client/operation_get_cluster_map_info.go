@@ -18,6 +18,7 @@ type operationGetClusterMapInfoResponse struct {
 	Reward          []int    `mapstructure:"12"`
 	AvailableSilver []int    `mapstructure:"13"`
 	Owners          []string `mapstructure:"14"`
+	Buildable       []bool   `mapstructure:"19"`
 	IsForSale       []bool   `mapstructure:"27"`
 	BuyPrice        []int    `mapstructure:"28"`
 }
