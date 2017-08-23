@@ -21,8 +21,10 @@ This client monitors local network traffic, identifies UDP packets
 that contain relevant data for Albion Online, and ships the information
 off to a central NATS server that anyone can subscribe to.
 
-# Dev Setup
+# Downloads
+Downloads can be found here: https://github.com/Regner/albiondata-client/releases
 
+# Developer Setup
 ### Mac/Linux Setup
 - Install [Dep](https://github.com/golang/dep)
   - Any OS: `go get -u github.com/golang/dep/cmd/dep`
