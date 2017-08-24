@@ -1,6 +1,9 @@
 package client
 
 import (
+	"encoding/json"
+
+	"github.com/regner/albiondata-client/lib"
 	"github.com/regner/albiondata-client/log"
 )
 
@@ -25,4 +28,24 @@ type operationGetClusterMapInfoResponse struct {
 
 func (op operationGetClusterMapInfoResponse) Process(state *albionState, uploader iuploader) {
 	log.Debug("Got response to GetClusterMapInfo operation...")
+
+	data, err := json.Marshal(lib.MapDataUpload{
+		ZoneID:          op.ZoneID,
+		BuildingType:    op.BuildingType,
+		AvailableFood:   op.AvailableFood,
+		Reward:          op.Reward,
+		AvailableSilver: op.AvailableSilver,
+		Owners:          op.Owners,
+		Buildable:       op.Buildable,
+		IsForSale:       op.IsForSale,
+		BuyPrice:        op.BuyPrice,
+	})
+
+	if err != nil {
+		log.Errorf("Error while marshalling payload for market data: %v", err)
+		return
+	}
+
+	log.Info("Sending market data to ingest")
+	uploader.sendToIngest(data, lib.NatsMapDataIngest)
 }

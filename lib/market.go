@@ -4,6 +4,7 @@ package lib
 type MarketOrder struct {
 	ID               int    `json:"Id"`
 	ItemID           string `json:"ItemTypeId"`
+	GroupTypeId      string `json:"ItemGroupTypeId"`
 	LocationID       int    `json:"LocationId"`
 	QualityLevel     int    `json:"QualityLevel"`
 	EnchantmentLevel int    `json:"EnchantmentLevel"`
