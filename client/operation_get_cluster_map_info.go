@@ -5,6 +5,7 @@ import (
 
 	"github.com/regner/albiondata-client/lib"
 	"github.com/regner/albiondata-client/log"
+	"strconv"
 )
 
 type operationGetClusterMapInfo struct {
@@ -15,7 +16,7 @@ func (op operationGetClusterMapInfo) Process(state *albionState, uploader iuploa
 }
 
 type operationGetClusterMapInfoResponse struct {
-	ZoneID          int      `mapstructure:"0"`
+	ZoneID          string   `mapstructure:"0"`
 	BuildingType    []int    `mapstructure:"5"`
 	AvailableFood   []int    `mapstructure:"10"`
 	Reward          []int    `mapstructure:"12"`
@@ -29,8 +30,14 @@ type operationGetClusterMapInfoResponse struct {
 func (op operationGetClusterMapInfoResponse) Process(state *albionState, uploader iuploader) {
 	log.Debug("Got response to GetClusterMapInfo operation...")
 
+	zoneInt, err := strconv.Atoi(op.ZoneID)
+	if err != nil {
+		log.Debugf("Unable to convert zoneID to int. Probably an instance.. ZoneID: %v", op.ZoneID)
+		return
+	}
+
 	data, err := json.Marshal(lib.MapDataUpload{
-		ZoneID:          op.ZoneID,
+		ZoneID:          zoneInt,
 		BuildingType:    op.BuildingType,
 		AvailableFood:   op.AvailableFood,
 		Reward:          op.Reward,
