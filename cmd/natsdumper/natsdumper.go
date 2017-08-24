@@ -32,7 +32,7 @@ func init() {
 			lib.NatsGoldPricesDeduped,
 			lib.NatsMapDataDeduped,
 			lib.NatsMapDataIngest,
-	),
+		),
 		fmt.Sprintf(
 			"NATS channels to connect to, comma saperated. Can be '%s', '%s', '%s', '%s'",
 			lib.NatsMarketOrdersDeduped,
