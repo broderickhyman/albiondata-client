@@ -3,9 +3,10 @@ package client
 import (
 	"encoding/json"
 
+	"strconv"
+
 	"github.com/regner/albiondata-client/lib"
 	"github.com/regner/albiondata-client/log"
-	"strconv"
 )
 
 type operationGetClusterMapInfo struct {

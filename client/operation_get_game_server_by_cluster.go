@@ -7,7 +7,7 @@ import (
 )
 
 type operationGetGameServerByCluster struct {
-	ZoneID               string `mapstructure:"0"`
+	ZoneID string `mapstructure:"0"`
 }
 
 func (op operationGetGameServerByCluster) Process(state *albionState, uploader iuploader) {
