@@ -2,7 +2,6 @@ package client
 
 import (
 	"github.com/mitchellh/mapstructure"
-	"github.com/regner/albiondata-client/log"
 )
 
 func decodeRequest(params map[string]interface{}) operation {
