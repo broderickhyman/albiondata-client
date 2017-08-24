@@ -26,15 +26,24 @@ func init() {
 	flag.StringVar(
 		&natsChannels,
 		"c",
-		fmt.Sprintf("%s,%s", lib.NatsMarketOrdersDeduped, lib.NatsGoldPricesDeduped),
-		fmt.Sprintf("NATS channels to connect to, comma saperated. Can be '%s', '%s', '%s', '%s'",
-			lib.NatsMarketOrdersDeduped, lib.NatsGoldPricesDeduped, lib.NatsMarketOrdersIngest, lib.NatsGoldPricesIngest,
+		fmt.Sprintf(
+			"%s,%s,%s",
+			lib.NatsMarketOrdersDeduped,
+			lib.NatsGoldPricesDeduped,
+			lib.NatsMapDataDeduped,
+		),
+		fmt.Sprintf(
+			"NATS channels to connect to, comma saperated. Can be '%s', '%s', '%s', '%s'",
+			lib.NatsMarketOrdersDeduped,
+			lib.NatsGoldPricesDeduped,
+			lib.NatsMarketOrdersIngest,
+			lib.NatsGoldPricesIngest,
 		),
 	)
 }
 
 func subscribeMarketOrdersIngest(nc *nats.Conn) {
-	fmt.Printf("mi Subscribing %s\n", lib.NatsMarketOrdersIngest)
+	fmt.Printf("mo i Subscribing %s\n", lib.NatsMarketOrdersIngest)
 	marketCh := make(chan *nats.Msg, 64)
 	marketSub, err := nc.ChanSubscribe(lib.NatsMarketOrdersIngest, marketCh)
 	if err != nil {
@@ -53,14 +62,14 @@ func subscribeMarketOrdersIngest(nc *nats.Conn) {
 
 			for _, order := range morders.Orders {
 				jb, _ := json.Marshal(order)
-				fmt.Printf("mi %s\n", string(jb))
+				fmt.Printf("mo i %s\n", string(jb))
 			}
 		}
 	}
 }
 
 func subscribeMarketOrdersDeduped(nc *nats.Conn) {
-	fmt.Printf("md Subscribing %s\n", lib.NatsMarketOrdersDeduped)
+	fmt.Printf("mo d Subscribing %s\n", lib.NatsMarketOrdersDeduped)
 	marketCh := make(chan *nats.Msg, 64)
 	marketSub, err := nc.ChanSubscribe(lib.NatsMarketOrdersDeduped, marketCh)
 	if err != nil {
@@ -72,13 +81,13 @@ func subscribeMarketOrdersDeduped(nc *nats.Conn) {
 	for {
 		select {
 		case msg := <-marketCh:
-			fmt.Printf("md %s\n", string(msg.Data))
+			fmt.Printf("mo d %s\n", string(msg.Data))
 		}
 	}
 }
 
 func subscribeGoldPricesIngest(nc *nats.Conn) {
-	fmt.Printf("gi Subscribing %s\n", lib.NatsGoldPricesIngest)
+	fmt.Printf("gp i Subscribing %s\n", lib.NatsGoldPricesIngest)
 	goldCh := make(chan *nats.Msg, 64)
 	goldSub, err := nc.ChanSubscribe(lib.NatsGoldPricesIngest, goldCh)
 	if err != nil {
@@ -90,13 +99,13 @@ func subscribeGoldPricesIngest(nc *nats.Conn) {
 	for {
 		select {
 		case msg := <-goldCh:
-			fmt.Printf("gi %s\n", string(msg.Data))
+			fmt.Printf("gp i %s\n", string(msg.Data))
 		}
 	}
 }
 
 func subscribeGoldPricesDeduped(nc *nats.Conn) {
-	fmt.Printf("gd Subscribing %s\n", lib.NatsGoldPricesDeduped)
+	fmt.Printf("gp d Subscribing %s\n", lib.NatsGoldPricesDeduped)
 	goldCh := make(chan *nats.Msg, 64)
 	goldSub, err := nc.ChanSubscribe(lib.NatsGoldPricesDeduped, goldCh)
 	if err != nil {
@@ -108,7 +117,43 @@ func subscribeGoldPricesDeduped(nc *nats.Conn) {
 	for {
 		select {
 		case msg := <-goldCh:
-			fmt.Printf("gd %s\n", string(msg.Data))
+			fmt.Printf("gp d %s\n", string(msg.Data))
+		}
+	}
+}
+
+func subscribeMapDataIngest(nc *nats.Conn) {
+	fmt.Printf("md i Subscribing %s\n", lib.NatsMapDataIngest)
+	mapCh := make(chan *nats.Msg, 64)
+	mapSub, err := nc.ChanSubscribe(lib.NatsMapDataIngest, mapCh)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
+	defer mapSub.Unsubscribe()
+
+	for {
+		select {
+		case msg := <-mapCh:
+			fmt.Printf("md i %s\n", string(msg.Data))
+		}
+	}
+}
+
+func subscribeMapDataDeduped(nc *nats.Conn) {
+	fmt.Printf("md d Subscribing %s\n", lib.NatsMapDataDeduped)
+	mapCh := make(chan *nats.Msg, 64)
+	mapSub, err := nc.ChanSubscribe(lib.NatsMapDataDeduped, mapCh)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
+	defer mapSub.Unsubscribe()
+
+	for {
+		select {
+		case msg := <-mapCh:
+			fmt.Printf("md d %s\n", string(msg.Data))
 		}
 	}
 }
@@ -134,6 +179,10 @@ func main() {
 				go subscribeGoldPricesIngest(nc)
 			case lib.NatsGoldPricesDeduped:
 				go subscribeGoldPricesDeduped(nc)
+			case lib.NatsMapDataIngest:
+				go subscribeMapDataIngest(nc)
+			case lib.NatsMapDataDeduped:
+				go subscribeMapDataDeduped(nc)
 			}
 
 			goChans = goChans + 1
@@ -152,5 +201,9 @@ func main() {
 		subscribeGoldPricesIngest(nc)
 	case lib.NatsGoldPricesDeduped:
 		subscribeGoldPricesDeduped(nc)
+	case lib.NatsMapDataIngest:
+		subscribeMapDataIngest(nc)
+	case lib.NatsMapDataDeduped:
+		subscribeMapDataDeduped(nc)
 	}
 }
