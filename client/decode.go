@@ -1,8 +1,6 @@
 package client
 
 import (
-	"sort"
-
 	"github.com/mitchellh/mapstructure"
 	"github.com/regner/albiondata-client/log"
 )
@@ -28,7 +26,6 @@ func decodeRequest(params map[string]interface{}) operation {
 	case 166:
 		operation := operationGetClusterMapInfo{}
 		mapstructure.Decode(params, &operation)
-		log.Debug("Location: ", params)
 
 		return operation
 	case 217:
@@ -72,15 +69,6 @@ func decodeResponse(params map[string]interface{}) operation {
 	case 166:
 		operation := operationGetClusterMapInfoResponse{}
 		mapstructure.Decode(params, &operation)
-		var keys []string
-		for k := range params {
-			keys = append(keys, k)
-		}
-		sort.Strings(keys)
-
-		for _, k := range keys {
-			log.Debug(k, ": ", params[k])
-		}
 
 		return operation
 	case 217:
