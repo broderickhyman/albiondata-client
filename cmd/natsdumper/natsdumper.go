@@ -50,6 +50,8 @@ func writeDataToFile(msg []string, identification string, filename string) bool 
 			jsonKeys = lib.GetGoldPricesUploadJsonKeys()
 		case lib.NatsMarketOrdersDeduped, lib.NatsMarketOrdersIngest:
 			jsonKeys = lib.GetMarketOrderJsonKeys()
+		case lib.NatsMapDataDeduped, lib.NatsMapDataIngest:
+			jsonKeys = lib.MapDataHeaders()
 		}
 
 		csvWriter.Write(jsonKeys)
@@ -239,6 +241,16 @@ func subscribeMapDataIngest(nc *nats.Conn) {
 		select {
 		case msg := <-mapCh:
 			fmt.Printf("md i %s\n", string(msg.Data))
+			if saveLocally {
+				md := &lib.MapDataUpload{}
+				if err := json.Unmarshal(msg.Data, md); err != nil {
+					fmt.Printf("%v\n", err)
+				}
+				sas := md.StringArrays()
+				for _, sa := range sas {
+					saveToCSVFile(sa, lib.NatsMapDataIngest)
+				}
+			}
 		}
 	}
 }
@@ -257,6 +269,16 @@ func subscribeMapDataDeduped(nc *nats.Conn) {
 		select {
 		case msg := <-mapCh:
 			fmt.Printf("md d %s\n", string(msg.Data))
+			if saveLocally {
+				md := &lib.MapDataUpload{}
+				if err := json.Unmarshal(msg.Data, md); err != nil {
+					fmt.Printf("%v\n", err)
+				}
+				sas := md.StringArrays()
+				for _, sa := range sas {
+					saveToCSVFile(sa, lib.NatsMapDataIngest)
+				}
+			}
 		}
 	}
 }
