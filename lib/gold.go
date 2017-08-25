@@ -2,32 +2,31 @@ package lib
 
 import (
 	"fmt"
-	"strings"
+	"time"
 )
 
 // GoldPricesUpload contains the current gold prices
 type GoldPricesUpload struct {
-	Prices     []int `json:"Prices"`
-	TimeStamps []int `json:"Timestamps"`
+	Prices     []int   `json:"Prices"`
+	TimeStamps []int64 `json:"Timestamps"`
 }
 
-func (g *GoldPricesUpload) StringArray() []string {
-	var prices []string
-	for _, price := range g.Prices {
-		prices = append(prices, fmt.Sprintf("%d", price))
+func (g *GoldPricesUpload) StringArrays() [][]string {
+	result := [][]string{}
+
+	for i := range g.Prices {
+		result = append(result, []string{
+			fmt.Sprintf("%d", g.Prices[i]),
+			time.Unix(g.TimeStamps[i], 0).Format(time.RFC3339),
+		})
 	}
 
-	var tss []string
-	for _, ts := range g.TimeStamps {
-		tss = append(tss, fmt.Sprintf("%d", ts))
-	}
-
-	return []string{strings.Join(prices, ";"), strings.Join(tss, ";")}
+	return result
 }
 
 func GetGoldPricesUploadJsonKeys() []string {
 	return []string{
-		"Prices",
-		"Timestamps",
+		"Price",
+		"Timestamp",
 	}
 }

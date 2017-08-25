@@ -196,7 +196,10 @@ func subscribeGoldPricesIngest(nc *nats.Conn) {
 				if err := json.Unmarshal(msg.Data, gp); err != nil {
 					fmt.Printf("%v\n", err)
 				}
-				saveToCSVFile(gp.StringArray(), lib.NatsGoldPricesIngest)
+				sas := gp.StringArrays()
+				for _, sa := range sas {
+					saveToCSVFile(sa, lib.NatsGoldPricesIngest)
+				}
 			}
 		}
 	}
@@ -221,7 +224,10 @@ func subscribeGoldPricesDeduped(nc *nats.Conn) {
 				if err := json.Unmarshal(msg.Data, gp); err != nil {
 					fmt.Printf("%v\n", err)
 				}
-				saveToCSVFile(gp.StringArray(), lib.NatsGoldPricesIngest)
+				sas := gp.StringArrays()
+				for _, sa := range sas {
+					saveToCSVFile(sa, lib.NatsGoldPricesIngest)
+				}
 			}
 		}
 	}
