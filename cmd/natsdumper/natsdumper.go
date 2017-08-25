@@ -1,19 +1,84 @@
 package main
 
 import (
+	"encoding/csv"
 	"encoding/json"
 	"flag"
 	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
+	"time"
 
 	nats "github.com/nats-io/go-nats"
 	"github.com/regner/albiondata-client/lib"
 )
 
 var (
-	natsURL      string
-	natsChannels string
+	natsURL         string
+	natsChannels    string
+	saveLocally     bool
+	saveLocallyPath string
+	csvPerMessage   bool
+	timestamp       string = "_" + time.Now().Format("20060102150405")
 )
+
+func fileExists(filename string) bool {
+	if _, err := os.Stat(filename); os.IsNotExist(err) {
+		return false
+	}
+
+	return true
+}
+
+func writeDataToFile(msg []string, identification string, filename string) bool {
+	fExists := fileExists(filename)
+
+	file, err := os.OpenFile(filename, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0660)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return false
+	}
+	defer file.Close()
+
+	csvWriter := csv.NewWriter(file)
+
+	if !fExists {
+		var jsonKeys []string
+		switch identification {
+		case lib.NatsGoldPricesDeduped, lib.NatsGoldPricesIngest:
+			jsonKeys = lib.GetGoldPricesUploadJsonKeys()
+		case lib.NatsMarketOrdersDeduped, lib.NatsMarketOrdersIngest:
+			jsonKeys = lib.GetMarketOrderJsonKeys()
+		}
+
+		csvWriter.Write(jsonKeys)
+	}
+
+	csvWriter.Write(msg)
+	csvWriter.Flush()
+
+	return true
+}
+
+func saveToCSVFile(msg []string, identification string) {
+	if csvPerMessage {
+		timestamp = "_" + time.Now().Format("20060102150405")
+	}
+	var filename string = filepath.Join(saveLocallyPath, identification+timestamp+".csv")
+
+	absFilename, err := filepath.Abs(filename)
+	if err != nil {
+		fmt.Printf("ERROR: %v\n", err)
+		return
+	}
+	os.MkdirAll(filepath.Dir(absFilename), os.ModePerm)
+
+	if !writeDataToFile(msg, identification, absFilename) {
+		fmt.Printf("Failed to write to file %v\n", absFilename)
+		return
+	}
+}
 
 func init() {
 	flag.StringVar(
@@ -40,6 +105,20 @@ func init() {
 			lib.NatsGoldPricesIngest,
 		),
 	)
+
+	flag.StringVar(
+		&saveLocallyPath,
+		"s",
+		"",
+		"If specified all uploads will be saved locally to this folder.",
+	)
+
+	flag.BoolVar(
+		&csvPerMessage,
+		"nsf",
+		false,
+		"If specified a new csv file will be created for every incoming message.",
+	)
 }
 
 func subscribeMarketOrdersIngest(nc *nats.Conn) {
@@ -63,6 +142,9 @@ func subscribeMarketOrdersIngest(nc *nats.Conn) {
 			for _, order := range morders.Orders {
 				jb, _ := json.Marshal(order)
 				fmt.Printf("mo i %s\n", string(jb))
+				if saveLocally {
+					saveToCSVFile(order.StringArray(), lib.NatsMarketOrdersIngest)
+				}
 			}
 		}
 	}
@@ -82,6 +164,13 @@ func subscribeMarketOrdersDeduped(nc *nats.Conn) {
 		select {
 		case msg := <-marketCh:
 			fmt.Printf("mo d %s\n", string(msg.Data))
+			if saveLocally {
+				order := &lib.MarketOrder{}
+				if err := json.Unmarshal(msg.Data, order); err != nil {
+					fmt.Printf("%v\n", err)
+				}
+				saveToCSVFile(order.StringArray(), lib.NatsMarketOrdersDeduped)
+			}
 		}
 	}
 }
@@ -100,6 +189,13 @@ func subscribeGoldPricesIngest(nc *nats.Conn) {
 		select {
 		case msg := <-goldCh:
 			fmt.Printf("gp i %s\n", string(msg.Data))
+			if saveLocally {
+				gp := &lib.GoldPricesUpload{}
+				if err := json.Unmarshal(msg.Data, gp); err != nil {
+					fmt.Printf("%v\n", err)
+				}
+				saveToCSVFile(gp.StringArray(), lib.NatsGoldPricesIngest)
+			}
 		}
 	}
 }
@@ -118,6 +214,13 @@ func subscribeGoldPricesDeduped(nc *nats.Conn) {
 		select {
 		case msg := <-goldCh:
 			fmt.Printf("gp d %s\n", string(msg.Data))
+			if saveLocally {
+				gp := &lib.GoldPricesUpload{}
+				if err := json.Unmarshal(msg.Data, gp); err != nil {
+					fmt.Printf("%v\n", err)
+				}
+				saveToCSVFile(gp.StringArray(), lib.NatsGoldPricesIngest)
+			}
 		}
 	}
 }
@@ -160,6 +263,10 @@ func subscribeMapDataDeduped(nc *nats.Conn) {
 
 func main() {
 	flag.Parse()
+
+	if saveLocallyPath != "" {
+		saveLocally = true
+	}
 
 	nc, _ := nats.Connect(natsURL)
 	defer nc.Close()
