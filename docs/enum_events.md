@@ -1,4 +1,6 @@
-22: character information
-71: equipment list
-77: player logged off
-214: loot event
+| Event Name            | ID  |
+|-----------------------|-----|
+| character information |  22 |
+| equipment list        |  71 |
+| player logged off     |  77 |
+| loot event            | 214 |
