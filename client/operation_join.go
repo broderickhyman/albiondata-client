@@ -1,8 +1,9 @@
 package client
 
 import (
-	"github.com/regner/albiondata-client/log"
 	"strconv"
+
+	"github.com/regner/albiondata-client/log"
 )
 
 type operationJoinResponse struct {
