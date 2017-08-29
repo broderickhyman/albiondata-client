@@ -1,6 +1,8 @@
 package client
 
 import (
+	"strconv"
+
 	"github.com/regner/albiondata-client/log"
 )
 
@@ -14,4 +16,13 @@ type operationJoinResponse struct {
 
 func (op operationJoinResponse) Process(state *albionState, uploader iuploader) {
 	log.Debugf("Got JoinResponse operation...")
+
+	loc, err := strconv.Atoi(op.Location)
+	if err != nil {
+		log.Debugf("Unable to convert zoneID to int. Probably an instance.. ZoneID: %v", op.Location)
+		return
+	}
+
+	state.LocationId = loc
+	log.Debugf("Updating player location to %v.", loc)
 }
