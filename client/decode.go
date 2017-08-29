@@ -58,6 +58,7 @@ func decodeResponse(params map[string]interface{}) operation {
 	case 2:
 		operation := operationJoinResponse{}
 		// We have to pick out the params manually, because Decode fails because of unknown types
+		// ISSUE: https://github.com/hmadison/photon_spectator/issues/2
 		operation.CharacterName = params["2"].(string)
 		operation.CharacterPartsJSON = params["6"].(string)
 		operation.Location = params["7"].(string)
