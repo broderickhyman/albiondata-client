@@ -24,4 +24,5 @@ func (op operationJoinResponse) Process(state *albionState, uploader iuploader) 
 	}
 
 	state.LocationId = loc
+	log.Debugf("Updating player location to %v.", loc)
 }
