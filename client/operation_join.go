@@ -18,7 +18,7 @@ func (op operationJoinResponse) Process(state *albionState, uploader iuploader) 
 
 	loc, err := strconv.Atoi(op.Location)
 	if err != nil {
-		log.Debugf("Unable to convert zoneID to int. Probably an instance.. ZoneID: %v", op.ZoneID)
+		log.Debugf("Unable to convert zoneID to int. Probably an instance.. ZoneID: %v", op.Location)
 		return
 	}
 
