@@ -2,7 +2,6 @@
 
 set -eo pipefail
 
-apt-get update && apt-get install -y build-essential mingw-w64 nsis
 go get -u github.com/golang/dep/cmd/dep
 dep ensure
 
