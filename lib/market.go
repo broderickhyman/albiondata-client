@@ -34,17 +34,3 @@ func (m *MarketOrder) StringArray() []string {
 type MarketUpload struct {
 	Orders []*MarketOrder `json:"Orders"`
 }
-
-func GetMarketOrderJsonKeys() []string {
-	return []string{
-		"Id",
-		"ItemTypeId",
-		"LocationId",
-		"QualityLevel",
-		"EnchantmentLevel",
-		"UnitPriceSilver",
-		"Amount",
-		"AuctionType",
-		"Expires",
-	}
-}
