@@ -15,9 +15,69 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/getlantern/context"
+  packages = ["."]
+  revision = "624d99b1798d7c5375ea1d3ca4c5b04d58f7c775"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/getlantern/errors"
+  packages = ["."]
+  revision = "99fa440517e8f3d1e4cd8d6dbed6b41f4c1ed3d6"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/getlantern/filepersist"
+  packages = ["."]
+  revision = "c5f0cd24e7991579ba6f5f1bd20a1ad2c9f06cd4"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/getlantern/golog"
+  packages = ["."]
+  revision = "cca714f7feb5df8e455f409b549d384441ac4578"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/getlantern/hex"
+  packages = ["."]
+  revision = "083fba3033ad473db3dd31c9bb368473d37581a7"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/getlantern/hidden"
+  packages = ["."]
+  revision = "d52a649ab33af200943bb599898dbdcfdbc94cb7"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/getlantern/ops"
+  packages = ["."]
+  revision = "b70875f5d689a9438bca72aefd7142a2af889b18"
+
+[[projects]]
+  name = "github.com/getlantern/stack"
+  packages = ["."]
+  revision = "ac4c579c437a23e1a15814c867ccb82122fb383b"
+  version = "v1.5.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/getlantern/systray"
+  packages = ["."]
+  revision = "66e6fad5eea92d7adda31abfae7a5a52070dfae5"
+
+[[projects]]
+  branch = "master"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   revision = "1909bc2f63dc92bb931deace8b8312c4db72d12f"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/gonutz/w32"
+  packages = ["."]
+  revision = "6c6a6524af8dc8a64552e0b0932d0c90b8da2b9d"
 
 [[projects]]
   branch = "master"
@@ -85,6 +145,12 @@
   version = "v1.0.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/oxtoacart/bpool"
+  packages = ["."]
+  revision = "4e1c5567d7c2dd59fa4c7c83d34c2f3528b025d6"
+
+[[projects]]
   name = "github.com/pcdummy/go-githubupdate"
   packages = ["updater"]
   revision = "254d343bc0ec7869462798ee14740dc365ddadb1"
@@ -128,6 +194,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9858ef4f0da1b22629e45075bdc7c228c628e0d678a7364655827f3baed7fd1d"
+  inputs-digest = "18fd65ec36f21779770bfc4592b146b3e296b1ba2f48aa330a12d2cc4617327b"
   solver-name = "gps-cdcl"
   solver-version = 1
