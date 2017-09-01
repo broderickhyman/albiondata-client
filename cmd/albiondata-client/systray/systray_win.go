@@ -6,11 +6,37 @@ import (
 	"fmt"
 
 	"github.com/getlantern/systray"
-	"github.com/regner/albiondata-client/client"
+	"github.com/gonutz/w32"
 	"github.com/regner/albiondata-client/icon"
 )
 
 var myRUNNER func()
+
+var consoleHidden bool
+
+func hideConsole() {
+	console := w32.GetConsoleWindow()
+	if console != 0 {
+		_, consoleProcID := w32.GetWindowThreadProcessId(console)
+		if w32.GetCurrentProcessId() == consoleProcID {
+			w32.ShowWindowAsync(console, w32.SW_HIDE)
+		}
+	}
+
+	consoleHidden = true
+}
+
+func showConsole() {
+	console := w32.GetConsoleWindow()
+	if console != 0 {
+		_, consoleProcID := w32.GetWindowThreadProcessId(console)
+		if w32.GetCurrentProcessId() == consoleProcID {
+			w32.ShowWindowAsync(console, w32.SW_SHOW)
+		}
+	}
+
+	consoleHidden = false
+}
 
 func Run(runner func()) {
 	myRUNNER = runner
@@ -23,14 +49,11 @@ func onExit() {
 }
 
 func onReady() {
-	client.HideConsole()
+	hideConsole()
 	systray.SetIcon(icon.Data)
 	systray.SetTitle("Albion Data Client")
 	systray.SetTooltip("Albion Data Client")
 	mConHideShow := systray.AddMenuItem("Show Console", "Show/Hide Console")
-	if !client.CanHideConsole {
-		mConHideShow.Disable()
-	}
 	mQuit := systray.AddMenuItem("Quit", "Close the Albion Data Client")
 
 	go func() {
@@ -42,13 +65,11 @@ func onReady() {
 				fmt.Println("Finished quitting")
 
 			case <-mConHideShow.ClickedCh:
-				if client.ConsoleHidden == true {
-					client.ShowConsole()
-					client.ConsoleHidden = false
+				if consoleHidden == true {
+					showConsole()
 					mConHideShow.SetTitle("Hide Console")
 				} else {
-					client.HideConsole()
-					client.ConsoleHidden = true
+					hideConsole()
 					mConHideShow.SetTitle("Show Console")
 				}
 			}
