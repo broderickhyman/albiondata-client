@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"time"
 
@@ -20,8 +21,26 @@ var (
 	saveLocally     bool
 	saveLocallyPath string
 	csvPerMessage   bool
+	csvHeadersCache map[string][]string
 	timestamp       string = "_" + time.Now().Format("20060102150405")
 )
+
+func getJSONHeaders(value interface{}, identifier string) []string {
+	if result, ok := csvHeadersCache[identifier]; ok {
+		return result
+	}
+
+	result := []string{}
+	s := reflect.ValueOf(value).Elem()
+	typeOfT := s.Type()
+	for i := 0; i < s.NumField(); i++ {
+		result = append(result, typeOfT.Field(i).Tag.Get("json"))
+	}
+
+	csvHeadersCache[identifier] = result
+
+	return result
+}
 
 func fileExists(filename string) bool {
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
@@ -44,14 +63,15 @@ func writeDataToFile(msg []string, identification string, filename string) bool 
 	csvWriter := csv.NewWriter(file)
 
 	if !fExists {
+
 		var jsonKeys []string
 		switch identification {
 		case lib.NatsGoldPricesDeduped, lib.NatsGoldPricesIngest:
-			jsonKeys = lib.GetGoldPricesUploadJsonKeys()
+			jsonKeys = getJSONHeaders(&lib.GoldPricesUpload{}, identification)
 		case lib.NatsMarketOrdersDeduped, lib.NatsMarketOrdersIngest:
-			jsonKeys = lib.GetMarketOrderJsonKeys()
+			jsonKeys = getJSONHeaders(&lib.MarketOrder{}, identification)
 		case lib.NatsMapDataDeduped, lib.NatsMapDataIngest:
-			jsonKeys = lib.MapDataHeaders()
+			jsonKeys = getJSONHeaders(&lib.MapDataUpload{}, identification)
 		}
 
 		csvWriter.Write(jsonKeys)
@@ -100,11 +120,15 @@ func init() {
 			lib.NatsMapDataDeduped,
 		),
 		fmt.Sprintf(
-			"NATS channels to connect to, comma saperated. Can be '%s', '%s', '%s', '%s'",
-			lib.NatsMarketOrdersDeduped,
-			lib.NatsGoldPricesDeduped,
-			lib.NatsMarketOrdersIngest,
-			lib.NatsGoldPricesIngest,
+			"NATS channels to connect to, comma saperated. Can be %s",
+			strings.Join([]string{
+				lib.NatsMarketOrdersDeduped,
+				lib.NatsGoldPricesDeduped,
+				lib.NatsMapDataDeduped,
+				lib.NatsMarketOrdersIngest,
+				lib.NatsGoldPricesIngest,
+				lib.NatsMapDataIngest,
+			}, ","),
 		),
 	)
 
@@ -294,6 +318,7 @@ func main() {
 
 	if saveLocallyPath != "" {
 		saveLocally = true
+		csvHeadersCache = make(map[string][]string)
 	}
 
 	nc, _ := nats.Connect(natsURL)

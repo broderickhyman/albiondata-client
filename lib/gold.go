@@ -23,10 +23,3 @@ func (g *GoldPricesUpload) StringArrays() [][]string {
 
 	return result
 }
-
-func GetGoldPricesUploadJsonKeys() []string {
-	return []string{
-		"Price",
-		"Timestamp",
-	}
-}
