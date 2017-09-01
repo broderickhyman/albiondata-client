@@ -41,8 +41,8 @@ VIAddVersionKey "ProductVersion"	"${PACKAGE_VERSION}"
 ;--------------------------------
 
 ;Interface Settings
-!define MUI_ICON "${TOP_SRCDIR}\albiondata-client.ico"
-!define MUI_UNICON "${TOP_SRCDIR}\albiondata-client.ico"
+!define MUI_ICON "${TOP_SRCDIR}\icon\albiondata-client.ico"
+!define MUI_UNICON "${TOP_SRCDIR}\icon\albiondata-client.ico"
 
 ;--------------------------------
 ;Variables
