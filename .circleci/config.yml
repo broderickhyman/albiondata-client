@@ -3,7 +3,7 @@ jobs:
   test:
     working_directory: /go/src/github.com/regner/albiondata-client
     docker:
-      - image: circleci/golang:1.8
+      - image: circleci/golang:1.9
     steps:
       - checkout
       - run: go get golang.org/x/tools/cmd/goimports
@@ -11,7 +11,7 @@ jobs:
   build_windows:
     working_directory: /go/src/github.com/regner/albiondata-client
     docker:
-      - image: regner/golang
+      - image: pcdummy/mingw-golang:1.9
     steps:
       - checkout
       - run: make build-windows
@@ -29,7 +29,7 @@ jobs:
   build_linux:
     working_directory: /go/src/github.com/regner/albiondata-client
     docker:
-      - image: circleci/golang:1.8
+      - image: circleci/golang:1.9
     steps:
       - checkout
       - run: make build-linux
@@ -43,7 +43,7 @@ jobs:
   build_darwin:
     working_directory: /go/src/github.com/regner/albiondata-client
     docker:
-      - image: pcdummy/crossbuild-golang:1.8.3
+      - image: pcdummy/crossbuild-golang:1.9
     steps:
       - checkout
       - run: make build-darwin
@@ -57,7 +57,7 @@ jobs:
   deploy:
     working_directory: /tmp/workspace
     docker:
-      - image: circleci/golang:1.8
+      - image: circleci/golang:1.9
     steps:
       - attach_workspace:
           at: /tmp/workspace
