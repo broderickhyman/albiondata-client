@@ -8,6 +8,7 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/pcdummy/go-githubupdate/updater"
 	"github.com/regner/albiondata-client/client"
+	"github.com/regner/albiondata-client/cmd/albiondata-client/systray"
 	"github.com/regner/albiondata-client/log"
 )
 
@@ -57,7 +58,7 @@ func init() {
 	)
 }
 
-func main() {
+func runClient() {
 	flag.Parse()
 
 	if client.ConfigGlobal.VersionDump {
@@ -120,4 +121,8 @@ func main() {
 
 	c := client.NewClient()
 	c.Run()
+}
+
+func main() {
+	systray.Run(runClient)
 }
