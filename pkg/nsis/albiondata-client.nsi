@@ -6,7 +6,7 @@
 ;-----------------------------------------------
 ;Include section
 
-!include "MUI.nsh"
+!include "MUI2.nsh"
 !include "FileFunc.nsh"
 !include "LogicLib.nsh"
 
@@ -91,6 +91,14 @@ Var STARTMENU_FOLDER
 
 !insertmacro MUI_RESERVEFILE_LANGDLL
 
+
+Function .onInit
+
+  !insertmacro MUI_LANGDLL_DISPLAY
+
+FunctionEnd
+
+
 ;--------------------------------
 ;Installer Sections
 
@@ -140,6 +148,10 @@ Section $(TEXT_SecBase) SecBase
 
   SetOutPath "$INSTDIR"
   CreateShortCut "$DESKTOP\${PACKAGE_NAME}.lnk" "$INSTDIR\${PACKAGE_EXE}"
+
+; Create Task to run the Client as Admin on Logon
+  Exec 'c:\Windows\System32\schtasks.exe /Create /SC ONLOGON /RL HIGHEST /TN "Albion Data Client" /TR "$INSTDIR\albiondata-client.exe"'
+
 SectionEnd
 
 Section $(TEXT_SecWinPcap) SecWinPcap
@@ -197,3 +209,50 @@ LangString DESC_SecBase ${LANG_ENGLISH} "The core files required to run ${PACKAG
 
 LangString TEXT_SecWinPcap ${LANG_ENGLISH} "WinPCAP"
 LangString DESC_SecWinPcap ${LANG_ENGLISH} "WinPCAP Driver"
+
+
+;--------------------------------
+;Uninstaller Section
+
+Section "Uninstall"
+
+  ; Main executable
+  Delete "$INSTDIR\${PACKAGE_EXE}"
+
+  ; WinPCAP driver
+  Delete "$INSTDIR\WinPcap_4_1_3.exe"
+  Delete "$INSTDIR\LICENSE.txt"
+  Delete "$INSTDIR\uninstall.exe"
+  RmDir "$INSTDIR"
+  
+  ; Startmenu  
+  !insertmacro MUI_STARTMENU_GETFOLDER Application $STARTMENU_FOLDER
+
+  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk"
+  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\${PACKAGE_NAME}.lnk"
+
+  ;Delete empty start menu parent diretories
+  RmDir "$SMPROGRAMS\$STARTMENU_FOLDER"
+
+  ; Registry
+  DeleteRegValue HKLM "Software\${PACKAGE_NAME}" "Start Menu Folder"
+  DeleteRegValue HKLM "Software\${PACKAGE_NAME}" ""
+  DeleteRegKey /ifempty HKLM "Software\${PACKAGE_NAME}"
+
+  ; Unregister with Windows' uninstall system
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PACKAGE_NAME}"
+
+; Task
+  Exec 'c:\Windows\System32\schtasks.exe /Delete /TN "Albion Data Client" /F'
+
+SectionEnd
+
+
+;--------------------------------
+;Uninstaller Functions
+
+Function un.onInit
+
+  !insertmacro MUI_UNGETLANGUAGE
+  
+FunctionEnd
