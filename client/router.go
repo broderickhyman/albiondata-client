@@ -16,21 +16,40 @@ type Router struct {
 func newRouter() *Router {
 	uploader := iuploader(&noopUploader{})
 	if !ConfigGlobal.DisableUpload {
-		urls := strings.Split(ConfigGlobal.IngestBaseUrl, ",")
+		// PUBLIC URLs
+		urls := strings.Split(ConfigGlobal.PublicIngestBaseUrls, ",")
 		uploaders := []iuploader{}
 		for _, url := range urls {
+			if len(url) < 4 {
+				continue
+			}
+
 			if url[0:4] == "http" {
-				uploaders = append(uploaders, newHTTPUploader(url))
+				uploaders = append(uploaders, newHTTPUploader(url, false))
 			} else if url[0:4] == "nats" {
-				uploaders = append(uploaders, newNATSUploader(url))
+				uploaders = append(uploaders, newNATSUploader(url, false))
+			} else if url[0:4] == "noop" {
+				uploaders = append(uploaders, newNOOPUploader(false))
 			}
 		}
 
-		if len(uploaders) > 1 {
-			uploader = newMultiUploader(uploaders)
-		} else {
-			uploader = uploaders[0]
+		// Private URLs
+		urls = strings.Split(ConfigGlobal.PrivateIngestBaseUrls, ",")
+		for _, url := range urls {
+			if len(url) < 4 {
+				continue
+			}
+
+			if url[0:4] == "http" {
+				uploaders = append(uploaders, newHTTPUploader(url, true))
+			} else if url[0:4] == "nats" {
+				uploaders = append(uploaders, newNATSUploader(url, true))
+			} else if url[0:4] == "noop" {
+				uploaders = append(uploaders, newNOOPUploader(true))
+			}
 		}
+
+		uploader = newMultiUploader(uploaders)
 	}
 
 	return &Router{

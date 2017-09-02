@@ -55,5 +55,5 @@ func (op operationGetClusterMapInfoResponse) Process(state *albionState, uploade
 	}
 
 	log.Info("Sending market data to ingest")
-	uploader.sendToIngest(data, lib.NatsMapDataIngest)
+	uploader.sendToPublicIngest(data, lib.NatsMapDataIngest)
 }
