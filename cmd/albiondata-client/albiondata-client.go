@@ -8,8 +8,8 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/pcdummy/go-githubupdate/updater"
 	"github.com/regner/albiondata-client/client"
-	"github.com/regner/albiondata-client/cmd/albiondata-client/systray"
 	"github.com/regner/albiondata-client/log"
+	"github.com/regner/albiondata-client/systray"
 )
 
 var version string
@@ -58,7 +58,7 @@ func init() {
 	)
 }
 
-func runClient() {
+func main() {
 	flag.Parse()
 
 	if client.ConfigGlobal.VersionDump {
@@ -81,7 +81,15 @@ func runClient() {
 		client.ConfigGlobal.Offline = true
 	}
 
-	// Updater
+	startUpdater()
+
+	go systray.Run()
+
+	c := client.NewClient()
+	c.Run()
+}
+
+func startUpdater() {
 	if version != "" && !strings.Contains(version, "dev") {
 		u := updater.NewUpdater(
 			version,
@@ -118,11 +126,4 @@ func runClient() {
 			}
 		}()
 	}
-
-	c := client.NewClient()
-	c.Run()
-}
-
-func main() {
-	systray.Run(runClient)
 }

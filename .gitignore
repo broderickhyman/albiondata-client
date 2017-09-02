@@ -2,3 +2,4 @@
 vendor/
 _vendor-[0-9]*
 .vscode/
+albiondata-client.exe

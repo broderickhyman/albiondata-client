@@ -14,6 +14,5 @@ func ShowConsole() {
 	// stub
 }
 
-func Run(runner func()) {
-	runner()
+func Run() {
 }
