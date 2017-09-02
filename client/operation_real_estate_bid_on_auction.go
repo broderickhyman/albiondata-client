@@ -7,13 +7,13 @@ import (
 type operationRealEstateBidOnAuction struct {
 }
 
-func (op operationRealEstateBidOnAuction) Process(state *albionState, uploader iuploader) {
+func (op operationRealEstateBidOnAuction) Process(state *albionState) {
 	log.Debug("Got RealEstateBidOnAuction operation...")
 }
 
 type operationRealEstateBidOnAuctionResponse struct {
 }
 
-func (op operationRealEstateBidOnAuctionResponse) Process(state *albionState, uploader iuploader) {
+func (op operationRealEstateBidOnAuctionResponse) Process(state *albionState) {
 	log.Debug("Got response to RealEstateBidOnAuction operation...")
 }

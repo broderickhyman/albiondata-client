@@ -10,7 +10,7 @@ type operationGetGameServerByCluster struct {
 	ZoneID string `mapstructure:"0"`
 }
 
-func (op operationGetGameServerByCluster) Process(state *albionState, uploader iuploader) {
+func (op operationGetGameServerByCluster) Process(state *albionState) {
 	log.Debug("Got GetGameServerByCluster operation...")
 
 	zoneInt, err := strconv.Atoi(op.ZoneID)

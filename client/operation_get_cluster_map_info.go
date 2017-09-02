@@ -12,7 +12,7 @@ import (
 type operationGetClusterMapInfo struct {
 }
 
-func (op operationGetClusterMapInfo) Process(state *albionState, uploader iuploader) {
+func (op operationGetClusterMapInfo) Process(state *albionState) {
 	log.Debug("Got GetClusterMapInfo operation...")
 }
 
@@ -28,7 +28,7 @@ type operationGetClusterMapInfoResponse struct {
 	BuyPrice        []int    `mapstructure:"28"`
 }
 
-func (op operationGetClusterMapInfoResponse) Process(state *albionState, uploader iuploader) {
+func (op operationGetClusterMapInfoResponse) Process(state *albionState) {
 	log.Debug("Got response to GetClusterMapInfo operation...")
 
 	zoneInt, err := strconv.Atoi(op.ZoneID)
@@ -55,5 +55,5 @@ func (op operationGetClusterMapInfoResponse) Process(state *albionState, uploade
 	}
 
 	log.Info("Sending market data to ingest")
-	uploader.sendToPublicIngest(data, lib.NatsMapDataIngest)
+	sendMsgToPublicUploaders(data, lib.NatsMapDataIngest)
 }

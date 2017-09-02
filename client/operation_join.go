@@ -14,7 +14,7 @@ type operationJoinResponse struct {
 	GuildName          string `mapstructure:"47"`
 }
 
-func (op operationJoinResponse) Process(state *albionState, uploader iuploader) {
+func (op operationJoinResponse) Process(state *albionState) {
 	log.Debugf("Got JoinResponse operation...")
 
 	loc, err := strconv.Atoi(op.Location)

@@ -10,37 +10,22 @@ import (
 )
 
 type httpUploader struct {
-	isPrivate bool
 	baseURL   string
 	transport *http.Transport
 }
 
-func newHTTPUploader(baseURL string, isPrivate bool) iuploader {
+// newNATSUploader creates a new HTTP uploader
+func newHTTPUploader(url string) uploader {
 	return &httpUploader{
-		isPrivate: isPrivate,
-		baseURL:   baseURL,
+		baseURL:   url,
 		transport: &http.Transport{},
 	}
 }
 
-func (u *httpUploader) private() bool {
-	return u.isPrivate
-}
-
-func (u *httpUploader) sendToPrivateIngest(body []byte, queue string) {
-	if u.private() {
-		u.sendToIngest(body, queue)
-	}
-}
-
-func (u *httpUploader) sendToPublicIngest(body []byte, queue string) {
-	u.sendToIngest(body, queue)
-}
-
-func (u *httpUploader) sendToIngest(body []byte, queue string) {
+func (u *httpUploader) sendToIngest(body []byte, topic string) {
 	client := &http.Client{Transport: u.transport}
 
-	fullURL := u.baseURL + "/" + queue
+	fullURL := u.baseURL + "/" + topic
 
 	req, err := http.NewRequest("POST", fullURL, bytes.NewBuffer([]byte(body)))
 	if err != nil {
