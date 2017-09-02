@@ -29,15 +29,19 @@ func (u *httpUploader) private() bool {
 
 func (u *httpUploader) sendToPrivateIngest(body []byte, queue string) {
 	if u.private() {
-		u.sendToIngest(body, queue)
+		u.sendToIngest(body, queue, "PRIVATE")
 	}
 }
 
 func (u *httpUploader) sendToPublicIngest(body []byte, queue string) {
-	u.sendToIngest(body, queue)
+	if u.private() {
+		u.sendToIngest(body, queue, "PRIVATE")
+	} else {
+		u.sendToIngest(body, queue, "PUBLIC")
+	}
 }
 
-func (u *httpUploader) sendToIngest(body []byte, queue string) {
+func (u *httpUploader) sendToIngest(body []byte, queue string, privOrPublic string) {
 	client := &http.Client{Transport: u.transport}
 
 	fullURL := u.baseURL + "/" + queue
@@ -64,7 +68,7 @@ func (u *httpUploader) sendToIngest(body []byte, queue string) {
 	// See: https://stackoverflow.com/questions/17948827/reusing-http-connections-in-golang
 	io.Copy(ioutil.Discard, resp.Body)
 
-	log.Infof("Successfully sent ingest request to %v", u.baseURL)
+	log.Debugf("Successfully sent %s ingest request to %v", privOrPublic, u.baseURL)
 
 	defer resp.Body.Close()
 }

@@ -28,16 +28,22 @@ func (u *natsUploader) private() bool {
 
 func (u *natsUploader) sendToPrivateIngest(body []byte, queue string) {
 	if u.private() {
-		u.sendToIngest(body, queue)
+		u.sendToIngest(body, queue, "PRIVATE")
 	}
 }
 
 func (u *natsUploader) sendToPublicIngest(body []byte, queue string) {
-	u.sendToIngest(body, queue)
+	if u.private() {
+		u.sendToIngest(body, queue, "PRIVATE")
+	} else {
+		u.sendToIngest(body, queue, "PUBLIC")
+	}
 }
 
-func (u *natsUploader) sendToIngest(body []byte, queue string) {
+func (u *natsUploader) sendToIngest(body []byte, queue string, privOrPublic string) {
 	if err := u.nc.Publish(queue, body); err != nil {
 		log.Errorf("Error while sending ingest to nats with data: %v", err)
 	}
+
+	log.Debugf("Successfully sent %s ingest request to %s", privOrPublic, u.url)
 }
