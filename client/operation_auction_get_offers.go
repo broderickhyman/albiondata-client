@@ -63,5 +63,5 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState, uploader
 		return
 	}
 
-	uploader.sendToIngest(data, lib.NatsMarketOrdersIngest)
+	uploader.sendToPublicIngest(data, lib.NatsMarketOrdersIngest)
 }

@@ -10,8 +10,20 @@ func newMultiUploader(uploaders []iuploader) iuploader {
 	}
 }
 
-func (u *multiUploader) sendToIngest(body []byte, queue string) {
+func (u *multiUploader) private() bool {
+	return true
+}
+
+func (u *multiUploader) sendToPublicIngest(body []byte, queue string) {
 	for _, mu := range u.uploaders {
-		mu.sendToIngest(body, queue)
+		if mu.private() {
+			mu.sendToPublicIngest(body, queue)
+		}
+	}
+}
+
+func (u *multiUploader) sendToPrivateIngest(body []byte, queue string) {
+	for _, mu := range u.uploaders {
+		mu.sendToPrivateIngest(body, queue)
 	}
 }

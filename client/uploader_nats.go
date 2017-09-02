@@ -6,18 +6,34 @@ import (
 )
 
 type natsUploader struct {
-	url string
-	nc  *nats.Conn
+	isPrivate bool
+	url       string
+	nc        *nats.Conn
 }
 
 // newNATSUploader creates a new NATS uploader :)
-func newNATSUploader(url string) iuploader {
+func newNATSUploader(url string, isPrivate bool) iuploader {
 	nc, _ := nats.Connect(url)
 
 	return &natsUploader{
-		url: url,
-		nc:  nc,
+		isPrivate: isPrivate,
+		url:       url,
+		nc:        nc,
 	}
+}
+
+func (u *natsUploader) private() bool {
+	return u.isPrivate
+}
+
+func (u *natsUploader) sendToPrivateIngest(body []byte, queue string) {
+	if u.private() {
+		u.sendToIngest(body, queue)
+	}
+}
+
+func (u *natsUploader) sendToPublicIngest(body []byte, queue string) {
+	u.sendToIngest(body, queue)
 }
 
 func (u *natsUploader) sendToIngest(body []byte, queue string) {

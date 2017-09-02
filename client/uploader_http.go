@@ -10,15 +10,31 @@ import (
 )
 
 type httpUploader struct {
+	isPrivate bool
 	baseURL   string
 	transport *http.Transport
 }
 
-func newHTTPUploader(baseURL string) iuploader {
+func newHTTPUploader(baseURL string, isPrivate bool) iuploader {
 	return &httpUploader{
+		isPrivate: isPrivate,
 		baseURL:   baseURL,
 		transport: &http.Transport{},
 	}
+}
+
+func (u *httpUploader) private() bool {
+	return u.isPrivate
+}
+
+func (u *httpUploader) sendToPrivateIngest(body []byte, queue string) {
+	if u.private() {
+		u.sendToIngest(body, queue)
+	}
+}
+
+func (u *httpUploader) sendToPublicIngest(body []byte, queue string) {
+	u.sendToIngest(body, queue)
 }
 
 func (u *httpUploader) sendToIngest(body []byte, queue string) {
@@ -48,7 +64,7 @@ func (u *httpUploader) sendToIngest(body []byte, queue string) {
 	// See: https://stackoverflow.com/questions/17948827/reusing-http-connections-in-golang
 	io.Copy(ioutil.Discard, resp.Body)
 
-	log.Infof("Successfully sent ingest request to %v", ConfigGlobal.IngestBaseUrl)
+	log.Infof("Successfully sent ingest request to %v", u.baseURL)
 
 	defer resp.Body.Close()
 }
