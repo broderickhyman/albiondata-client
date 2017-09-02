@@ -16,14 +16,14 @@ func (u *multiUploader) private() bool {
 
 func (u *multiUploader) sendToPublicIngest(body []byte, queue string) {
 	for _, mu := range u.uploaders {
-		if mu.private() {
-			mu.sendToPublicIngest(body, queue)
-		}
+		mu.sendToPublicIngest(body, queue)
 	}
 }
 
 func (u *multiUploader) sendToPrivateIngest(body []byte, queue string) {
 	for _, mu := range u.uploaders {
-		mu.sendToPrivateIngest(body, queue)
+		if mu.private() {
+			mu.sendToPrivateIngest(body, queue)
+		}
 	}
 }
