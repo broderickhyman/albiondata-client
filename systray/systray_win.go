@@ -4,6 +4,7 @@ package systray
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/getlantern/systray"
 	"github.com/gonutz/w32"
@@ -58,6 +59,7 @@ func onReady() {
 			case <-mQuit.ClickedCh:
 				fmt.Println("Requesting quit")
 				systray.Quit()
+				os.Exit(0)
 				fmt.Println("Finished quitting")
 
 			case <-mConHideShow.ClickedCh:
