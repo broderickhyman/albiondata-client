@@ -10,8 +10,6 @@ import (
 	"github.com/regner/albiondata-client/icon"
 )
 
-var myRUNNER func()
-
 var consoleHidden bool
 
 func hideConsole() {
@@ -38,9 +36,7 @@ func showConsole() {
 	consoleHidden = false
 }
 
-func Run(runner func()) {
-	myRUNNER = runner
-
+func Run() {
 	systray.Run(onReady, onExit)
 }
 
@@ -56,7 +52,7 @@ func onReady() {
 	mConHideShow := systray.AddMenuItem("Show Console", "Show/Hide Console")
 	mQuit := systray.AddMenuItem("Quit", "Close the Albion Data Client")
 
-	go func() {
+	func() {
 		for {
 			select {
 			case <-mQuit.ClickedCh:
@@ -77,6 +73,4 @@ func onReady() {
 		}
 
 	}()
-
-	myRUNNER()
 }
