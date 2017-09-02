@@ -1,0 +1,43 @@
+# Enable debug mode or not. Prints lots of extra information
+# for developers.
+debug: false
+
+# Disable all ingests. Easier than commenting out all the
+# different ingests. Mostly used by people doing testing
+# on the test server.
+disableIngests: false
+
+# We try to detect what device to use, but if you know
+# and want to make sure it gets used specify it here.
+# Useful when the auto-detection has an issue.
+#listenDevice: "eth0"
+
+# A list of ingests to use for public information.
+# Please don't remove the albion-data one as it powers
+# many different websites with market, map, and gold
+# information.
+publicIngests:
+  - nats://public:notsecure@ingest.albion-data.com:4222/
+
+# A list of ingests to send private informaiton to.
+# There is a lot of private information that gets sent
+# to these so ONLY add them if you trust the person running
+# the server. Do not add random servers here just
+# because some random forum warrior suggested it.
+#privateIngests:
+#  - "nats://private-nats-server.com:4222"
+#  - "https://private-http-server.com"
+
+# The local websocket server is used by other applications
+# to gather private data. This is a convenience thing
+# so that ever application doesn't have to re-implement
+# all the work we have done. Disabling it is usually
+# done for testing and development reasons.
+disableWebsocket: false
+
+# The port the websocket server should operate on. This
+# is mostly for developers that need to run the real
+# client and a development version they are testing.
+# Changing this is dangerous as other applications
+# wont know where to find it if you change it.
+websocketPort: 8099
