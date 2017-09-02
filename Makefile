@@ -1,9 +1,6 @@
 run:
 	scripts/run.sh
 
-test:
-	scripts/runtests.sh
-
 fmt:
 	scripts/fmt.sh
 

@@ -32,7 +32,7 @@ Downloads can be found here: https://github.com/Regner/albiondata-client/release
 - Install dependencies using `dep ensure`
 
 ### Windows Setup
-[Windows Setup Guide](docs/building_in_windows.md)
+[Windows Setup Guide](https://github.com/Regner/albiondata-client/wiki/Building-in-Windows
 
 # License
 This project, and all contributed code, are licensed under the MIT
