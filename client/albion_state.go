@@ -1,5 +1,8 @@
 package client
 
 type albionState struct {
-	LocationId int
+	LocationId        int
+	CharacterId       string
+	CharacterIdBase64 string
+	CharacterName     string
 }

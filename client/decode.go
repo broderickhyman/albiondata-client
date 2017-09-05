@@ -93,3 +93,21 @@ func decodeResponse(params map[string]interface{}) operation {
 
 	return nil
 }
+
+func decodeEvent(params map[string]interface{}) operation {
+	if _, ok := params["252"]; !ok {
+		return nil
+	}
+
+	eventType := params["252"].(int16)
+
+	switch eventType {
+	case 114:
+		operation := eventSkillData{}
+		mapstructure.Decode(params, &operation)
+
+		return operation
+	}
+
+	return nil
+}
