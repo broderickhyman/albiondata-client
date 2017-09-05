@@ -4,6 +4,7 @@
 
 [[constraint]]
   name = "github.com/google/gopacket"
+  revision = "8af772c0bcc826f671fd7c133917fec9686d720d"
 
 [[constraint]]
   name = "github.com/hmadison/photon_spectator"
@@ -22,6 +23,7 @@
 [[constraint]]
   name = "github.com/shirou/gopsutil"
   source = "https://github.com/gradiuscypher/gopsutil.git"
+  revision = "d573c8e3f1c5337585b0e285214e80df7429d8b5"
 
 [[constraint]]
   name = "golang.org/x/tools"
