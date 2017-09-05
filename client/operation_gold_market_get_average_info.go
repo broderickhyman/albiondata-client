@@ -10,7 +10,7 @@ import (
 type operationGoldMarketGetAverageInfo struct {
 }
 
-func (op operationGoldMarketGetAverageInfo) Process(state *albionState, uploader iuploader) {
+func (op operationGoldMarketGetAverageInfo) Process(state *albionState) {
 	log.Debug("Got GoldMarketGetAverageInfo operation...")
 }
 
@@ -19,7 +19,7 @@ type operationGoldMarketGetAverageInfoResponse struct {
 	TimeStamps []int64 `mapstructure:"1"`
 }
 
-func (op operationGoldMarketGetAverageInfoResponse) Process(state *albionState, uploader iuploader) {
+func (op operationGoldMarketGetAverageInfoResponse) Process(state *albionState) {
 	log.Debug("Got response to GoldMarketGetAverageInfo operation...")
 
 	data, err := json.Marshal(lib.GoldPricesUpload{
@@ -33,5 +33,5 @@ func (op operationGoldMarketGetAverageInfoResponse) Process(state *albionState, 
 	}
 
 	log.Info("Sending gold prices to ingest")
-	uploader.sendToPublicIngest(data, lib.NatsGoldPricesIngest)
+	sendMsgToPublicUploaders(data, lib.NatsGoldPricesIngest)
 }

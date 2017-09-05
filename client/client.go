@@ -18,6 +18,8 @@ func (client *Client) Run() {
 	log.Info("Starting the Albion Data Client...")
 	log.Info("This is a third-party application and is in no way affiliated with Sandbox Interactive or Albion Online.")
 
+	createDispatcher()
+
 	if ConfigGlobal.Offline {
 		processOfflinePcap(ConfigGlobal.OfflinePath)
 	} else {

@@ -11,7 +11,7 @@ type operationAuctionGetRequestsResponse struct {
 	MarketOrders []string `mapstructure:"0"`
 }
 
-func (op operationAuctionGetRequestsResponse) Process(state *albionState, uploader iuploader) {
+func (op operationAuctionGetRequestsResponse) Process(state *albionState) {
 	log.Debug("Got response to AuctionGetOffers operation...")
 
 	if state.LocationId == 0 {
@@ -49,5 +49,5 @@ func (op operationAuctionGetRequestsResponse) Process(state *albionState, upload
 		return
 	}
 
-	uploader.sendToPublicIngest(data, lib.NatsMarketOrdersIngest)
+	sendMsgToPublicUploaders(data, lib.NatsMarketOrdersIngest)
 }

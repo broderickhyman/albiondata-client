@@ -10,41 +10,22 @@ import (
 )
 
 type httpUploader struct {
-	isPrivate bool
 	baseURL   string
 	transport *http.Transport
 }
 
-func newHTTPUploader(baseURL string, isPrivate bool) iuploader {
+// newNATSUploader creates a new HTTP uploader
+func newHTTPUploader(url string) uploader {
 	return &httpUploader{
-		isPrivate: isPrivate,
-		baseURL:   baseURL,
+		baseURL:   url,
 		transport: &http.Transport{},
 	}
 }
 
-func (u *httpUploader) private() bool {
-	return u.isPrivate
-}
-
-func (u *httpUploader) sendToPrivateIngest(body []byte, queue string) {
-	if u.private() {
-		u.sendToIngest(body, queue, "PRIVATE")
-	}
-}
-
-func (u *httpUploader) sendToPublicIngest(body []byte, queue string) {
-	if u.private() {
-		u.sendToIngest(body, queue, "PRIVATE")
-	} else {
-		u.sendToIngest(body, queue, "PUBLIC")
-	}
-}
-
-func (u *httpUploader) sendToIngest(body []byte, queue string, privOrPublic string) {
+func (u *httpUploader) sendToIngest(body []byte, topic string) {
 	client := &http.Client{Transport: u.transport}
 
-	fullURL := u.baseURL + "/" + queue
+	fullURL := u.baseURL + "/" + topic
 
 	req, err := http.NewRequest("POST", fullURL, bytes.NewBuffer([]byte(body)))
 	if err != nil {
@@ -68,7 +49,7 @@ func (u *httpUploader) sendToIngest(body []byte, queue string, privOrPublic stri
 	// See: https://stackoverflow.com/questions/17948827/reusing-http-connections-in-golang
 	io.Copy(ioutil.Discard, resp.Body)
 
-	log.Debugf("Successfully sent %s ingest request to %v", privOrPublic, u.baseURL)
+	log.Infof("Successfully sent ingest request to %v", u.baseURL)
 
 	defer resp.Body.Close()
 }

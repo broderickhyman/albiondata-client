@@ -8,7 +8,7 @@ type operationRealEstateGetAuctionData struct {
 	PlotID int `mapstructure:"0"`
 }
 
-func (op operationRealEstateGetAuctionData) Process(state *albionState, uploader iuploader) {
+func (op operationRealEstateGetAuctionData) Process(state *albionState) {
 	log.Debug("Got RealEstateGetAuctionData operation...")
 }
 
@@ -20,6 +20,6 @@ type operationRealEstateGetAuctionDataResponse struct {
 	AuctionEndTime    int    `mapstructure:"4"`
 }
 
-func (op operationRealEstateGetAuctionDataResponse) Process(state *albionState, uploader iuploader) {
+func (op operationRealEstateGetAuctionDataResponse) Process(state *albionState) {
 	log.Debug("Got response to RealEstateGetAuctionData operation...")
 }
