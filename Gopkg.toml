@@ -17,7 +17,7 @@
   name = "github.com/mitchellh/mapstructure"
 
 [[constraint]]
-  name = "github.com/pcdummy/go-githubupdate"
+  name = "github.com/albiondata/go-githubupdate"
   version = "0.0.3"
 
 [[constraint]]
