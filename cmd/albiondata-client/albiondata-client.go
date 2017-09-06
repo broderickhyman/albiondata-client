@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/pcdummy/go-githubupdate/updater"
+	"github.com/albiondata/go-githubupdate/updater"
 	"github.com/regner/albiondata-client/client"
 	"github.com/regner/albiondata-client/log"
 	"github.com/regner/albiondata-client/systray"
