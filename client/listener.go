@@ -135,5 +135,10 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 			l.router.newOperation <- operation
 		}
 	case photon.EventDataType:
+		operation := decodeEvent(params)
+
+		if operation != nil {
+			l.router.newOperation <- operation
+		}
 	}
 }
