@@ -30,6 +30,40 @@ func (m *MarketOrder) StringArray() []string {
 	}
 }
 
+const (
+	SalesTax = 0.02
+)
+
+type MarketNotificationType string
+
+const (
+	SalesNotification  MarketNotificationType = "SalesNotification"
+	ExpiryNotification                        = "ExpiryNotification"
+)
+
+type MarketNotification interface {
+	Type() MarketNotificationType
+}
+
+type MarketSellNotification struct {
+	MailID          int     `json:"Id"`
+	BuyerName       string  `json:"BuyerName"`
+	ItemID          string  `json:"ItemTypeId"`
+	Amount          int     `json:"Amount"`
+	Price           int     `json:"UnitPriceSilver"`
+	TotalAfterTaxes float32 `json:"TotalAfterTaxes"`
+}
+
+func (m *MarketSellNotification) Type() MarketNotificationType {
+	return SalesNotification
+}
+
+type MarketNotificationUpload struct {
+	PrivateUpload
+	Type         MarketNotificationType `json: "NotificationType"`
+	Notification MarketNotification     `json:"Notification"`
+}
+
 // MarketUpload contains a list of orders
 type MarketUpload struct {
 	Orders []*MarketOrder `json:"Orders"`
