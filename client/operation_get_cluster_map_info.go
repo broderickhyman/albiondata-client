@@ -1,8 +1,6 @@
 package client
 
 import (
-	"encoding/json"
-
 	"strconv"
 
 	"github.com/regner/albiondata-client/lib"
@@ -37,7 +35,7 @@ func (op operationGetClusterMapInfoResponse) Process(state *albionState) {
 		return
 	}
 
-	data, err := json.Marshal(lib.MapDataUpload{
+	upload := lib.MapDataUpload{
 		ZoneID:          zoneInt,
 		BuildingType:    op.BuildingType,
 		AvailableFood:   op.AvailableFood,
@@ -47,13 +45,8 @@ func (op operationGetClusterMapInfoResponse) Process(state *albionState) {
 		Buildable:       op.Buildable,
 		IsForSale:       op.IsForSale,
 		BuyPrice:        op.BuyPrice,
-	})
-
-	if err != nil {
-		log.Errorf("Error while marshalling payload for market data: %v", err)
-		return
 	}
 
-	log.Info("Sending market data to ingest")
-	sendMsgToPublicUploaders(data, lib.NatsMapDataIngest)
+	log.Info("Sending map data to ingest")
+	sendMsgToPublicUploaders(upload, lib.NatsMapDataIngest, state)
 }

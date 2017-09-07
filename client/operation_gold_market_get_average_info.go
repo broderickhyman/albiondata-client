@@ -1,8 +1,6 @@
 package client
 
 import (
-	"encoding/json"
-
 	"github.com/regner/albiondata-client/lib"
 	"github.com/regner/albiondata-client/log"
 )
@@ -22,16 +20,11 @@ type operationGoldMarketGetAverageInfoResponse struct {
 func (op operationGoldMarketGetAverageInfoResponse) Process(state *albionState) {
 	log.Debug("Got response to GoldMarketGetAverageInfo operation...")
 
-	data, err := json.Marshal(lib.GoldPricesUpload{
+	upload := lib.GoldPricesUpload{
 		Prices:     op.GoldPrices,
 		TimeStamps: op.TimeStamps,
-	})
-
-	if err != nil {
-		log.Errorf("Error while marshalling payload for gold prices: %v", err)
-		return
 	}
 
 	log.Info("Sending gold prices to ingest")
-	sendMsgToPublicUploaders(data, lib.NatsGoldPricesIngest)
+	sendMsgToPublicUploaders(upload, lib.NatsGoldPricesIngest, state)
 }
