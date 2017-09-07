@@ -66,7 +66,7 @@ func sendMsgToPublicUploaders(upload interface{}, topic string, state *albionSta
 
 func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, state *albionState) {
 	if state.CharacterName == "" || state.CharacterId == "" {
-		log.Error("The player name or id has not yet been set. Please transition zones so the name can be identified.")
+		log.Error("The player name or id has not been set. Please restart the game and make sure the client is running.")
 		return
 	}
 
