@@ -119,26 +119,26 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 	params, err := photon.DecodeReliableMessage(msg)
 	if err != nil {
 		log.Debugf("Error while decoding parameters: %v", err)
+		// reset error message
+		err = nil
 	}
+
+	var operation operation
 
 	switch msg.Type {
 	case photon.OperationRequest:
-		operation := decodeRequest(params)
-
-		if operation != nil {
-			l.router.newOperation <- operation
-		}
+		operation, err = decodeRequest(params)
 	case photon.OperationResponse:
-		operation := decodeResponse(params)
-
-		if operation != nil {
-			l.router.newOperation <- operation
-		}
+		operation, err = decodeResponse(params)
 	case photon.EventDataType:
-		operation := decodeEvent(params)
+		operation, err = decodeEvent(params)
+	}
 
-		if operation != nil {
-			l.router.newOperation <- operation
-		}
+	if err != nil {
+		log.Debugf("Error while decoding an event or operation: %v", err)
+	}
+
+	if operation != nil {
+		l.router.newOperation <- operation
 	}
 }

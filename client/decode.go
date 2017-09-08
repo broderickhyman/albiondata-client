@@ -9,127 +9,90 @@ import (
 	"github.com/regner/albiondata-client/log"
 )
 
-func decodeRequest(params map[string]interface{}) operation {
+func decodeRequest(params map[string]interface{}) (operation operation, err error) {
 	if _, ok := params["253"]; !ok {
-		return nil
+		return nil, nil
 	}
 
 	code := params["253"].(int16)
 
 	switch code {
 	case 10:
-		operation := operationGetGameServerByCluster{}
-		mapstructure.Decode(params, &operation)
-
-		return operation
+		operation = &operationGetGameServerByCluster{}
 	case 67:
-		operation := operationAuctionGetOffers{}
-		mapstructure.Decode(params, &operation)
-
-		return operation
+		operation = &operationAuctionGetOffers{}
 	case 166:
-		operation := operationGetClusterMapInfo{}
-		mapstructure.Decode(params, &operation)
-
-		return operation
+		operation = &operationGetClusterMapInfo{}
 	case 217:
-		operation := operationGoldMarketGetAverageInfo{}
-		mapstructure.Decode(params, &operation)
-
-		return operation
+		operation = &operationGoldMarketGetAverageInfo{}
 	case 232:
-		operation := operationRealEstateGetAuctionData{}
-		mapstructure.Decode(params, &operation)
-
-		return operation
+		operation = &operationRealEstateGetAuctionData{}
 	case 233:
-		operation := operationRealEstateBidOnAuction{}
-		mapstructure.Decode(params, &operation)
-
-		return operation
+		operation = &operationRealEstateBidOnAuction{}
+	default:
+		return nil, nil
 	}
 
-	return nil
+	err = decodeParams(params, operation)
+
+	return operation, err
 }
 
-func decodeResponse(params map[string]interface{}) operation {
+func decodeResponse(params map[string]interface{}) (operation operation, err error) {
 	if _, ok := params["253"]; !ok {
-		return nil
+		return nil, nil
 	}
 
 	code := params["253"].(int16)
 
 	switch code {
 	case 2:
-		operation := operationJoinResponse{}
-		decodeParams(params, &operation)
-		return operation
+		operation = &operationJoinResponse{}
 	case 67:
-		operation := operationAuctionGetOffersResponse{}
-		mapstructure.Decode(params, &operation)
-
-		return operation
+		operation = &operationAuctionGetOffersResponse{}
 	case 68:
-		operation := operationAuctionGetRequestsResponse{}
-		mapstructure.Decode(params, &operation)
-
-		return operation
-
+		operation = &operationAuctionGetRequestsResponse{}
 	case 147:
-		operation := operationReadMail{}
-		mapstructure.Decode(params, &operation)
-		return operation
-
+		operation = &operationReadMail{}
 	case 166:
-		operation := operationGetClusterMapInfoResponse{}
-		mapstructure.Decode(params, &operation)
-
-		return operation
+		operation = &operationGetClusterMapInfoResponse{}
 	case 217:
-		operation := operationGoldMarketGetAverageInfoResponse{}
-		mapstructure.Decode(params, &operation)
-
-		return operation
+		operation = &operationGoldMarketGetAverageInfoResponse{}
 	case 232:
-		operation := operationRealEstateGetAuctionDataResponse{}
-		mapstructure.Decode(params, &operation)
-
-		return operation
+		operation = &operationRealEstateGetAuctionDataResponse{}
 	case 233:
-		operation := operationRealEstateBidOnAuctionResponse{}
-		mapstructure.Decode(params, &operation)
-
-		return operation
+		operation = &operationRealEstateBidOnAuctionResponse{}
+	default:
+		return nil, nil
 	}
 
-	return nil
+	err = decodeParams(params, operation)
+
+	return operation, err
 }
 
-func decodeEvent(params map[string]interface{}) operation {
+func decodeEvent(params map[string]interface{}) (event operation, err error) {
 	if _, ok := params["252"]; !ok {
-		return nil
+		return nil, nil
 	}
 
 	eventType := params["252"].(int16)
 
 	switch eventType {
 	case 77:
-		event := eventPlayerOnlineStatus{}
-		err := decodeParams(params, &event)
-		log.Debug(err)
-
-		return event
+		event = &eventPlayerOnlineStatus{}
 	case 114:
-		event := eventSkillData{}
-		mapstructure.Decode(params, &event)
-
-		return event
+		event = &eventSkillData{}
+	default:
+		return nil, nil
 	}
 
-	return nil
+	err = decodeParams(params, event)
+
+	return event, err
 }
 
-func decodeParams(params interface{}, out interface{}) error {
+func decodeParams(params interface{}, operation operation) error {
 	convertGameObjects := func(from reflect.Type, to reflect.Type, v interface{}) (interface{}, error) {
 		if from == reflect.TypeOf([]int8{}) && to == reflect.TypeOf(lib.CharacterID("")) {
 			log.Debug("Parsing character ID from mixed-endian UUID")
@@ -142,7 +105,7 @@ func decodeParams(params interface{}, out interface{}) error {
 
 	config := mapstructure.DecoderConfig{
 		DecodeHook: convertGameObjects,
-		Result:     out,
+		Result:     operation,
 	}
 
 	decoder, err := mapstructure.NewDecoder(&config)
@@ -150,7 +113,9 @@ func decodeParams(params interface{}, out interface{}) error {
 		return err
 	}
 
-	return decoder.Decode(params)
+	err = decoder.Decode(params)
+
+	return err
 }
 
 func decodeCharacterID(array []int8) lib.CharacterID {

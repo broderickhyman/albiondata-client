@@ -13,7 +13,4 @@ type eventPlayerOnlineStatus struct {
 
 func (event eventPlayerOnlineStatus) Process(state *albionState) {
 	log.Debug("Got player online status event...")
-
-	log.Debug(event)
-
 }

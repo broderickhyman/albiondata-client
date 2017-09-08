@@ -54,8 +54,18 @@ type MarketSellNotification struct {
 	TotalAfterTaxes float32 `json:"TotalAfterTaxes"`
 }
 
+type MarketExpiryNotification struct {
+	MailID int    `json:"Id"`
+	ItemID string `json:"ItemTypeId"`
+	Amount int    `json:"Amount"`
+}
+
 func (m *MarketSellNotification) Type() MarketNotificationType {
 	return SalesNotification
+}
+
+func (m *MarketExpiryNotification) Type() MarketNotificationType {
+	return ExpiryNotification
 }
 
 type MarketNotificationUpload struct {
