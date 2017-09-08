@@ -14,7 +14,7 @@ type httpUploader struct {
 	transport *http.Transport
 }
 
-// newNATSUploader creates a new HTTP uploader
+// newHTTPUploader creates a new HTTP uploader
 func newHTTPUploader(url string) uploader {
 	return &httpUploader{
 		baseURL:   url,

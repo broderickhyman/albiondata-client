@@ -1,10 +1,12 @@
 package client
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"strings"
 
+	"github.com/regner/albiondata-client/lib"
 	"github.com/regner/albiondata-client/log"
 )
 
@@ -50,15 +52,34 @@ func createUploaders(targets []string) []uploader {
 	return uploaders
 }
 
-func sendMsgToPublicUploaders(msg []byte, topic string) {
-	sendMsgToUploaders(msg, topic, dis.publicUploaders)
-	sendMsgToUploaders(msg, topic, dis.privateUploaders)
-	sendMsgToWebSockets(msg, topic)
+func sendMsgToPublicUploaders(upload interface{}, topic string, state *albionState) {
+	data, err := json.Marshal(upload)
+	if err != nil {
+		log.Errorf("Error while marshalling payload for %v: %v", err, topic)
+		return
+	}
+
+	sendMsgToUploaders(data, topic, dis.publicUploaders)
+	sendMsgToUploaders(data, topic, dis.privateUploaders)
+	sendMsgToWebSockets(data, topic)
 }
 
-func sendMsgToPrivateUploaders(msg []byte, topic string) {
-	sendMsgToUploaders(msg, topic, dis.privateUploaders)
-	sendMsgToWebSockets(msg, topic)
+func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, state *albionState) {
+	if state.CharacterName == "" || state.CharacterId == "" {
+		log.Error("The player name or id has not been set. Please restart the game and make sure the client is running.")
+		return
+	}
+
+	upload.Personalize(state.CharacterId, state.CharacterName)
+
+	data, err := json.Marshal(upload)
+	if err != nil {
+		log.Errorf("Error while marshalling payload for %v: %v", err, topic)
+		return
+	}
+
+	sendMsgToUploaders(data, topic, dis.privateUploaders)
+	sendMsgToWebSockets(data, topic)
 }
 
 func sendMsgToUploaders(msg []byte, topic string, uploaders []uploader) {

@@ -1,7 +1,6 @@
 package client
 
 import (
-	"encoding/json"
 	"strconv"
 
 	"github.com/regner/albiondata-client/lib"
@@ -17,11 +16,6 @@ type eventSkillData struct {
 
 func (event eventSkillData) Process(state *albionState) {
 	log.Debug("Got skill data event...")
-
-	if state.CharacterName == "" {
-		log.Error("The player name has not yet been set. Please transition zones so the name can be identified.")
-		return
-	}
 
 	skills := []*lib.Skill{}
 
@@ -45,19 +39,11 @@ func (event eventSkillData) Process(state *albionState) {
 		return
 	}
 
+	upload := lib.SkillsUpload{
+		Skills: skills,
+	}
+
 	log.Infof("Sending %d skills of %v to ingest", len(skills), state.CharacterName)
 
-	ingestRequest := lib.SkillsUpload{
-		CharacterId:   state.CharacterId,
-		CharacterName: state.CharacterName,
-		Skills:        skills,
-	}
-
-	data, err := json.Marshal(ingestRequest)
-	if err != nil {
-		log.Errorf("Error while marshalling payload for skills: %v", err)
-		return
-	}
-
-	sendMsgToPrivateUploaders(data, lib.NatsSkillData)
+	sendMsgToPrivateUploaders(&upload, lib.NatsSkillData, state)
 }

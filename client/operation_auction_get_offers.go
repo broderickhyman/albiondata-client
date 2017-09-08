@@ -51,17 +51,10 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState) {
 		return
 	}
 
-	log.Infof("Sending %d market offers to ingest", len(orders))
-
-	ingestRequest := lib.MarketUpload{
+	upload := lib.MarketUpload{
 		Orders: orders,
 	}
 
-	data, err := json.Marshal(ingestRequest)
-	if err != nil {
-		log.Errorf("Error while marshalling payload for market orders: %v", err)
-		return
-	}
-
-	sendMsgToPublicUploaders(data, lib.NatsMarketOrdersIngest)
+	log.Infof("Sending %d market offers to ingest", len(orders))
+	sendMsgToPublicUploaders(upload, lib.NatsMarketOrdersIngest, state)
 }

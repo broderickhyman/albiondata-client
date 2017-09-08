@@ -10,7 +10,6 @@ type Skill struct {
 
 // SkillsUpload contains a list of skills
 type SkillsUpload struct {
-	CharacterId   string   `json:"CharacterId"`
-	CharacterName string   `json:"CharacterName"`
-	Skills        []*Skill `json:"Skills"`
+	PrivateUpload
+	Skills []*Skill `json:"Skills"`
 }
