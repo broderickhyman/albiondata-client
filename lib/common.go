@@ -24,10 +24,7 @@ type PersonalizedUpload interface {
 // Represents a character identifier in its UUID-style string format
 type CharacterID string
 
-// Represents a character identifier in its pseudo-base64 format
-type CharacterIDBase64 string
-
-func (c *CharacterID) Base64() (CharacterIDBase64, error) {
+func (c *CharacterID) Base64() (string, error) {
 	// since it is now properly formatted, we can use the UUID packet
 	UUID, err := uuid.Parse(string(*c))
 	if err != nil {
@@ -46,5 +43,5 @@ func (c *CharacterID) Base64() (CharacterIDBase64, error) {
 	b64 = strings.Replace(b64, "+", "-", -1)
 	b64 = strings.Replace(b64, "/", "_", -1)
 
-	return CharacterIDBase64(b64), nil
+	return b64, nil
 }
