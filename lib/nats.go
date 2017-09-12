@@ -10,5 +10,6 @@ const (
 	NatsMapDataDeduped      = "mapdata.deduped"
 
 	// Private Topics
-	NatsSkillData = "skills"
+	NatsSkillData           = "skills"
+	NatsMarketNotifications = "marketnotifications"
 )

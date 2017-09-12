@@ -44,6 +44,5 @@ func (event eventSkillData) Process(state *albionState) {
 	}
 
 	log.Infof("Sending %d skills of %v to ingest", len(skills), state.CharacterName)
-
 	sendMsgToPrivateUploaders(&upload, lib.NatsSkillData, state)
 }

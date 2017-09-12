@@ -1,8 +1,11 @@
 package client
 
+import (
+	"github.com/regner/albiondata-client/lib"
+)
+
 type albionState struct {
-	LocationId        int
-	CharacterId       string
-	CharacterIdBase64 string
-	CharacterName     string
+	LocationId    int
+	CharacterId   lib.CharacterID
+	CharacterName string
 }
