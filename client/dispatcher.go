@@ -8,6 +8,7 @@ import (
 
 	"github.com/regner/albiondata-client/lib"
 	"github.com/regner/albiondata-client/log"
+	"github.com/regner/albiondata-client/notification"
 )
 
 type dispatcher struct {
@@ -67,6 +68,7 @@ func sendMsgToPublicUploaders(upload interface{}, topic string, state *albionSta
 func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, state *albionState) {
 	if state.CharacterName == "" || state.CharacterId == "" {
 		log.Error("The player name or id has not been set. Please restart the game and make sure the client is running.")
+		notification.Push("The player name or id has not been set. Please restart the game and make sure the client is running.")
 		return
 	}
 
