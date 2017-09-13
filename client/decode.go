@@ -79,6 +79,18 @@ func decodeEvent(params map[string]interface{}) (event operation, err error) {
 	eventType := params["252"].(int16)
 
 	switch eventType {
+	case 23:
+		event = &eventEquipmentItem{}
+	case 24:
+		event = &eventStackableItem{}
+	case 25:
+		event = &eventFurnitureItem{}
+	case 26:
+		event = &eventJournalItem{}
+	case 42:
+		event = &eventBankContainerContents{}
+	case 75:
+		event = &eventGenericContainerContents{}
 	case 77:
 		event = &eventPlayerOnlineStatus{}
 	case 114:

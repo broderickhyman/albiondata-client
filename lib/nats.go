@@ -10,6 +10,8 @@ const (
 	NatsMapDataDeduped      = "mapdata.deduped"
 
 	// Private Topics
-	NatsSkillData           = "skills"
-	NatsMarketNotifications = "marketnotifications"
+	NatsSkillData            = "skills"
+	NatsMarketNotifications  = "marketnotifications"
+	NatsBankContainerData    = "bank.container"
+	NatsGenericContainerData = "generic.container"
 )
