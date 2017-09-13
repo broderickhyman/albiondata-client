@@ -5,6 +5,7 @@ import (
 
 	"github.com/regner/albiondata-client/lib"
 	"github.com/regner/albiondata-client/log"
+	"github.com/regner/albiondata-client/notification"
 )
 
 type operationAuctionGetOffers struct {
@@ -31,6 +32,8 @@ func (op operationAuctionGetOffersResponse) Process(state *albionState) {
 
 	if state.LocationId == 0 {
 		log.Error("The players location has not yet been set. Please transition zones so the location can be identified.")
+		notification.Push("The players location has not yet been set. Please transition zones so the location can be identified.")
+
 		return
 	}
 
