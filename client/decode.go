@@ -48,19 +48,19 @@ func decodeResponse(params map[string]interface{}) (operation operation, err err
 	switch code {
 	case 2:
 		operation = &operationJoinResponse{}
-	case 67:
+	case 69:
 		operation = &operationAuctionGetOffersResponse{}
-	case 68:
+	case 70:
 		operation = &operationAuctionGetRequestsResponse{}
-	case 147:
+	case 149:
 		operation = &operationReadMail{}
-	case 166:
+	case 168:
 		operation = &operationGetClusterMapInfoResponse{}
-	case 217:
+	case 219:
 		operation = &operationGoldMarketGetAverageInfoResponse{}
-	case 232:
+	case 235:
 		operation = &operationRealEstateGetAuctionDataResponse{}
-	case 233:
+	case 236:
 		operation = &operationRealEstateBidOnAuctionResponse{}
 	default:
 		return nil, nil
