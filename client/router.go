@@ -12,7 +12,7 @@ type Router struct {
 
 func newRouter() *Router {
 	return &Router{
-		albionstate:  &albionState{},
+		albionstate:  &albionState{LocationId: -1},
 		newOperation: make(chan operation, 1000),
 		quit:         make(chan bool, 1),
 	}

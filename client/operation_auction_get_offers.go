@@ -30,7 +30,7 @@ type operationAuctionGetOffersResponse struct {
 func (op operationAuctionGetOffersResponse) Process(state *albionState) {
 	log.Debug("Got response to AuctionGetOffers operation...")
 
-	if state.LocationId == 0 {
+	if state.LocationId == -1 {
 		log.Error("The players location has not yet been set. Please transition zones so the location can be identified.")
 		notification.Push("The players location has not yet been set. Please transition zones so the location can be identified.")
 
