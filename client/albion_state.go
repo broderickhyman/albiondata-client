@@ -1,7 +1,7 @@
 package client
 
 import (
-	"github.com/regner/albiondata-client/lib"
+	"github.com/alexscott/albiondata-client/lib"
 )
 
 type albionState struct {

@@ -5,8 +5,8 @@ import (
 	"reflect"
 
 	"github.com/mitchellh/mapstructure"
-	"github.com/regner/albiondata-client/lib"
-	"github.com/regner/albiondata-client/log"
+	"github.com/alexscott/albiondata-client/lib"
+	"github.com/alexscott/albiondata-client/log"
 )
 
 func decodeRequest(params map[string]interface{}) (operation operation, err error) {

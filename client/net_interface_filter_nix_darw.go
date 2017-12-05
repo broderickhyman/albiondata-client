@@ -5,7 +5,7 @@ package client
 import (
 	"net"
 
-	"github.com/regner/albiondata-client/log"
+	"github.com/alexscott/albiondata-client/log"
 )
 
 // Gets all physical interfaces based on filter results, ignoring all VM, Loopback and Tunnel interfaces.

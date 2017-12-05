@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/regner/albiondata-client/log"
+	"github.com/alexscott/albiondata-client/log"
 )
 
 type httpUploader struct {

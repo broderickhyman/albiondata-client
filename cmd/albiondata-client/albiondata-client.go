@@ -7,9 +7,9 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/albiondata/go-githubupdate/updater"
-	"github.com/regner/albiondata-client/client"
-	"github.com/regner/albiondata-client/log"
-	"github.com/regner/albiondata-client/systray"
+	"github.com/alexscott/albiondata-client/client"
+	"github.com/alexscott/albiondata-client/log"
+	"github.com/alexscott/albiondata-client/systray"
 )
 
 var version string

@@ -4,8 +4,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/regner/albiondata-client/lib"
-	"github.com/regner/albiondata-client/log"
+	"github.com/alexscott/albiondata-client/lib"
+	"github.com/alexscott/albiondata-client/log"
 )
 
 type operationReadMail struct {
