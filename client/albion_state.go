@@ -5,7 +5,8 @@ import (
 )
 
 type albionState struct {
-	LocationId    int
-	CharacterId   lib.CharacterID
-	CharacterName string
+	LocationId     int
+  LocationString string
+	CharacterId    lib.CharacterID
+	CharacterName  string
 }

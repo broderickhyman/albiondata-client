@@ -88,7 +88,7 @@ func main() {
 		client.ConfigGlobal.Offline = true
 	}
 
-	startUpdater()
+	//startUpdater()
 
 	go systray.Run()
 

@@ -16,18 +16,18 @@ func decodeRequest(params map[string]interface{}) (operation operation, err erro
 
 	code := params["253"].(int16)
 
-	switch code {
-	case 10:
+	switch OperationType(code) {
+	case GetGameServerByCluster:
 		operation = &operationGetGameServerByCluster{}
-	case 67:
+	case AuctionGetOffers:
 		operation = &operationAuctionGetOffers{}
-	case 166:
+	case GetClusterMapInfo:
 		operation = &operationGetClusterMapInfo{}
-	case 217:
+	case GoldMarketGetAverageInfo:
 		operation = &operationGoldMarketGetAverageInfo{}
-	case 232:
+	case RealEstateGetAuctionData:
 		operation = &operationRealEstateGetAuctionData{}
-	case 233:
+	case RealEstateBidOnAuction:
 		operation = &operationRealEstateBidOnAuction{}
 	default:
 		return nil, nil
@@ -45,22 +45,22 @@ func decodeResponse(params map[string]interface{}) (operation operation, err err
 
 	code := params["253"].(int16)
 
-	switch code {
-	case 2:
+	switch OperationType(code) {
+	case Join:
 		operation = &operationJoinResponse{}
-	case 69:
+	case AuctionGetOffers:
 		operation = &operationAuctionGetOffersResponse{}
-	case 70:
+	case AuctionGetRequests:
 		operation = &operationAuctionGetRequestsResponse{}
-	case 149:
+	case ReadMail:
 		operation = &operationReadMail{}
-	case 168:
+	case GetClusterMapInfo:
 		operation = &operationGetClusterMapInfoResponse{}
-	case 219:
+	case GoldMarketGetAverageInfo:
 		operation = &operationGoldMarketGetAverageInfoResponse{}
-	case 235:
+	case RealEstateGetAuctionData:
 		operation = &operationRealEstateGetAuctionDataResponse{}
-	case 236:
+	case RealEstateBidOnAuction:
 		operation = &operationRealEstateBidOnAuctionResponse{}
 	default:
 		return nil, nil
