@@ -1,5 +1,9 @@
 package client
 
+import (
+  "fmt"
+)
+
 type operation interface {
 	Process(state *albionState)
 }
@@ -24,52 +28,94 @@ const (
   CastCancel                   OperationType = 20
   ChannelingCancel             OperationType = 21
 
-  InventoryDestroyItem         OperationType = 23
-  InventoryMoveItem            OperationType = 24 // quick equip is move
-  InventorySplitStack          OperationType = 25
+  InventoryDestroyItem         OperationType = 24
+  InventoryMoveItem            OperationType = 25 // quick equip is move
+  InventorySplitStack          OperationType = 26
+
+  ChangeZone                   OperationType = 27
+  ReportPlayer                 OperationType = 28
+
+  RegisterToObject             OperationType = 31 // building, instanciate chest
+  UnRegisterToObject           OperationType = 32 // building, instanciate chest
 
   Repair                       OperationType = 40
-  Claim                        OperationType = 50
-  GiveUp                       OperationType = 51
-  Place                        OperationType = 56
-  PickUp                       OperationType = 58
+  Claim                        OperationType = 51
+  GiveUp                       OperationType = 52
 
-  AuctionGetOffers             OperationType = 70
-  AuctionGetRequests           OperationType = 71
-  AuctionBuyOffer              OperationType = 72
-  AuctionAbortAuction          OperationType = 73
-  AuctionAbortOffer            OperationType = 74
-  AuctionAbortRequest          OperationType = 75
-  AuctionSellRequest           OperationType = 76
-  AuctionGetFinishedAuctions   OperationType = 77
-  AuctionFetchAuction          OperationType = 78
-  AuctionGetMyOpenOffers       OperationType = 79
-  AuctionGetMyOpenRequests     OperationType = 80
-  AuctionGetMyOpenAuctions     OperationType = 81
-  AuctionGetItemsAverage       OperationType = 82
+  FarmableHarvest              OperationType = 57
+  FarmableGetProduct           OperationType = 61
+  FarmableUseFoca              OperationType = 271
 
-  GetMyGuildInfo               OperationType = 105
+  AuctionGetOffers             OperationType = 71 // JSON
+  AuctionGetRequests           OperationType = 72 // JSON
+  AuctionBuyOffer              OperationType = 73
+  AuctionAbortAuction          OperationType = 74
+  AuctionAbortOffer            OperationType = 75
+  AuctionAbortRequest          OperationType = 76
+  AuctionSellRequest           OperationType = 77
+  AuctionGetFinishedAuctions   OperationType = 78
+  AuctionFetchAuction          OperationType = 79
+  AuctionGetMyOpenOffers       OperationType = 80
+  AuctionGetMyOpenRequests     OperationType = 81
+  AuctionGetMyOpenAuctions     OperationType = 82
+  AuctionGetItemsAverage       OperationType = 83
 
-  DepositToGuildAccount        OperationType = 116
-  WithdrawalFromAccount        OperationType = 117
-  ChangeGuildTax               OperationType = 119
+  ContainerOpen                OperationType = 84
+  ContainerClose               OperationType = 85
 
-  ReadMail                     OperationType = 150
-  SendNewMail                  OperationType = 151
-  DeleteMail                   OperationType = 152
+  Respawn                      OperationType = 86
+  Suicide                      OperationType = 87
 
-  GetClusterMapInfo            OperationType = 169
+  JoinGuild                    OperationType = 88
+  LeaveGuild                   OperationType = 89
+  CreateGuild                  OperationType = 90
+  InviteToGuild                OperationType = 91
+  DeclineGuildInvitation       OperationType = 92
+  KickFromGuild                OperationType = 93
 
-  GoldMarketGetAverageInfo     OperationType = 220
+  GetAttackSchedule            OperationType = 105
+  GetMatches                   OperationType = 107
 
-  RealEstateGetAuctionData     OperationType = 232 // ?
-  RealEstateBidOnAuction       OperationType = 233 // ?
+  DepositToGuildAccount        OperationType = 117
+  WithdrawalFromAccount        OperationType = 118
+  ChangeGuildTax               OperationType = 120
 
-  FriendInvitationSend         OperationType = 239
-  FriendInvitationResponseSend OperationType = 240
-  FriendInvitationReceive      OperationType = 241
-  FriendRemove                 OperationType = 242
+  GetMyTerritories             OperationType = 122
+  GetWorldMap                  OperationType = 126
+  GetMyGuildInfo               OperationType = 129
 
-  Stack                        OperationType = 243
-  Sort                         OperationType = 244
+  PromotePlayer                OperationType = 133
+  DemotePlayer                 OperationType = 134
+
+  ReadMail                     OperationType = 151
+  SendNewMail                  OperationType = 152
+  DeleteMail                   OperationType = 153
+
+  GetClusterMapInfo            OperationType = 174
+  AccessRightsChangeSettings   OperationType = 175
+  Mount                        OperationType = 176
+  MountCancel                  OperationType = 177
+  BuyJourney                   OperationType = 178
+
+  MakeHome                     OperationType = 182
+  LeaveHome                    OperationType = 183
+
+  GetIslandInfos               OperationType = 195
+
+  GoldMarketGetAverageInfo     OperationType = 221
+
+  RealEstateGetAuctionData     OperationType = 233 // ?
+  RealEstateBidOnAuction       OperationType = 234 // ?
+
+  FriendInvitationSend         OperationType = 240
+  FriendInvitationResponseSend OperationType = 241
+  FriendInvitationReceive      OperationType = 242
+  FriendRemove                 OperationType = 243
+
+  Stack                        OperationType = 244
+  Sort                         OperationType = 245
+
+  SendGraphicSettings          OperationType = 278
+  SendHardwareConfiguration    OperationType = 279
 )
+
