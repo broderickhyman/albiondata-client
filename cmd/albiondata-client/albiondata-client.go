@@ -18,7 +18,7 @@ func init() {
 	flag.StringVar(
 		&client.ConfigGlobal.PublicIngestBaseUrls,
 		"i",
-		"nats://public:notsecure@ingest.albion-data.com:4222/",
+		"nats://public:thenewalbiondata@192.241.250.27:4222",
 		"Base URL to send PUBLIC data to, can be 'nats://', 'http://' or 'noop' and can have multiple uploaders comma separated.",
 	)
 
