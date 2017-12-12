@@ -1,8 +1,8 @@
 package client
 
 import (
-	"github.com/alexscott/albiondata-client/lib"
-	"github.com/alexscott/albiondata-client/log"
+	"github.com/broderickhyman/albiondata-client/lib"
+	"github.com/broderickhyman/albiondata-client/log"
 )
 
 type operationGoldMarketGetAverageInfo struct {

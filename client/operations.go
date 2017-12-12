@@ -1,9 +1,5 @@
 package client
 
-import (
-  "fmt"
-)
-
 type operation interface {
 	Process(state *albionState)
 }

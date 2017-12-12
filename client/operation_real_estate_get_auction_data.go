@@ -1,7 +1,7 @@
 package client
 
 import (
-	"github.com/alexscott/albiondata-client/log"
+	"github.com/broderickhyman/albiondata-client/log"
 )
 
 type operationRealEstateGetAuctionData struct {

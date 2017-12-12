@@ -1,7 +1,7 @@
 package client
 
 import (
-	"github.com/alexscott/albiondata-client/lib"
+	"github.com/broderickhyman/albiondata-client/lib"
 )
 
 type albionState struct {

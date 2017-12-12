@@ -8,7 +8,7 @@ import (
 
 	"github.com/getlantern/systray"
 	"github.com/gonutz/w32"
-	"github.com/alexscott/albiondata-client/icon"
+	"github.com/broderickhyman/albiondata-client/icon"
 )
 
 var consoleHidden bool

@@ -6,9 +6,9 @@ import (
 
 	"strings"
 
-	"github.com/alexscott/albiondata-client/lib"
-	"github.com/alexscott/albiondata-client/log"
-	"github.com/alexscott/albiondata-client/notification"
+	"github.com/broderickhyman/albiondata-client/lib"
+	"github.com/broderickhyman/albiondata-client/log"
+	"github.com/broderickhyman/albiondata-client/notification"
 )
 
 type dispatcher struct {
