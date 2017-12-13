@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/Regner/albiondata-client.svg?style=svg)](https://circleci.com/gh/Regner/albiondata-client) [![Go Report Card](https://goreportcard.com/badge/github.com/Regner/albiondata-client)](https://goreportcard.com/report/github.com/Regner/albiondata-client)
+[![Go Report Card](https://goreportcard.com/badge/github.com/broderickhyman/albiondata-client)](https://goreportcard.com/report/github.com/broderickhyman/albiondata-client)
 
 # Albion Data - Client
 Distributed client for the [Albion Data](https://albion-data.com/)
@@ -21,8 +21,14 @@ This client monitors local network traffic, identifies UDP packets
 that contain relevant data for Albion Online, and ships the information
 off to a central NATS server that anyone can subscribe to.
 
+# Contributions
+Many thanks to the original developers!:
+- [Regner](https://github.com/Regner)
+- [pcdummy](https://github.com/pcdummy)
+- [Ultraporing](https://github.com/Ultraporing)
+
 # Downloads
-Downloads can be found here: https://github.com/Regner/albiondata-client/releases
+Downloads can be found here: https://github.com/broderickhyman/albiondata-client/releases
 
 # Developer Setup
 ### Mac/Linux Setup
@@ -30,9 +36,6 @@ Downloads can be found here: https://github.com/Regner/albiondata-client/release
   - Any OS: `go get -u github.com/golang/dep/cmd/dep`
   - Mac with Homebrew: `brew install dep`
 - Install dependencies using `dep ensure`
-
-### Windows Setup
-[Windows Setup Guide](https://github.com/Regner/albiondata-client/wiki/Building-in-Windows
 
 # License
 This project, and all contributed code, are licensed under the MIT

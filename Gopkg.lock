@@ -8,7 +8,7 @@
   version = "v1.0.3"
 
 [[projects]]
-  name = "github.com/albiondata/go-githubupdate"
+  name = "github.com/broderickhyman/go-githubupdate"
   packages = ["updater"]
   revision = "254d343bc0ec7869462798ee14740dc365ddadb1"
   version = "0.0.3"

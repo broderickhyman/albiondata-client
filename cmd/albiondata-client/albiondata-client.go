@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/albiondata/go-githubupdate/updater"
+	"github.com/broderickhyman/go-githubupdate/updater"
 	"github.com/broderickhyman/albiondata-client/client"
 	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/broderickhyman/albiondata-client/systray"
@@ -88,7 +88,7 @@ func main() {
 		client.ConfigGlobal.Offline = true
 	}
 
-	//startUpdater()
+	startUpdater()
 
 	go systray.Run()
 
@@ -100,7 +100,7 @@ func startUpdater() {
 	if version != "" && !strings.Contains(version, "dev") {
 		u := updater.NewUpdater(
 			version,
-			"regner",
+			"broderickhyman",
 			"albiondata-client",
 			"update-",
 		)
