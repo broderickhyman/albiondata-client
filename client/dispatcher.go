@@ -36,6 +36,9 @@ func createUploaders(targets []string) []uploader {
 	var uploaders []uploader
 
 	for _, target := range targets {
+		if(target == ""){
+			continue
+		}
 		if len(target) < 4 {
 			log.Infof("Got an ingest target that was less than 4 characters, not a valid ingest target: %v", target)
 			continue

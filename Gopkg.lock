@@ -8,16 +8,16 @@
   version = "v1.0.3"
 
 [[projects]]
-  name = "github.com/broderickhyman/go-githubupdate"
-  packages = ["updater"]
-  revision = "254d343bc0ec7869462798ee14740dc365ddadb1"
-  version = "0.0.3"
-
-[[projects]]
   name = "github.com/blang/semver"
   packages = ["."]
   revision = "2ee87856327ba09384cabd113bc6b5d174e9ec0f"
   version = "v3.5.1"
+
+[[projects]]
+  name = "github.com/broderickhyman/go-githubupdate"
+  packages = ["updater"]
+  revision = "254d343bc0ec7869462798ee14740dc365ddadb1"
+  version = "0.0.3"
 
 [[projects]]
   name = "github.com/ctcpip/notifize"
@@ -213,6 +213,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6bb1777d4185ac1849f12cedd055d9a4aa4503ce4586e4439691f50bdf3e58a3"
+  inputs-digest = "a5b7d2a46ce8e67aaad32734e9e2e77da3aa88f8c7f68f04d2981bd2e9983dd8"
   solver-name = "gps-cdcl"
   solver-version = 1
