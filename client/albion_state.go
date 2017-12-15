@@ -9,4 +9,5 @@ type albionState struct {
   LocationString string
 	CharacterId    lib.CharacterID
 	CharacterName  string
+	ContainerItemsToSend map[int64]lib.ItemContainer
 }
