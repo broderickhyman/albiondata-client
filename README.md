@@ -45,6 +45,9 @@ The best way to get in touch with us is on the Albion Online Fansites Discord se
   - Mac with Homebrew: `brew install dep`
 - Install dependencies using `dep ensure`
 
+### Windows Setup
+[Windows Setup Guide](https://github.com/broderickhyman/albiondata-client/wiki/Building-in-Windows)
+
 # License
 This project, and all contributed code, are licensed under the MIT
 License. A copy of the MIT License may be found in the repository.
