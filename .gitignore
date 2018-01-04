@@ -3,3 +3,4 @@ vendor/
 _vendor-[0-9]*
 .vscode/
 *.exe
+*.gz
