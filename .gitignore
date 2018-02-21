@@ -4,3 +4,5 @@ _vendor-[0-9]*
 .vscode/
 *.exe
 *.gz
+*.zip
+scripts/albiondata-client
