@@ -1,7 +1,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/broderickhyman/albiondata-client)](https://goreportcard.com/report/github.com/broderickhyman/albiondata-client)
 
 # Albion Data - Client
-Distributed client for the [Albion Data](https://albion-data.com/)
+Distributed client for the [Albion Online Data](https://www.albion-online-data.com/)
 project.
 
 A quick note on the legality of this application and if it
