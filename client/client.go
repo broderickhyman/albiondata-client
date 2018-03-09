@@ -5,17 +5,20 @@ import (
 	"github.com/broderickhyman/albiondata-client/log"
 )
 
+var version string
+
 type Client struct {
 }
 
-func NewClient() *Client {
+func NewClient(_version string) *Client {
+	version = _version
 	return &Client{}
 }
 
 func (client *Client) Run() {
 	log.SetFormatter(&logrus.TextFormatter{FullTimestamp: true, DisableSorting: true})
 
-	log.Info("Starting the Albion Data Client...")
+	log.Infof("Starting Albion Data Client version %s", version)
 	log.Info("This is a third-party application and is in no way affiliated with Sandbox Interactive or Albion Online.")
 
 	createDispatcher()

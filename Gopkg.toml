@@ -1,6 +1,6 @@
 [[constraint]]
   name = "github.com/Sirupsen/logrus"
-  version = "1.0.2"
+  version = "1.0.4"
 
 [[constraint]]
   name = "github.com/google/gopacket"
@@ -18,7 +18,6 @@
 
 [[constraint]]
   name = "github.com/broderickhyman/go-githubupdate"
-  version = "0.0.3"
 
 [[constraint]]
   name = "github.com/shirou/gopsutil"

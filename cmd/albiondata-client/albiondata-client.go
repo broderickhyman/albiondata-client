@@ -92,7 +92,7 @@ func main() {
 
 	go systray.Run()
 
-	c := client.NewClient()
+	c := client.NewClient(version)
 	c.Run()
 }
 
@@ -107,26 +107,7 @@ func startUpdater() {
 
 		go func() {
 			for {
-				available, err := u.CheckUpdateAvailable()
-				if err != nil {
-					log.Errorf("%v", err)
-					return
-				}
-
-				if available != "" {
-					log.Infof("A new update %s is available", available)
-
-					err := u.Update()
-					if err != nil {
-						log.Errorf("%v", err)
-						return
-					}
-
-					log.Infof(
-						"The update %s has been installed, please restart albiondata-client.",
-						available,
-					)
-				}
+				u.BackgroundUpdater()
 
 				// Check again in 2 hours
 				time.Sleep(time.Hour * 2)

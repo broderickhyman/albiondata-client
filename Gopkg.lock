@@ -4,8 +4,8 @@
 [[projects]]
   name = "github.com/Sirupsen/logrus"
   packages = ["."]
-  revision = "f006c2ac4710855cf0f916dd6b77acf6b048dc6e"
-  version = "v1.0.3"
+  revision = "d682213848ed68c0a260ca37d6dd5ace8423f5ba"
+  version = "v1.0.4"
 
 [[projects]]
   name = "github.com/blang/semver"
@@ -99,7 +99,11 @@
 
 [[projects]]
   name = "github.com/google/gopacket"
-  packages = [".","layers","pcap"]
+  packages = [
+    ".",
+    "layers",
+    "pcap"
+  ]
   revision = "8af772c0bcc826f671fd7c133917fec9686d720d"
 
 [[projects]]
@@ -117,7 +121,10 @@
 [[projects]]
   branch = "master"
   name = "github.com/hashicorp/golang-lru"
-  packages = [".","simplelru"]
+  packages = [
+    ".",
+    "simplelru"
+  ]
   revision = "0a025b7e63adc15a622f29b0b2c4c3848243bbf6"
 
 [[projects]]
@@ -152,7 +159,11 @@
 
 [[projects]]
   name = "github.com/nats-io/go-nats"
-  packages = [".","encoders/builtin","util"]
+  packages = [
+    ".",
+    "encoders/builtin",
+    "util"
+  ]
   revision = "29f9728a183bf3fa7e809e14edac00b33be72088"
   version = "v1.3.0"
 
@@ -176,7 +187,10 @@
 
 [[projects]]
   name = "github.com/shirou/gopsutil"
-  packages = ["internal/common","net"]
+  packages = [
+    "internal/common",
+    "net"
+  ]
   revision = "d573c8e3f1c5337585b0e285214e80df7429d8b5"
   source = "https://github.com/gradiuscypher/gopsutil.git"
 
@@ -189,7 +203,10 @@
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
-  packages = ["unix","windows"]
+  packages = [
+    "unix",
+    "windows"
+  ]
   revision = "7ddbeae9ae08c6a06a59597f0c9edbc5ff2444ce"
 
 [[projects]]
@@ -201,7 +218,10 @@
 [[projects]]
   branch = "v0"
   name = "gopkg.in/inconshreveable/go-update.v0"
-  packages = [".","download"]
+  packages = [
+    ".",
+    "download"
+  ]
   revision = "d8b0b1d421aa1cbf392c05869f8abbc669bb7066"
 
 [[projects]]
@@ -213,6 +233,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a5b7d2a46ce8e67aaad32734e9e2e77da3aa88f8c7f68f04d2981bd2e9983dd8"
+  inputs-digest = "4cd143122d5cd7020042c00ad7f514044ac4a44777f421910a7b5e9fb63b69ea"
   solver-name = "gps-cdcl"
   solver-version = 1
