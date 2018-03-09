@@ -3,6 +3,7 @@ package client
 import (
 	"github.com/Sirupsen/logrus"
 	"github.com/broderickhyman/albiondata-client/log"
+	"github.com/mattn/go-colorable"
 )
 
 var version string
@@ -16,7 +17,8 @@ func NewClient(_version string) *Client {
 }
 
 func (client *Client) Run() {
-	log.SetFormatter(&logrus.TextFormatter{FullTimestamp: true, DisableSorting: true})
+	log.SetFormatter(&logrus.TextFormatter{FullTimestamp: true, DisableSorting: true, ForceColors: true})
+	log.SetOutput(colorable.NewColorableStdout())
 
 	log.Infof("Starting Albion Data Client version %s", version)
 	log.Info("This is a third-party application and is in no way affiliated with Sandbox Interactive or Albion Online.")

@@ -33,3 +33,6 @@
 
 [[constraint]]
   name = "github.com/getlantern/systray"
+
+[[constraint]]
+  name = "github.com/mattn/go-colorable"
