@@ -107,7 +107,18 @@ func startUpdater() {
 
 		go func() {
 			for {
-				u.BackgroundUpdater()
+				maxTries := 6
+				for i := 0; i < maxTries; i++ {
+					err := u.BackgroundUpdater()
+					if err != nil {
+						if i == maxTries - 1 {
+							log.Error(err.Error())
+						} else {
+							// Sleep and hope the network connects
+							time.Sleep(time.Second * 10)
+						}
+					}
+				}
 
 				// Check again in 2 hours
 				time.Sleep(time.Hour * 2)
