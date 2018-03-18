@@ -117,6 +117,8 @@ func startUpdater() {
 							// Sleep and hope the network connects
 							time.Sleep(time.Second * 10)
 						}
+					} else {
+						break
 					}
 				}
 
