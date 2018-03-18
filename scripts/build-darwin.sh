@@ -19,4 +19,4 @@ cd scripts
 cp run.command ./$TEMP/run.command
 sudo chown -R ${USER}:${USER} ./$TEMP
 chmod a+x ./$TEMP/*
-zip update-darwin-amd64.zip -r ./$TEMP
+zip ../update-darwin-amd64.zip -r ./$TEMP
