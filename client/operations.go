@@ -32,14 +32,14 @@ const (
 	ChannelingCancel
 	AttackBuildingStart
 	InventoryDestroyItem
-	InventoryMoveItem 					// quick equip is move
+	InventoryMoveItem
 	InventorySplitStack
 	ChangeCluster
 	ConsoleCommand
 	ChatMessage
 	ReportClientError
-	RegisterToObject						// building, instanciate chest
-	UnRegisterFromObject				// building, instanciate chest
+	RegisterToObject
+	UnRegisterFromObject
 	CraftBuildingChangeSettings
 	CraftBuildingTakeMoney
 	RepairBuildingChangeSettings
@@ -78,8 +78,8 @@ const (
 	CastleGateUse
 	AuctionCreateOffer
 	AuctionCreateRequest
-	AuctionGetOffers			// JSON
-	AuctionGetRequests 		// JSON
+	AuctionGetOffers
+	AuctionGetRequests
 	AuctionBuyOffer
 	AuctionAbortAuction
 	AuctionAbortOffer
@@ -93,6 +93,7 @@ const (
 	AuctionGetItemsAverage
 	ContainerOpen
 	ContainerClose
+	ContainerManageSubContainer
 	Respawn
 	Suicide
 	JoinGuild
@@ -123,8 +124,6 @@ const (
 	LogoutCancel
 	ClaimOrbStart
 	ClaimOrbCancel
-	OpenBattleVault
-	CloseBattleVault
 	DepositToGuildAccount
 	WithdrawalFromAccount
 	ChangeGuildPayUpkeepFlag
@@ -140,14 +139,13 @@ const (
 	GetKillHistoryDetails
 	LearnMasteryLevel
 	ChangeAvatar
-	PromotePlayer
-	DemotePlayer
 	GetRankings
 	GetRank
 	GetGvgSeasonRankings
 	GetGvgSeasonRank
 	GetGvgSeasonHistoryRankings
 	KickFromGvGMatch
+	GetChestLogs
 	InviteToPlayerTrade
 	PlayerTradeCancel
 	PlayerTradeInvitationAccept
@@ -209,8 +207,6 @@ const (
 	AbandonGuildIsland
 	UpgradeMyIsland
 	UpgradeGuildIsland
-	MonolithBankOpen
-	MonolithBankClose
 	TerritoryFillNutrition
 	TeleportBack
 	PartyInvitePlayer
@@ -237,8 +233,6 @@ const (
 	GoldMarketGetAverageInfo
 	SiegeCampClaimStart
 	SiegeCampClaimCancel
-	SiegeCampBankOpen
-	SiegeCampBankClose
 	ChangeUseCraftingFocus
 	TreasureChestUsingStart
 	TreasureChestUsingCancel
@@ -295,5 +289,27 @@ const (
 	TrackAchievements
 	DepositItemToGuildToken
 	WithdrawalItemFromGuildToken
+	AuctionSellSpecificItemRequest
+	FishingStart
+	FishingCasting
+	FishingCast
+	FishingCatch
+	FishingPull
+	FishingGiveLine
+	FishingFinish
+	FishingCancel
+	CreateGuildAccessTag
+	DeleteGuildAccessTag
+	RenameGuildAccessTag
+	FlagGuildAccessTagGuildPermission
+	AssignGuildAccessTag
+	RemoveGuildAccessTagFromPlayer
+	ModifyGuildAccessTagEditors
+	RequestPublicAccessTags
+	ChangeAccessTagPublicFlag
+	UpdateGuildAccessTag
+	SteamStartMicrotransaction
+	SteamFinishMicrotransaction
+	BuyGvgSeasonBooster
 )
 
