@@ -170,6 +170,12 @@
   revision = "d0303fe809921458f417bcf828397a65db30a7e4"
 
 [[projects]]
+  name = "github.com/namsral/flag"
+  packages = ["."]
+  revision = "71ceffbeb0ba60fccc853971bb3ed4d7d90bfd04"
+  version = "v1.7.4-pre"
+
+[[projects]]
   name = "github.com/nats-io/go-nats"
   packages = [
     ".",
@@ -245,6 +251,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b9974ab7cc61935dfbd420fe089a8244354e2a96bbc92dd88b913ef17c79d2c6"
+  inputs-digest = "9c0a1fd421ca39d4292cfdbd9589b39e7e9c6db822c6e48454c6103b60a682c4"
   solver-name = "gps-cdcl"
   solver-version = 1

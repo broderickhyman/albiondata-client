@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"strings"
 	"time"
 
@@ -10,11 +9,19 @@ import (
 	"github.com/broderickhyman/albiondata-client/client"
 	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/broderickhyman/albiondata-client/systray"
+	"github.com/namsral/flag"
 )
 
 var version string
 
 func init() {
+	// set a reference to the configuration file
+	flag.String(
+		flag.DefaultConfigFlagname,
+		"albiondata-client.conf",
+		"Path to a configuration file",
+	)
+
 	flag.StringVar(
 		&client.ConfigGlobal.PublicIngestBaseUrls,
 		"i",
