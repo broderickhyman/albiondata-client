@@ -6,7 +6,7 @@ const (
 	NatsGoldPricesDeduped   = "goldprices.deduped"
 	NatsMarketOrdersIngest  = "marketorders.ingest"
 	NatsMarketOrdersDeduped = "marketorders.deduped"
-	NatsValidMarketOrders		= "validmarketorders"
+	NatsValidMarketOrders   = "validmarketorders"
 	NatsMapDataIngest       = "mapdata.ingest"
 	NatsMapDataDeduped      = "mapdata.deduped"
 

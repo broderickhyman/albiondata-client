@@ -4,9 +4,9 @@ import (
 	"encoding/hex"
 	"reflect"
 
-	"github.com/mitchellh/mapstructure"
 	"github.com/broderickhyman/albiondata-client/lib"
 	"github.com/broderickhyman/albiondata-client/log"
+	"github.com/mitchellh/mapstructure"
 )
 
 func decodeRequest(params map[string]interface{}) (operation operation, err error) {

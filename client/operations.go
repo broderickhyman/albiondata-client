@@ -6,6 +6,7 @@ type operation interface {
 
 //go:generate stringer -type=OperationType
 type OperationType uint16
+
 const (
 	Unused = iota
 	Ping
@@ -318,4 +319,3 @@ const (
 	LinkAccountToSteamId
 	BuyGvgSeasonBooster
 )
-

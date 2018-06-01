@@ -36,7 +36,7 @@ func createUploaders(targets []string) []uploader {
 	var uploaders []uploader
 
 	for _, target := range targets {
-		if(target == ""){
+		if target == "" {
 			continue
 		}
 		if len(target) < 4 {

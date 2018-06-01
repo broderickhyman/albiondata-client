@@ -6,10 +6,10 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/broderickhyman/go-githubupdate/updater"
 	"github.com/broderickhyman/albiondata-client/client"
 	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/broderickhyman/albiondata-client/systray"
+	"github.com/broderickhyman/go-githubupdate/updater"
 )
 
 var version string
@@ -111,7 +111,7 @@ func startUpdater() {
 				for i := 0; i < maxTries; i++ {
 					err := u.BackgroundUpdater()
 					if err != nil {
-						if i == maxTries - 1 {
+						if i == maxTries-1 {
 							log.Error(err.Error())
 						} else {
 							// Sleep and hope the network connects
