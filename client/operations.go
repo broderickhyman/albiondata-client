@@ -21,6 +21,7 @@ const (
 	GetSubscriptionDetails
 	GetActiveSubscription
 	GetSubscriptionUrl
+	GetPurchaseGoldUrl
 	GetBuyTrialDetails
 	GetReferralSeasonDetails
 	GetAvailableTrialKeys
@@ -135,9 +136,11 @@ const (
 	SubscribeToCluster
 	AnswerMercenaryInvitation
 	GetCharacterEquipment
+	GetCharacterSteamAchievements
 	GetCharacterStats
 	GetKillHistoryDetails
 	LearnMasteryLevel
+	ReSpecAchievement
 	ChangeAvatar
 	GetRankings
 	GetRank
@@ -233,7 +236,6 @@ const (
 	GoldMarketGetAverageInfo
 	SiegeCampClaimStart
 	SiegeCampClaimCancel
-	ChangeUseCraftingFocus
 	TreasureChestUsingStart
 	TreasureChestUsingCancel
 	LaborerStartJob
@@ -271,6 +273,7 @@ const (
 	DeclineArenaInvitation
 	EnteringArenaStart
 	EnteringArenaCancel
+	ArenaCustomMatch
 	UpdateCharacterStatement
 	BoostFarmable
 	GetStrikeHistory
@@ -278,7 +281,7 @@ const (
 	UsePortalEntrance
 	QueryPortalBinding
 	ClaimPaymentTransaction
-	ChangeUseAutoLP
+	ChangeUseFlag
 	ClientPerformanceStats
 	ExtendedHardwareStats
 	TerritoryClaimStart
@@ -310,6 +313,9 @@ const (
 	UpdateGuildAccessTag
 	SteamStartMicrotransaction
 	SteamFinishMicrotransaction
+	SteamIdHasActiveAccount
+	CheckEmailAccountState
+	LinkAccountToSteamId
 	BuyGvgSeasonBooster
 )
 
