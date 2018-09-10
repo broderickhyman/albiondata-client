@@ -51,6 +51,13 @@ func init() {
 	)
 
 	flag.BoolVar(
+		&client.ConfigGlobal.LogToFile,
+		"output-file",
+		false,
+		"Enable logging to file.",
+	)
+
+	flag.BoolVar(
 		&client.ConfigGlobal.VersionDump,
 		"version",
 		false,

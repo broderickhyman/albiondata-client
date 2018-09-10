@@ -137,10 +137,10 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 			log.Debugf("OperationResponse: %s", OperationType(params["253"].(int16)))
 		}
 	case photon.EventDataType:
+		operation, err = decodeEvent(params)
 		if params != nil && params["252"] != nil {
 			log.Debugf("EventDataType: %d -- %s", params["252"].(int16), params)
 		}
-		operation, err = decodeEvent(params)
 		//  default:
 		//    log.Debugf("[%d] (%d) %s (%d)", msg.Type, msg.ParamaterCount, msg.Data, len(msg.Data))
 	}
