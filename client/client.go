@@ -1,11 +1,12 @@
 package client
 
 import (
+	"io"
+	"os"
+
 	"github.com/Sirupsen/logrus"
 	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/mattn/go-colorable"
-	"io"
-	"os"
 )
 
 var version string
@@ -20,15 +21,15 @@ func NewClient(_version string) *Client {
 
 func (client *Client) Run() {
 	if ConfigGlobal.LogToFile {
-		log.SetFormatter(&logrus.TextFormatter{DisableTimestamp:true, DisableSorting: true, ForceColors: false})
-		f, err := os.OpenFile("albiondata-client-output.txt", os.O_WRONLY | os.O_TRUNC | os.O_CREATE, 0755)
+		log.SetFormatter(&logrus.TextFormatter{DisableTimestamp: true, DisableSorting: true, ForceColors: false})
+		f, err := os.OpenFile("albiondata-client-output.txt", os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0755)
 		if err == nil {
 			multiWriter := io.MultiWriter(os.Stdout, f)
 			log.SetOutput(multiWriter)
-		}else{
+		} else {
 			log.SetOutput(os.Stdout)
 		}
-	}else {
+	} else {
 		log.SetFormatter(&logrus.TextFormatter{FullTimestamp: true, DisableSorting: true, ForceColors: true})
 		log.SetOutput(colorable.NewColorableStdout())
 	}

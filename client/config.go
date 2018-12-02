@@ -7,7 +7,7 @@ type config struct {
 	OfflinePath           string
 	Offline               bool
 	Debug                 bool
-	LogToFile							bool
+	LogToFile             bool
 	LogLevel              string
 	VersionDump           bool
 	ListenDevices         string
