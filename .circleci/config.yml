@@ -11,7 +11,7 @@ jobs:
   build_windows:
     working_directory: /go/src/github.com/broderickhyman/albiondata-client
     docker:
-      - image: broderickhyman/mingw-golang:1.9
+      - image: pcdummy/mingw-golang:1.9
     steps:
       - checkout
       - run: make build-windows
@@ -43,7 +43,7 @@ jobs:
   build_darwin:
     working_directory: /go/src/github.com/broderickhyman/albiondata-client
     docker:
-      - image: broderickhyman/crossbuild-golang:1.9
+      - image: pcdummy/crossbuild-golang:1.9
     steps:
       - checkout
       - run: make build-darwin
