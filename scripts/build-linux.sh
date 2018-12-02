@@ -2,9 +2,9 @@
 
 set -eo pipefail
 
-# sudo apt-get install -y libpcap-dev
-# go get -u github.com/golang/dep/cmd/dep
-# dep ensure
+sudo apt-get install -y libpcap-dev
+go get -u github.com/golang/dep/cmd/dep
+dep ensure
 
 go build -ldflags "-s -w -X main.version=$CIRCLE_TAG" cmd/albiondata-client/albiondata-client.go
 
