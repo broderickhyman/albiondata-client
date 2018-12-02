@@ -17,17 +17,17 @@ func decodeRequest(params map[string]interface{}) (operation operation, err erro
 	code := params["253"].(int16)
 
 	switch OperationType(code) {
-	case GetGameServerByCluster:
+	case opGetGameServerByCluster:
 		operation = &operationGetGameServerByCluster{}
-	case AuctionGetOffers:
+	case opAuctionGetOffers:
 		operation = &operationAuctionGetOffers{}
-	case GetClusterMapInfo:
+	case opGetClusterMapInfo:
 		operation = &operationGetClusterMapInfo{}
-	case GoldMarketGetAverageInfo:
+	case opGoldMarketGetAverageInfo:
 		operation = &operationGoldMarketGetAverageInfo{}
-	case RealEstateGetAuctionData:
+	case opRealEstateGetAuctionData:
 		operation = &operationRealEstateGetAuctionData{}
-	case RealEstateBidOnAuction:
+	case opRealEstateBidOnAuction:
 		operation = &operationRealEstateBidOnAuction{}
 	default:
 		return nil, nil
@@ -46,21 +46,21 @@ func decodeResponse(params map[string]interface{}) (operation operation, err err
 	code := params["253"].(int16)
 
 	switch OperationType(code) {
-	case Join:
+	case opJoin:
 		operation = &operationJoinResponse{}
-	case AuctionGetOffers:
+	case opAuctionGetOffers:
 		operation = &operationAuctionGetOffersResponse{}
-	case AuctionGetRequests:
+	case opAuctionGetRequests:
 		operation = &operationAuctionGetRequestsResponse{}
-	case ReadMail:
+	case opReadMail:
 		operation = &operationReadMail{}
-	case GetClusterMapInfo:
+	case opGetClusterMapInfo:
 		operation = &operationGetClusterMapInfoResponse{}
-	case GoldMarketGetAverageInfo:
+	case opGoldMarketGetAverageInfo:
 		operation = &operationGoldMarketGetAverageInfoResponse{}
-	case RealEstateGetAuctionData:
+	case opRealEstateGetAuctionData:
 		operation = &operationRealEstateGetAuctionDataResponse{}
-	case RealEstateBidOnAuction:
+	case opRealEstateBidOnAuction:
 		operation = &operationRealEstateBidOnAuctionResponse{}
 	default:
 		return nil, nil
@@ -79,10 +79,10 @@ func decodeEvent(params map[string]interface{}) (event operation, err error) {
 	eventType := params["252"].(int16)
 
 	switch eventType {
-	case 77:
-		event = &eventPlayerOnlineStatus{}
-	case 114:
-		event = &eventSkillData{}
+	// case evRespawn: //TODO: confirm this eventCode (old 77)
+	// 	event = &eventPlayerOnlineStatus{}
+	// case evCharacterStats: //TODO: confirm this eventCode (old 114)
+	// 	event = &eventSkillData{}
 	default:
 		return nil, nil
 	}
