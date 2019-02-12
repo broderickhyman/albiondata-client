@@ -7,7 +7,7 @@ import (
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/pcap"
-	photon "github.com/hmadison/photon_spectator"
+	photon "github.com/broderickhyman/photon_spectator"
 )
 
 type listener struct {

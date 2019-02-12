@@ -6,3 +6,4 @@ _vendor-[0-9]*
 *.gz
 *.zip
 scripts/albiondata-client
+albiondata-client-output.txt
