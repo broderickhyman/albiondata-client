@@ -4,10 +4,10 @@ import (
 	"fmt"
 
 	"github.com/broderickhyman/albiondata-client/log"
+	photon "github.com/broderickhyman/photon_spectator"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/pcap"
-	photon "github.com/broderickhyman/photon_spectator"
 )
 
 type listener struct {
