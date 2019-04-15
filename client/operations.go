@@ -19,13 +19,13 @@ const (
 	opSelectCharacter
 	opRedeemKeycode
 	opGetGameServerByCluster
-	opGetSubscriptionDetails
 	opGetActiveSubscription
-	opGetSubscriptionUrl
-	opGetPurchaseGoldUrl
+	opGetShopPurchaseUrl
 	opGetBuyTrialDetails
 	opGetReferralSeasonDetails
+	opGetReferralLink
 	opGetAvailableTrialKeys
+	opGetShopTilesForCategory
 	opMove
 	opAttackStart
 	opCastStart
@@ -36,6 +36,7 @@ const (
 	opInventoryDestroyItem
 	opInventoryMoveItem
 	opInventorySplitStack
+	opGetClusterData
 	opChangeCluster
 	opConsoleCommand
 	opChatMessage
@@ -220,6 +221,8 @@ const (
 	opAbandonGuildIsland
 	opUpgradeMyIsland
 	opUpgradeGuildIsland
+	opMoveMyIsland
+	opMoveGuildIsland
 	opTerritoryFillNutrition
 	opTeleportBack
 	opPartyInvitePlayer
@@ -250,6 +253,8 @@ const (
 	opSiegeCampClaimCancel
 	opTreasureChestUsingStart
 	opTreasureChestUsingCancel
+	opUseLootChest
+	opUseShrine
 	opLaborerStartJob
 	opLaborerTakeJobLoot
 	opLaborerDismiss
@@ -297,6 +302,7 @@ const (
 	opChangeUseFlag
 	opClientPerformanceStats
 	opExtendedHardwareStats
+	opClientLowMemoryWarning
 	opTerritoryClaimStart
 	opTerritoryClaimCancel
 	opRequestAppStoreProducts
@@ -348,9 +354,16 @@ const (
 	opPartyFinderRegisterApplicants
 	opPartyFinderUnregisterApplicants
 	opPartyFinderFulltextSearch
+	opPartyFinderRequestEquipmentSnapshot
 	opGetPersonalSeasonTrackerData
 	opUseConsumableFromInventory
 	opClaimPersonalSeasonReward
 	opEasyAntiCheatMessageToServer
 	opRetaliationAttackClaimTerritory
+	opSetNextTutorialState
+	opAddPlayerToMuteList
+	opRemovePlayerFromMuteList
+	opMakeTerritoryHome
+	opLeaveTerritoryHome
+	opProductShopUserEvent
 )

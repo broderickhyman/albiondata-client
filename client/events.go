@@ -23,6 +23,7 @@ const (
 	evCastFinished
 	evCastSpell
 	evCastHit
+	evCastHits
 	evChannelingEnded
 	evAttackBuilding
 	evInventoryPutItem
@@ -46,6 +47,7 @@ const (
 	evConstructionSiteInfo
 	evPlayerBuildingInfo
 	evFarmBuildingInfo
+	evTutorialBuildingInfo
 	evLaborerObjectInfo
 	evLaborerObjectJobInfo
 	evMarketPlaceBuildingInfo
@@ -67,9 +69,11 @@ const (
 	evChatMessage
 	evChatSay
 	evChatWhisper
+	evChatMuted
 	evPlayEmote
 	evStopEmote
 	evSystemMessage
+	evUtilityTextMessage
 	evUpdateMoney
 	evUpdateFame
 	evUpdateLearningPoints
@@ -87,7 +91,8 @@ const (
 	evRegenerationPlayerComboChanged
 	evDurabilityChanged
 	evNewLoot
-	evContainerInfo
+	evAttachItemContainer
+	evDetachItemContainer
 	evGuildVaultInfo
 	evGuildUpdate
 	evGuildPlayerUpdated
@@ -294,6 +299,7 @@ const (
 	evUseFunction
 	evNewPortalEntrance
 	evNewPortalExit
+	evNewRandomDungeonExit
 	evWaitingQueueUpdate
 	evPlayerMovementRateUpdate
 	evObserveStart
@@ -346,4 +352,19 @@ const (
 	evNotifyCrystalMatchReward
 	evCrystalRealmFeedback
 	evNewLocationMarker
+	evNewTutorialBlocker
+	evNewInformationProvider
+	evNewDynamicGuildLogo
+	evTutorialUpdate
+	evTriggerHintBox
+	evRandomDungeonPositionInfo
+	evNewLootChest
+	evUpdateLootChest
+	evLootChestOpened
+	evNewShrine
+	evUpdateShrine
+	evMutePlayerUpdate
+	evShopTileUpdate
+	evShopUpdate
+	evEasyAntiCheatKick
 )
