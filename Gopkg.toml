@@ -4,7 +4,7 @@
 
 [[constraint]]
   name = "github.com/google/gopacket"
-  revision = "8af772c0bcc826f671fd7c133917fec9686d720d"
+  revision = "1a2aa715ae412f434ae0bbb833442d14880cab8a"
 
 [[constraint]]
   name = "github.com/broderickhyman/photon_spectator"
