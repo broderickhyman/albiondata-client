@@ -1,7 +1,3 @@
-# ignoring photon_spectator from github so that we can use local version with bugfix
-# ref: https://github.com/golang/dep/issues/935#issuecomment-448291002
-# ignored = ["github.com/broderickhyman/photon_spectator"]
-
 [[constraint]]
   name = "github.com/Sirupsen/logrus"
   version = "1.0.4"
@@ -12,8 +8,7 @@
 
 [[constraint]]
   name = "github.com/broderickhyman/photon_spectator"
-  source = "https://github.com/gradiuscypher/photon_spectator.git"
-  branch = "gopacket-fix"
+  branch = "master"
 
 [[constraint]]
   name = "github.com/mitchellh/go-ps"
