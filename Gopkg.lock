@@ -20,10 +20,11 @@
   revision = "7010621e24804afdf1c9083bd4d1a3e47e1fb63e"
 
 [[projects]]
-  branch = "master"
+  branch = "gopacket-fix"
   name = "github.com/broderickhyman/photon_spectator"
   packages = ["."]
-  revision = "951cd2dce46c16f10ccc952fa2aaeb0c6a9b99ee"
+  revision = "33acfd15f972cd4acb617f1f01883592d36fef3d"
+  source = "https://github.com/gradiuscypher/photon_spectator.git"
 
 [[projects]]
   name = "github.com/ctcpip/notifize"
@@ -99,12 +100,8 @@
 
 [[projects]]
   name = "github.com/google/gopacket"
-  packages = [
-    ".",
-    "layers",
-    "pcap"
-  ]
-  revision = "8af772c0bcc826f671fd7c133917fec9686d720d"
+  packages = [".","layers","pcap"]
+  revision = "1a2aa715ae412f434ae0bbb833442d14880cab8a"
 
 [[projects]]
   name = "github.com/google/uuid"
@@ -120,12 +117,9 @@
 
 [[projects]]
   name = "github.com/hashicorp/golang-lru"
-  packages = [
-    ".",
-    "simplelru"
-  ]
-  revision = "20f1fb78b0740ba8c3cb143a61e86ba5c8669768"
-  version = "v0.5.0"
+  packages = [".","simplelru"]
+  revision = "7087cb70de9f7a8bc0a10c375cb0d2280a8edf9c"
+  version = "v0.5.1"
 
 [[projects]]
   branch = "master"
@@ -171,11 +165,7 @@
 
 [[projects]]
   name = "github.com/nats-io/go-nats"
-  packages = [
-    ".",
-    "encoders/builtin",
-    "util"
-  ]
+  packages = [".","encoders/builtin","util"]
   revision = "13c7fc7590db68b18f2015600f8765a02d705b5d"
   version = "v1.7.0"
 
@@ -205,30 +195,20 @@
 
 [[projects]]
   name = "github.com/shirou/gopsutil"
-  packages = [
-    "internal/common",
-    "net"
-  ]
+  packages = ["internal/common","net"]
   revision = "d573c8e3f1c5337585b0e285214e80df7429d8b5"
   source = "https://github.com/gradiuscypher/gopsutil.git"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
-  packages = [
-    "ed25519",
-    "ed25519/internal/edwards25519",
-    "ssh/terminal"
-  ]
+  packages = ["ed25519","ed25519/internal/edwards25519","ssh/terminal"]
   revision = "74369b46fc6756741c016591724fd1cb8e26845f"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
-  packages = [
-    "unix",
-    "windows"
-  ]
+  packages = ["unix","windows"]
   revision = "3b5209105503162ded1863c307ac66fec31120dd"
 
 [[projects]]
@@ -240,10 +220,7 @@
 [[projects]]
   branch = "v0"
   name = "gopkg.in/inconshreveable/go-update.v0"
-  packages = [
-    ".",
-    "download"
-  ]
+  packages = [".","download"]
   revision = "d8b0b1d421aa1cbf392c05869f8abbc669bb7066"
 
 [[projects]]
@@ -255,6 +232,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "91942648dcdc343079021b8046b74191fb0c01a3d5147b282032c1a3bcebabd6"
+  inputs-digest = "954259986296431afcd397b39ca4d57f578f72a4cffc9ef18c8b6bbf724713e1"
   solver-name = "gps-cdcl"
   solver-version = 1
