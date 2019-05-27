@@ -8,7 +8,6 @@ import (
 
 	"github.com/broderickhyman/albiondata-client/lib"
 	"github.com/broderickhyman/albiondata-client/log"
-	"github.com/broderickhyman/albiondata-client/notification"
 )
 
 type dispatcher struct {
@@ -69,13 +68,18 @@ func sendMsgToPublicUploaders(upload interface{}, topic string, state *albionSta
 }
 
 func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, state *albionState) {
-	if state.CharacterName == "" || state.CharacterId == "" {
-		log.Error("The player name or id has not been set. Please restart the game and make sure the client is running.")
-		notification.Push("The player name or id has not been set. Please restart the game and make sure the client is running.")
-		return
-	}
+	// TODO (gradius): determine how to capture character name/id, if possible
+	// TODO (gradius): current removed this for now, so no character ID/name will show.
+	// state.CharacterName = "ExampleName"
+	// state.CharacterId = "123456"
 
-	upload.Personalize(state.CharacterId, state.CharacterName)
+	// if state.CharacterName == "" || state.CharacterId == "" {
+	// 	log.Error("The player name or id has not been set. Please restart the game and make sure the client is running.")
+	// 	notification.Push("The player name or id has not been set. Please restart the game and make sure the client is running.")
+	// 	return
+	// }
+
+	// upload.Personalize(state.CharacterId, state.CharacterName)
 
 	data, err := json.Marshal(upload)
 	if err != nil {
@@ -98,6 +102,7 @@ func sendMsgToUploaders(msg []byte, topic string, uploaders []uploader) {
 }
 
 func runHTTPServer() {
+	// TODO (gradius): add authentication/authorization
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		serveWs(wsHub, w, r)
 	})
@@ -110,7 +115,9 @@ func runHTTPServer() {
 }
 
 func sendMsgToWebSockets(msg []byte, topic string) {
-	var test string
-	test = "{\"topic\": \"" + topic + "\", \"data\": " + string(msg) + "}"
-	wsHub.broadcast <- []byte(test)
+	// TODO (gradius): send JSON data with topic string
+	// TODO (gradius): this seems super hacky, and I'm sure there's a better way.
+	var result string
+	result = "{\"topic\": \"" + topic + "\", \"data\": " + string(msg) + "}"
+	wsHub.broadcast <- []byte(result)
 }
