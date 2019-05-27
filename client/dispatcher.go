@@ -26,9 +26,11 @@ func createDispatcher() {
 		privateUploaders: createUploaders(strings.Split(ConfigGlobal.PrivateIngestBaseUrls, ",")),
 	}
 
-	wsHub = newHub()
-	go wsHub.run()
-	go runHTTPServer()
+	if ConfigGlobal.EnableWebsockets {
+		wsHub = newHub()
+		go wsHub.run()
+		go runHTTPServer()
+	}
 }
 
 func createUploaders(targets []string) []uploader {
@@ -64,7 +66,11 @@ func sendMsgToPublicUploaders(upload interface{}, topic string, state *albionSta
 
 	sendMsgToUploaders(data, topic, dis.publicUploaders)
 	sendMsgToUploaders(data, topic, dis.privateUploaders)
-	sendMsgToWebSockets(data, topic)
+
+	// If websockets are enabled, send the data there too
+	if ConfigGlobal.EnableWebsockets {
+		sendMsgToWebSockets(data, topic)
+	}
 }
 
 func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, state *albionState) {
@@ -88,7 +94,11 @@ func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, stat
 	}
 
 	sendMsgToUploaders(data, topic, dis.privateUploaders)
-	sendMsgToWebSockets(data, topic)
+
+	// If websockets are enabled, send the data there too
+	if ConfigGlobal.EnableWebsockets {
+		sendMsgToWebSockets(data, topic)
+	}
 }
 
 func sendMsgToUploaders(msg []byte, topic string, uploaders []uploader) {
@@ -102,7 +112,6 @@ func sendMsgToUploaders(msg []byte, topic string, uploaders []uploader) {
 }
 
 func runHTTPServer() {
-	// TODO (gradius): add authentication/authorization
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		serveWs(wsHub, w, r)
 	})
