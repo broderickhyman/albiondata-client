@@ -5,9 +5,9 @@
 package client
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -36,10 +36,20 @@ var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 	CheckOrigin: func(r *http.Request) bool {
-		fmt.Println(ConfigGlobal.AllowedWSHosts)
-		fmt.Println(ConfigGlobal.EnableWebsockets)
-		fmt.Println(r.Header["Origin"])
-		return true
+		var originHost string
+		var originHostname string
+		originHost = r.Header.Get("Origin")
+
+		if originHost != "null" {
+			originHostname = (strings.Split((strings.Split(originHost, "//")[1]), ":")[0])
+			for _, v := range ConfigGlobal.AllowedWSHosts {
+				if v == originHostname {
+					return true
+				}
+			}
+		}
+
+		return false
 	},
 }
 

@@ -4,7 +4,6 @@ import (
 	"flag"
 	"strings"
 	"time"
-	"fmt"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/broderickhyman/albiondata-client/client"
@@ -21,7 +20,11 @@ func init() {
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")
 	err := viper.ReadInConfig()
-	if err != nil { panic(fmt.Errorf("%s", err))}
+
+	// if we cannot find the configuration file, set Websockets to false
+	if err != nil {
+		viper.Set("EnableWebsockets", false)
+	}
 
 	client.ConfigGlobal.EnableWebsockets = viper.GetBool("EnableWebsockets")
 	client.ConfigGlobal.AllowedWSHosts = viper.GetStringSlice("AllowedWebsocketHosts")
