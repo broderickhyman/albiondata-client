@@ -1,0 +1,4 @@
+EnableWebsockets: True
+AllowedWebsocketHosts:
+  - aom.grds.io
+  - bob.grds.io

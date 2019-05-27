@@ -4,17 +4,28 @@ import (
 	"flag"
 	"strings"
 	"time"
+	"fmt"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/broderickhyman/albiondata-client/client"
 	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/broderickhyman/albiondata-client/systray"
 	"github.com/broderickhyman/go-githubupdate/updater"
+	"github.com/spf13/viper"
 )
 
 var version string
 
 func init() {
+	// Setup the config file and parse values
+	viper.SetConfigName("config")
+	viper.AddConfigPath(".")
+	err := viper.ReadInConfig()
+	if err != nil { panic(fmt.Errorf("%s", err))}
+
+	client.ConfigGlobal.EnableWebsockets = viper.GetBool("EnableWebsockets")
+	client.ConfigGlobal.AllowedWSHosts = viper.GetStringSlice("AllowedWebsocketHosts")
+
 	flag.StringVar(
 		&client.ConfigGlobal.PublicIngestBaseUrls,
 		"i",

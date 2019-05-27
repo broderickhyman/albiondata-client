@@ -5,6 +5,7 @@
 package client
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -35,6 +36,9 @@ var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 	CheckOrigin: func(r *http.Request) bool {
+		fmt.Println(ConfigGlobal.AllowedWSHosts)
+		fmt.Println(ConfigGlobal.EnableWebsockets)
+		fmt.Println(r.Header["Origin"])
 		return true
 	},
 }

@@ -32,6 +32,12 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/fsnotify/fsnotify"
+  packages = ["."]
+  revision = "c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9"
+  version = "v1.4.7"
+
+[[projects]]
   branch = "master"
   name = "github.com/getlantern/context"
   packages = ["."]
@@ -99,11 +105,7 @@
 
 [[projects]]
   name = "github.com/google/gopacket"
-  packages = [
-    ".",
-    "layers",
-    "pcap"
-  ]
+  packages = [".","layers","pcap"]
   revision = "1a2aa715ae412f434ae0bbb833442d14880cab8a"
 
 [[projects]]
@@ -120,12 +122,15 @@
 
 [[projects]]
   name = "github.com/hashicorp/golang-lru"
-  packages = [
-    ".",
-    "simplelru"
-  ]
+  packages = [".","simplelru"]
   revision = "7087cb70de9f7a8bc0a10c375cb0d2280a8edf9c"
   version = "v0.5.1"
+
+[[projects]]
+  name = "github.com/hashicorp/hcl"
+  packages = [".","hcl/ast","hcl/parser","hcl/printer","hcl/scanner","hcl/strconv","hcl/token","json/parser","json/scanner","json/token"]
+  revision = "8cb6e5b959231cc1119e43259c4a608f9c51a241"
+  version = "v1.0.0"
 
 [[projects]]
   branch = "master"
@@ -144,6 +149,12 @@
   packages = ["."]
   revision = "88f551ae580780cc79d12ab4c218ba1ca346b83a"
   version = "v0.1.0"
+
+[[projects]]
+  name = "github.com/magiconair/properties"
+  packages = ["."]
+  revision = "de8848e004dd33dc07a2947b3d76f618a7fc7ef1"
+  version = "v1.8.1"
 
 [[projects]]
   name = "github.com/mattn/go-colorable"
@@ -171,11 +182,7 @@
 
 [[projects]]
   name = "github.com/nats-io/go-nats"
-  packages = [
-    ".",
-    "encoders/builtin",
-    "util"
-  ]
+  packages = [".","encoders/builtin","util"]
   revision = "13c7fc7590db68b18f2015600f8765a02d705b5d"
   version = "v1.7.0"
 
@@ -204,32 +211,64 @@
   revision = "4e1c5567d7c2dd59fa4c7c83d34c2f3528b025d6"
 
 [[projects]]
+  name = "github.com/pelletier/go-toml"
+  packages = ["."]
+  revision = "728039f679cbcd4f6a54e080d2219a4c4928c546"
+  version = "v1.4.0"
+
+[[projects]]
   name = "github.com/shirou/gopsutil"
-  packages = [
-    "internal/common",
-    "net"
-  ]
+  packages = ["internal/common","net"]
   revision = "d573c8e3f1c5337585b0e285214e80df7429d8b5"
   source = "https://github.com/gradiuscypher/gopsutil.git"
 
 [[projects]]
+  name = "github.com/spf13/afero"
+  packages = [".","mem"]
+  revision = "588a75ec4f32903aa5e39a2619ba6a4631e28424"
+  version = "v1.2.2"
+
+[[projects]]
+  name = "github.com/spf13/cast"
+  packages = ["."]
+  revision = "8c9545af88b134710ab1cd196795e7f2388358d7"
+  version = "v1.3.0"
+
+[[projects]]
+  name = "github.com/spf13/jwalterweatherman"
+  packages = ["."]
+  revision = "94f6ae3ed3bceceafa716478c5fbf8d29ca601a1"
+  version = "v1.1.0"
+
+[[projects]]
+  name = "github.com/spf13/pflag"
+  packages = ["."]
+  revision = "298182f68c66c05229eb03ac171abe6e309ee79a"
+  version = "v1.0.3"
+
+[[projects]]
+  name = "github.com/spf13/viper"
+  packages = ["."]
+  revision = "b5bf975e5823809fb22c7644d008757f78a4259e"
+  version = "v1.4.0"
+
+[[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
-  packages = [
-    "ed25519",
-    "ed25519/internal/edwards25519",
-    "ssh/terminal"
-  ]
+  packages = ["ed25519","ed25519/internal/edwards25519","ssh/terminal"]
   revision = "74369b46fc6756741c016591724fd1cb8e26845f"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
-  packages = [
-    "unix",
-    "windows"
-  ]
+  packages = ["unix","windows"]
   revision = "3b5209105503162ded1863c307ac66fec31120dd"
+
+[[projects]]
+  name = "golang.org/x/text"
+  packages = ["internal/gen","internal/triegen","internal/ucd","transform","unicode/cldr","unicode/norm"]
+  revision = "342b2e1fbaa52c93f31447ad2c6abc048c63e475"
+  version = "v0.3.2"
 
 [[projects]]
   branch = "master"
@@ -240,10 +279,7 @@
 [[projects]]
   branch = "v0"
   name = "gopkg.in/inconshreveable/go-update.v0"
-  packages = [
-    ".",
-    "download"
-  ]
+  packages = [".","download"]
   revision = "d8b0b1d421aa1cbf392c05869f8abbc669bb7066"
 
 [[projects]]
@@ -252,9 +288,15 @@
   packages = ["."]
   revision = "0a84660828b24d25b35525c9a1f1f51267f8da91"
 
+[[projects]]
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  revision = "51d6538a90f86fe93ac480b35f37b2be17fef232"
+  version = "v2.2.2"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "1ddb721303faa33d4f8fe2be78d7780b2d9c80280e65efb53e04671f4c0068e6"
+  inputs-digest = "88b70f20c6a22ad5ea482091f45c033cb2400427718038783a548b4bce732396"
   solver-name = "gps-cdcl"
   solver-version = 1
