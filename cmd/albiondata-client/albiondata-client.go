@@ -10,11 +10,25 @@ import (
 	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/broderickhyman/albiondata-client/systray"
 	"github.com/broderickhyman/go-githubupdate/updater"
+	"github.com/spf13/viper"
 )
 
 var version string
 
 func init() {
+	// Setup the config file and parse values
+	viper.SetConfigName("config")
+	viper.AddConfigPath(".")
+	err := viper.ReadInConfig()
+
+	// if we cannot find the configuration file, set Websockets to false
+	if err != nil {
+		viper.Set("EnableWebsockets", false)
+	}
+
+	client.ConfigGlobal.EnableWebsockets = viper.GetBool("EnableWebsockets")
+	client.ConfigGlobal.AllowedWSHosts = viper.GetStringSlice("AllowedWebsocketHosts")
+
 	flag.StringVar(
 		&client.ConfigGlobal.PublicIngestBaseUrls,
 		"i",

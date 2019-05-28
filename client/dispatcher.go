@@ -8,7 +8,6 @@ import (
 
 	"github.com/broderickhyman/albiondata-client/lib"
 	"github.com/broderickhyman/albiondata-client/log"
-	"github.com/broderickhyman/albiondata-client/notification"
 )
 
 type dispatcher struct {
@@ -27,9 +26,11 @@ func createDispatcher() {
 		privateUploaders: createUploaders(strings.Split(ConfigGlobal.PrivateIngestBaseUrls, ",")),
 	}
 
-	wsHub = newHub()
-	go wsHub.run()
-	go runHTTPServer()
+	if ConfigGlobal.EnableWebsockets {
+		wsHub = newHub()
+		go wsHub.run()
+		go runHTTPServer()
+	}
 }
 
 func createUploaders(targets []string) []uploader {
@@ -65,15 +66,21 @@ func sendMsgToPublicUploaders(upload interface{}, topic string, state *albionSta
 
 	sendMsgToUploaders(data, topic, dis.publicUploaders)
 	sendMsgToUploaders(data, topic, dis.privateUploaders)
-	sendMsgToWebSockets(data, topic)
+
+	// If websockets are enabled, send the data there too
+	if ConfigGlobal.EnableWebsockets {
+		sendMsgToWebSockets(data, topic)
+	}
 }
 
 func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, state *albionState) {
-	if state.CharacterName == "" || state.CharacterId == "" {
-		log.Error("The player name or id has not been set. Please restart the game and make sure the client is running.")
-		notification.Push("The player name or id has not been set. Please restart the game and make sure the client is running.")
-		return
-	}
+	// TODO: Re-enable this when issue #14 is fixed
+	// Will personalize with blanks for now in order to allow people to see the format
+	// if state.CharacterName == "" || state.CharacterId == "" {
+	// 	log.Error("The player name or id has not been set. Please restart the game and make sure the client is running.")
+	// 	notification.Push("The player name or id has not been set. Please restart the game and make sure the client is running.")
+	// 	return
+	// }
 
 	upload.Personalize(state.CharacterId, state.CharacterName)
 
@@ -84,7 +91,11 @@ func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, stat
 	}
 
 	sendMsgToUploaders(data, topic, dis.privateUploaders)
-	sendMsgToWebSockets(data, topic)
+
+	// If websockets are enabled, send the data there too
+	if ConfigGlobal.EnableWebsockets {
+		sendMsgToWebSockets(data, topic)
+	}
 }
 
 func sendMsgToUploaders(msg []byte, topic string, uploaders []uploader) {
@@ -110,7 +121,9 @@ func runHTTPServer() {
 }
 
 func sendMsgToWebSockets(msg []byte, topic string) {
-	var test string
-	test = "{\"topic\": \"" + topic + "\", \"data\": " + string(msg) + "}"
-	wsHub.broadcast <- []byte(test)
+	// TODO (gradius): send JSON data with topic string
+	// TODO (gradius): this seems super hacky, and I'm sure there's a better way.
+	var result string
+	result = "{\"topic\": \"" + topic + "\", \"data\": " + string(msg) + "}"
+	wsHub.broadcast <- []byte(result)
 }

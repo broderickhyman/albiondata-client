@@ -11,6 +11,8 @@ type config struct {
 	LogLevel              string
 	VersionDump           bool
 	ListenDevices         string
+	EnableWebsockets      bool
+	AllowedWSHosts        []string
 }
 
 var ConfigGlobal = &config{

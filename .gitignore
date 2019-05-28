@@ -7,3 +7,4 @@ _vendor-[0-9]*
 *.zip
 scripts/albiondata-client
 albiondata-client-output.txt
+config.yaml
