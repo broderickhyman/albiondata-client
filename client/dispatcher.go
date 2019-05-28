@@ -74,18 +74,15 @@ func sendMsgToPublicUploaders(upload interface{}, topic string, state *albionSta
 }
 
 func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, state *albionState) {
-	// TODO (gradius): determine how to capture character name/id, if possible
-	// TODO (gradius): current removed this for now, so no character ID/name will show.
-	// state.CharacterName = "ExampleName"
-	// state.CharacterId = "123456"
-
+	// TODO: Re-enable this when issue #14 is fixed
+	// Will personalize with blanks for now in order to allow people to see the format
 	// if state.CharacterName == "" || state.CharacterId == "" {
 	// 	log.Error("The player name or id has not been set. Please restart the game and make sure the client is running.")
 	// 	notification.Push("The player name or id has not been set. Please restart the game and make sure the client is running.")
 	// 	return
 	// }
 
-	// upload.Personalize(state.CharacterId, state.CharacterName)
+	upload.Personalize(state.CharacterId, state.CharacterName)
 
 	data, err := json.Marshal(upload)
 	if err != nil {
