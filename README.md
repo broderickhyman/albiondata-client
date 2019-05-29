@@ -31,12 +31,14 @@ Many thanks to the original developers:
 Downloads can be found here: https://github.com/broderickhyman/albiondata-client/releases
 
 # Related Projects
-- [albiondata-deduper](https://github.com/BroderickHyman/albiondata-deduper)
-- [albiondata-sql](https://github.com/BroderickHyman/albiondata-sql)
-- [albiondata-api-dotNet](https://github.com/broderickhyman/albiondata-api-dotNet)
+- [albiondata-deduper-dotNet](https://github.com/BroderickHyman/albiondata-deduper-dotNet)
+- [albiondata-sql-dotNet](https://github.com/BroderickHyman/albiondata-sql-dotNet)
+- [albiondata-api-dotNet](https://github.com/BroderickHyman/albiondata-api-dotNet)
+- [AlbionData.Models](https://github.com/broderickhyman/albiondata-models-dotNet) [![NuGet](https://img.shields.io/nuget/v/AlbionData.Models.svg)](https://www.nuget.org/packages/AlbionData.Models/)
+- [albion-data-website](https://github.com/broderickhyman/albion-data-website)
 
 # Contact Us
-The best way to get in touch with us is on the Albion Online Fansites Discord server in either the #proj-albiondata or the #developers channel. My username is MyPickle#2527. A permanent invite link can be found here: [https://discord.gg/8DDSjTs](https://discord.gg/8DDSjTs)
+The best way to get in touch with us is on the Albion Online Fansites Discord server in either the #proj-albiondata or the #developers channel. A permanent invite link can be found here: [https://discord.gg/TjWdq24](https://discord.gg/TjWdq24)
 
 # Developer Setup
 ### Mac/Linux Setup
