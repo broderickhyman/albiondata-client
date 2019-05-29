@@ -57,6 +57,13 @@ func init() {
 		"Parses a local file instead of checking albion ports.",
 	)
 
+	flag.StringVar(
+		&client.ConfigGlobal.RecordPath,
+		"record",
+		"",
+		"Enable recording commands to a file for debugging later.",
+	)
+
 	flag.BoolVar(
 		&client.ConfigGlobal.Debug,
 		"debug",
@@ -107,6 +114,7 @@ func main() {
 
 	if client.ConfigGlobal.OfflinePath != "" {
 		client.ConfigGlobal.Offline = true
+		client.ConfigGlobal.DisableUpload = true
 	}
 
 	startUpdater()

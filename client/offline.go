@@ -2,12 +2,13 @@ package client
 
 import (
 	"os"
+	"path/filepath"
 
 	"github.com/broderickhyman/albiondata-client/log"
 )
 
-func processOfflinePcap(path string) {
-	log.Info("Beginning offline process...")
+func processOffline(path string) {
+	log.Infof("Beginning offline process with %v", path)
 
 	r := newRouter()
 	go r.run()
@@ -21,5 +22,13 @@ func processOfflinePcap(path string) {
 	}
 
 	l := newListener(r)
-	l.startOffline(path)
+
+	fileExtension := filepath.Ext(path)
+	if fileExtension == ".pcap" {
+		l.startOfflinePcap(path)
+	} else if fileExtension == ".gob" {
+		l.startOfflineCommandGob(path)
+	} else {
+		log.Error("Only .pcap and .gob files supported at this time.")
+	}
 }

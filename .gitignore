@@ -5,6 +5,8 @@ _vendor-[0-9]*
 *.exe
 *.gz
 *.zip
+*.pcap
+*.gob
 scripts/albiondata-client
 albiondata-client-output.txt
 config.yaml

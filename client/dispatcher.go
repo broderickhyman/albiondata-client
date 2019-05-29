@@ -100,6 +100,7 @@ func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, stat
 
 func sendMsgToUploaders(msg []byte, topic string, uploaders []uploader) {
 	if ConfigGlobal.DisableUpload {
+		log.Info("Upload is disabled.")
 		return
 	}
 

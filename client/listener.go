@@ -1,7 +1,10 @@
 package client
 
 import (
+	"encoding/gob"
 	"fmt"
+	"io"
+	"os"
 
 	"github.com/broderickhyman/albiondata-client/log"
 	photon "github.com/broderickhyman/photon_spectator"
@@ -11,17 +14,19 @@ import (
 )
 
 type listener struct {
-	handle      *pcap.Handle
-	source      *gopacket.PacketSource
-	displayName string
-	fragments   *photon.FragmentBuffer
-	quit        chan bool
-	router      *Router
+	handle        *pcap.Handle
+	sourcePackets chan gopacket.Packet
+	commands      chan photon.PhotonCommand
+	displayName   string
+	fragments     *photon.FragmentBuffer
+	quit          chan bool
+	router        *Router
 }
 
 func newListener(router *Router) *listener {
 	return &listener{
 		fragments: photon.NewFragmentBuffer(),
+		commands:  make(chan photon.PhotonCommand, 1),
 		quit:      make(chan bool, 1),
 		router:    router,
 	}
@@ -41,13 +46,14 @@ func (l *listener) startOnline(device string, port int) {
 
 	layers.RegisterUDPPortLayerType(layers.UDPPort(port), photon.PhotonLayerType)
 	layers.RegisterTCPPortLayerType(layers.TCPPort(port), photon.PhotonLayerType)
-	l.source = gopacket.NewPacketSource(l.handle, l.handle.LinkType())
+	source := gopacket.NewPacketSource(l.handle, l.handle.LinkType())
+	l.sourcePackets = source.Packets()
 
 	l.displayName = fmt.Sprintf("online: %s:%d", device, port)
 	l.run()
 }
 
-func (l *listener) startOffline(path string) {
+func (l *listener) startOfflinePcap(path string) {
 	handle, err := pcap.OpenOffline(path)
 	if err != err {
 		log.Fatalf("Problem creating offline source. Error: %v", err)
@@ -58,9 +64,55 @@ func (l *listener) startOffline(path string) {
 		layers.RegisterUDPPortLayerType(layers.UDPPort(port), photon.PhotonLayerType)
 		layers.RegisterTCPPortLayerType(layers.TCPPort(port), photon.PhotonLayerType)
 	}
-	l.source = gopacket.NewPacketSource(handle, handle.LinkType())
+	source := gopacket.NewPacketSource(handle, handle.LinkType())
+	l.sourcePackets = source.Packets()
 
-	l.displayName = fmt.Sprintf("offline: %s", path)
+	l.displayName = fmt.Sprintf("Offline Pcap: %s", path)
+	l.run()
+}
+
+func (l *listener) startOfflineCommandGob(path string) {
+	// Set up packets with an empty channel
+	l.sourcePackets = make(chan gopacket.Packet, 1)
+
+	var decoder *gob.Decoder
+	file, err := os.Open(path)
+	if err != nil {
+		log.Errorf("Could not open commands input file ", err)
+	} else {
+		decoder = gob.NewDecoder(file)
+	}
+
+	go func() {
+		for {
+			command := &photon.PhotonCommand{}
+			if decoder == nil {
+				break
+			}
+			err = decoder.Decode(command)
+			if err != nil {
+				if err == io.EOF {
+					break
+				}
+				log.Errorf("Could not decode command ", err)
+				continue
+			}
+			l.commands <- *command
+		}
+
+		err = file.Close()
+		if err != nil {
+			log.Errorf("Could not close commands input file ", err)
+		}
+		log.Info("All offline commands should processed now.")
+	}()
+
+	for _, port := range []int{5055, 5056} {
+		layers.RegisterUDPPortLayerType(layers.UDPPort(port), photon.PhotonLayerType)
+		layers.RegisterTCPPortLayerType(layers.TCPPort(port), photon.PhotonLayerType)
+	}
+
+	l.displayName = fmt.Sprintf("Offline Commands: %s", path)
 	l.run()
 }
 
@@ -72,9 +124,8 @@ func (l *listener) run() {
 		case <-l.quit:
 			log.Debugf("Listener shutting down (%s)...", l.displayName)
 			l.handle.Close()
-
 			return
-		case packet := <-l.source.Packets():
+		case packet := <-l.sourcePackets:
 			if packet != nil {
 				l.processPacket(packet)
 			} else {
@@ -82,6 +133,8 @@ func (l *listener) run() {
 				l.handle.Close()
 				return
 			}
+		case command := <-l.commands:
+			l.onReliableCommand(&command)
 		}
 	}
 }
@@ -121,6 +174,8 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 		log.Debugf("Error while decoding parameters: %v", err)
 		// reset error message
 		err = nil
+	} else {
+		l.router.recordPhotonCommand <- *command
 	}
 
 	var operation operation

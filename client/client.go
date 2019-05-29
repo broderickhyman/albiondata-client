@@ -40,7 +40,7 @@ func (client *Client) Run() {
 	createDispatcher()
 
 	if ConfigGlobal.Offline {
-		processOfflinePcap(ConfigGlobal.OfflinePath)
+		processOffline(ConfigGlobal.OfflinePath)
 	} else {
 		pw := newProcessWatcher()
 		pw.run()
