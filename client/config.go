@@ -5,7 +5,7 @@ type config struct {
 	PrivateIngestBaseUrls string
 	DisableUpload         bool
 	OfflinePath           string
-	RecordPath		        string
+	RecordPath            string
 	Offline               bool
 	Debug                 bool
 	LogToFile             bool
