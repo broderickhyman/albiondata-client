@@ -2,7 +2,8 @@ package client
 
 import (
 	"albiondata-client/log"
-	nats "github.com/nats-io/go-nats"
+
+	"github.com/nats-io/go-nats"
 )
 
 type natsUploader struct {
