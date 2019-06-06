@@ -1,12 +1,11 @@
 package client
 
 import (
+	"albiondata-client/log"
 	"bytes"
 	"io"
 	"io/ioutil"
 	"net/http"
-
-	"github.com/broderickhyman/albiondata-client/log"
 )
 
 type httpUploader struct {

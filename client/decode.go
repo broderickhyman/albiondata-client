@@ -1,11 +1,11 @@
 package client
 
 import (
+	"albiondata-client/lib"
+	"albiondata-client/log"
 	"encoding/hex"
 	"reflect"
 
-	"github.com/broderickhyman/albiondata-client/lib"
-	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/mitchellh/mapstructure"
 )
 

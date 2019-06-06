@@ -1,7 +1,7 @@
 package client
 
 import (
-	"github.com/broderickhyman/albiondata-client/log"
+	"albiondata-client/log"
 	nats "github.com/nats-io/go-nats"
 )
 

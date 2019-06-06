@@ -1,13 +1,12 @@
 package client
 
 import (
+	"albiondata-client/lib"
+	"albiondata-client/log"
 	"encoding/json"
 	"net/http"
 
 	"strings"
-
-	"github.com/broderickhyman/albiondata-client/lib"
-	"github.com/broderickhyman/albiondata-client/log"
 )
 
 type dispatcher struct {

@@ -1,9 +1,8 @@
 package client
 
 import (
+	"albiondata-client/log"
 	"os"
-
-	"github.com/broderickhyman/albiondata-client/log"
 )
 
 func processOfflinePcap(path string) {

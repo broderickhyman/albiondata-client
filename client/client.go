@@ -1,11 +1,11 @@
 package client
 
 import (
+	"albiondata-client/log"
 	"io"
 	"os"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/broderickhyman/albiondata-client/log"
 	colorable "github.com/mattn/go-colorable"
 )
 

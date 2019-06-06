@@ -1,10 +1,9 @@
 package client
 
 import (
+	"albiondata-client/log"
 	"strings"
 	"time"
-
-	"github.com/broderickhyman/albiondata-client/log"
 )
 
 type albionProcessWatcher struct {
