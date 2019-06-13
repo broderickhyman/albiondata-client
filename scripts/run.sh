@@ -2,4 +2,4 @@
 
 set -e
 
-go run -ldflags="-w -s -X main.version=dev" cmd/albiondata-client/albiondata-client.go
+go run -ldflags="-w -s -X main.version=dev" albiondata-client.go
