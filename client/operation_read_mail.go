@@ -1,10 +1,11 @@
 package client
 
 import (
-	"albiondata-client/lib"
-	"albiondata-client/log"
 	"strconv"
 	"strings"
+
+	"github.com/broderickhyman/albiondata-client/lib"
+	"github.com/broderickhyman/albiondata-client/log"
 )
 
 type operationReadMail struct {

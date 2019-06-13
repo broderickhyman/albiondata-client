@@ -1,8 +1,9 @@
 package client
 
 import (
-	"albiondata-client/log"
 	"strconv"
+
+	"github.com/broderickhyman/albiondata-client/log"
 )
 
 type operationGetGameServerByCluster struct {

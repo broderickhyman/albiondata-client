@@ -3,10 +3,10 @@
 package systray
 
 import (
-	"albiondata-client/icon"
 	"fmt"
 	"os"
 
+	"github.com/broderickhyman/albiondata-client/icon"
 	"github.com/getlantern/systray"
 	"github.com/gonutz/w32"
 )

@@ -3,8 +3,9 @@
 package client
 
 import (
-	"albiondata-client/log"
 	"net"
+
+	"github.com/broderickhyman/albiondata-client/log"
 )
 
 // Gets all physical interfaces based on filter results, ignoring all VM, Loopback and Tunnel interfaces.

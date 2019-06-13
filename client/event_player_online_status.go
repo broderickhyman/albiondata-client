@@ -1,8 +1,8 @@
 package client
 
 import (
-	"albiondata-client/lib"
-	"albiondata-client/log"
+	"github.com/broderickhyman/albiondata-client/lib"
+	"github.com/broderickhyman/albiondata-client/log"
 )
 
 type eventPlayerOnlineStatus struct {

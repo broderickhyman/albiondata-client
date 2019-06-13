@@ -1,14 +1,14 @@
 package main
 
 import (
-	"albiondata-client/client"
-	"albiondata-client/log"
-	"albiondata-client/systray"
 	"flag"
 	"strings"
 	"time"
 
 	"github.com/Sirupsen/logrus"
+	"github.com/broderickhyman/albiondata-client/client"
+	"github.com/broderickhyman/albiondata-client/log"
+	"github.com/broderickhyman/albiondata-client/systray"
 	"github.com/broderickhyman/go-githubupdate/updater"
 	"github.com/spf13/viper"
 )

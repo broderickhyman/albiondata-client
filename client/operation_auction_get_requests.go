@@ -1,10 +1,11 @@
 package client
 
 import (
-	"albiondata-client/lib"
-	"albiondata-client/log"
-	"albiondata-client/notification"
 	"encoding/json"
+
+	"github.com/broderickhyman/albiondata-client/lib"
+	"github.com/broderickhyman/albiondata-client/log"
+	"github.com/broderickhyman/albiondata-client/notification"
 )
 
 type operationAuctionGetRequestsResponse struct {

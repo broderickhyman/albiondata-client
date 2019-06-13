@@ -1,9 +1,10 @@
 package client
 
 import (
-	"albiondata-client/log"
 	"runtime"
 	"time"
+
+	"github.com/broderickhyman/albiondata-client/log"
 )
 
 type processesWatcher struct {

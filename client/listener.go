@@ -1,9 +1,9 @@
 package client
 
 import (
-	"albiondata-client/log"
 	"fmt"
 
+	"github.com/broderickhyman/albiondata-client/log"
 	photon "github.com/broderickhyman/photon_spectator"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
