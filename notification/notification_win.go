@@ -4,8 +4,7 @@ package notification
 
 import (
 	"albiondata-client/log"
-
-	"gopkg.in/toast.v1"
+	toast "gopkg.in/toast.v1"
 )
 
 func Push(msg string) {
