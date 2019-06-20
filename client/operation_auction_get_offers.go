@@ -5,7 +5,6 @@ import (
 
 	"github.com/broderickhyman/albiondata-client/lib"
 	"github.com/broderickhyman/albiondata-client/log"
-	"github.com/broderickhyman/albiondata-client/notification"
 )
 
 type operationAuctionGetOffers struct {
@@ -30,14 +29,11 @@ type operationAuctionGetOffersResponse struct {
 func (op operationAuctionGetOffersResponse) Process(state *albionState) {
 	log.Debug("Got response to AuctionGetOffers operation...")
 
-	if state.LocationId == -1 {
-		log.Error("The players location has not yet been set. Please transition zones so the location can be identified.")
-		notification.Push("The players location has not yet been set. Please transition zones so the location can be identified.")
-
+	if !state.IsValidLocation() {
 		return
 	}
 
-	orders := []*lib.MarketOrder{}
+	var orders []*lib.MarketOrder
 
 	for _, v := range op.MarketOrders {
 		order := &lib.MarketOrder{}

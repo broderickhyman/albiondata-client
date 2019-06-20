@@ -174,7 +174,10 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 		log.Debugf("Error while decoding parameters: %v", err)
 		// reset error message
 		err = nil
-	} else if ConfigGlobal.RecordPath != "" {
+	}
+
+	// Record all photon commands even if the params did not parse correctly
+	if ConfigGlobal.RecordPath != "" {
 		l.router.recordPhotonCommand <- *command
 	}
 
