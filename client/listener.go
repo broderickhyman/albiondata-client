@@ -186,18 +186,18 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 	switch msg.Type {
 	case photon.OperationRequest:
 		operation, err = decodeRequest(params)
-		if params != nil {
-			log.Debugf("OperationRequest: %s", OperationType(params["253"].(int16)))
+		if params != nil && params["253"] != nil {
+			log.Debugf("OperationRequest: %v - %v", params["253"].(int16), params)
 		}
 	case photon.OperationResponse:
 		operation, err = decodeResponse(params)
 		if params != nil && params["253"] != nil {
-			log.Debugf("OperationResponse: %s", OperationType(params["253"].(int16)))
+			log.Debugf("OperationResponse: %v - %v", params["253"].(int16), params)
 		}
 	case photon.EventDataType:
 		operation, err = decodeEvent(params)
 		if params != nil && params["252"] != nil {
-			log.Debugf("EventDataType: %d -- %s", params["252"].(int16), params)
+			log.Debugf("EventDataType: %v - %v", params["252"].(int16), params)
 		}
 		//  default:
 		//    log.Debugf("[%d] (%d) %s (%d)", msg.Type, msg.ParamaterCount, msg.Data, len(msg.Data))
