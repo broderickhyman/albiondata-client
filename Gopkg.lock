@@ -27,11 +27,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:7ce148b2d94f0c547d79f5c1c7027d9ad4a62803f2b6798b4bd128ffecfd17e4"
+  digest = "1:30381f8d573526f949ecb35b91216d79bf249ed3a2c7a82193fe0198ff4fac98"
   name = "github.com/broderickhyman/photon_spectator"
   packages = ["."]
   pruneopts = ""
-  revision = "a4a17c1a49eac4f5b033faff37538b0392d960e5"
+  revision = "1a69dca80f7c719801384a61fc9765a3a1e383cf"
 
 [[projects]]
   digest = "1:197f25352dfa4d336e099f3300eade87b04b534c4ae96e41f0fe7644d2b19f3c"
@@ -121,12 +121,12 @@
   version = "v1.0.0"
 
 [[projects]]
-  digest = "1:a6eb98265ea75466cd1328c21d14c78384f7cccf63cc7b1fda2bf3291bedab14"
+  digest = "1:12b982b06ca042b26b328ad4d118c4b743b5b21da5a2c62637539a7d44be30b6"
   name = "github.com/google/go-github"
   packages = ["github"]
   pruneopts = ""
-  revision = "8bcc0479b1703906d4203dbffbb59d656783db5a"
-  version = "v26.0.2"
+  revision = "445d3bd422a8e75398ca4c1a6a287d05056f4068"
+  version = "v26.0.8"
 
 [[projects]]
   digest = "1:cea4aa2038169ee558bf507d5ea02c94ca85bcca28a4c7bb99fd59b31e43a686"
@@ -363,25 +363,32 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:a688b7859ee696f20cc5823f4685da54850e388fe9e7288f5d1653de48162c55"
+  digest = "1:90722da867436e04650b8491e5d9f690aeb2a4e305d548666bdd541d68d6cdbd"
   name = "golang.org/x/crypto"
   packages = [
+    "cast5",
     "ed25519",
     "ed25519/internal/edwards25519",
+    "openpgp",
+    "openpgp/armor",
+    "openpgp/elgamal",
+    "openpgp/errors",
+    "openpgp/packet",
+    "openpgp/s2k",
   ]
   pruneopts = ""
-  revision = "5c40567a22f818bd14a1ea7245dad9f8ef0691aa"
+  revision = "cc06ce4a13d484c0101a9e92913248488a75786d"
 
 [[projects]]
   branch = "master"
-  digest = "1:6e7646c0e844c2dc1950f6f9ce089ef7b978241a6c789adccdba925136d50655"
+  digest = "1:0cc6f08b513a8ae7ee7d5edfb89c528224c8f64cbd5d7587c9c758f9fab9dba2"
   name = "golang.org/x/sys"
   packages = [
     "unix",
     "windows",
   ]
   pruneopts = ""
-  revision = "5ed2794edfdc1c54dfb61d619c5944285f35d444"
+  revision = "c5567b49c5d04a5f83870795b8c0e2df43a8ce32"
 
 [[projects]]
   digest = "1:740b51a55815493a8d0f2b1e0d0ae48fe48953bf7eaf3fcc4198823bf67768c0"
@@ -400,11 +407,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:4c939e2057a3f5ae6dbf83d48872c670870006ae8f28a4eb1fffe45caf7f98a6"
+  digest = "1:c8d449a31e4cee29c2418a05f939294d3884822785eb8d3527dac9fb96788f79"
   name = "golang.org/x/tools"
   packages = ["container/intsets"]
   pruneopts = ""
-  revision = "ed0dc450797fdfbe6a9ee6bf3381a02099b897f9"
+  revision = "a101b041ded4588cfeb96c45f394050221b40f11"
 
 [[projects]]
   branch = "v0"

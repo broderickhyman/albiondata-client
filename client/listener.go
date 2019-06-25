@@ -169,12 +169,7 @@ func (l *listener) processPacket(packet gopacket.Packet) {
 
 func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 	msg, _ := command.ReliableMessage()
-	params, err := photon.DecodeReliableMessage(msg)
-	if err != nil {
-		log.Debugf("Error while decoding parameters: %v", err)
-		// reset error message
-		err = nil
-	}
+	params := photon.DecodeReliableMessage(msg)
 
 	// Record all photon commands even if the params did not parse correctly
 	if ConfigGlobal.RecordPath != "" {
@@ -182,6 +177,7 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 	}
 
 	var operation operation
+	var err error
 
 	switch msg.Type {
 	case photon.OperationRequest:
