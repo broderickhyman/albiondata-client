@@ -39,6 +39,14 @@ func showConsole() {
 	consoleHidden = false
 }
 
+func GetActionTitle() string {
+	if consoleHidden {
+		return "Show Console"
+	} else {
+		return "Hide Console"
+	}
+}
+
 func Run() {
 	systray.Run(onReady, onExit)
 }
@@ -57,7 +65,7 @@ func onReady() {
 	systray.SetIcon(icon.Data)
 	systray.SetTitle("Albion Data Client")
 	systray.SetTooltip("Albion Data Client")
-	mConHideShow := systray.AddMenuItem("Show Console", "Show/Hide Console")
+	mConHideShow := systray.AddMenuItem(GetActionTitle(), "Show/Hide Console")
 	mQuit := systray.AddMenuItem("Quit", "Close the Albion Data Client")
 
 	func() {
@@ -72,14 +80,12 @@ func onReady() {
 			case <-mConHideShow.ClickedCh:
 				if consoleHidden == true {
 					showConsole()
-					mConHideShow.SetTitle("Hide Console")
+					mConHideShow.SetTitle(GetActionTitle())
 				} else {
 					hideConsole()
-					mConHideShow.SetTitle("Show Console")
+					mConHideShow.SetTitle(GetActionTitle())
 				}
 			}
-
 		}
-
 	}()
 }
