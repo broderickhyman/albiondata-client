@@ -4,8 +4,9 @@ package systray
 
 import (
 	"fmt"
-	"github.com/broderickhyman/albiondata-client/client"
 	"os"
+
+	"github.com/broderickhyman/albiondata-client/client"
 
 	"github.com/broderickhyman/albiondata-client/icon"
 	"github.com/getlantern/systray"
