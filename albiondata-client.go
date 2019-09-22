@@ -29,6 +29,48 @@ func init() {
 	client.ConfigGlobal.EnableWebsockets = viper.GetBool("EnableWebsockets")
 	client.ConfigGlobal.AllowedWSHosts = viper.GetStringSlice("AllowedWebsocketHosts")
 
+	flag.BoolVar(
+		&client.ConfigGlobal.Debug,
+		"debug",
+		false,
+		"Enable debug logging.",
+	)
+
+	flag.BoolVar(
+		&client.ConfigGlobal.DisableUpload,
+		"d",
+		false,
+		"If specified no attempts will be made to upload data to remote server.",
+	)
+
+	flag.StringVar(
+		&client.ConfigGlobal.ListenDevices,
+		"l",
+		"",
+		"Listen on this comma separated devices instead of all available",
+	)
+
+	flag.BoolVar(
+		&client.ConfigGlobal.LogToFile,
+		"output-file",
+		false,
+		"Enable logging to file.",
+	)
+
+	flag.StringVar(
+		&client.ConfigGlobal.OfflinePath,
+		"o",
+		"",
+		"Parses a local file instead of checking albion ports.",
+	)
+
+	flag.BoolVar(
+		&client.ConfigGlobal.Minimize,
+		"minimize",
+		false,
+		"Automatically minimize the window.",
+	)
+
 	flag.StringVar(
 		&client.ConfigGlobal.PublicIngestBaseUrls,
 		"i",
@@ -43,63 +85,16 @@ func init() {
 		"Base URL to send PRIVATE data to, can be 'nats://', 'http://' or 'noop' and can have multiple uploaders comma separated.",
 	)
 
-	flag.BoolVar(
-		&client.ConfigGlobal.DisableUpload,
-		"d",
-		false,
-		"If specified no attempts will be made to upload data to remote server.",
-	)
-
-	flag.StringVar(
-		&client.ConfigGlobal.OfflinePath,
-		"o",
-		"",
-		"Parses a local file instead of checking albion ports.",
-	)
-
 	flag.StringVar(
 		&client.ConfigGlobal.RecordPath,
 		"record",
 		"",
 		"Enable recording commands to a file for debugging later.",
 	)
-
-	flag.BoolVar(
-		&client.ConfigGlobal.Debug,
-		"debug",
-		false,
-		"Enable debug logging.",
-	)
-
-	flag.BoolVar(
-		&client.ConfigGlobal.LogToFile,
-		"output-file",
-		false,
-		"Enable logging to file.",
-	)
-
-	flag.BoolVar(
-		&client.ConfigGlobal.VersionDump,
-		"version",
-		false,
-		"Print the current version.",
-	)
-
-	flag.StringVar(
-		&client.ConfigGlobal.ListenDevices,
-		"l",
-		"",
-		"Listen on this comma separated devices instead of all available",
-	)
 }
 
 func main() {
 	flag.Parse()
-
-	if client.ConfigGlobal.VersionDump {
-		log.Infof("albiondata-client version: %v", version)
-		return
-	}
 
 	if client.ConfigGlobal.Debug {
 		client.ConfigGlobal.LogLevel = "DEBUG"
@@ -115,6 +110,10 @@ func main() {
 	if client.ConfigGlobal.OfflinePath != "" {
 		client.ConfigGlobal.Offline = true
 		client.ConfigGlobal.DisableUpload = true
+	}
+
+	if client.ConfigGlobal.DisableUpload {
+		log.Info("Upload is disabled.")
 	}
 
 	startUpdater()

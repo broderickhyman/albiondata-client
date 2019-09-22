@@ -150,7 +150,7 @@ Section $(TEXT_SecBase) SecBase
   CreateShortCut "$DESKTOP\${PACKAGE_NAME}.lnk" "$INSTDIR\${PACKAGE_EXE}"
 
 ; Create Task to run the Client as Admin on Logon
-  Exec 'c:\Windows\System32\schtasks.exe /Create /SC ONLOGON /RL HIGHEST /TN "Albion Data Client" /TR "$INSTDIR\albiondata-client.exe"'
+  Exec 'c:\Windows\System32\schtasks.exe /Create /SC ONLOGON /RL HIGHEST /TN "Albion Data Client" /TR "\"$INSTDIR\albiondata-client.exe\" -minimize"'
 
 SectionEnd
 
@@ -224,8 +224,8 @@ Section "Uninstall"
   Delete "$INSTDIR\LICENSE.txt"
   Delete "$INSTDIR\uninstall.exe"
   RmDir "$INSTDIR"
-  
-  ; Startmenu  
+
+  ; Startmenu
   !insertmacro MUI_STARTMENU_GETFOLDER Application $STARTMENU_FOLDER
 
   Delete "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk"
@@ -254,5 +254,5 @@ SectionEnd
 Function un.onInit
 
   !insertmacro MUI_UNGETLANGUAGE
-  
+
 FunctionEnd

@@ -4,6 +4,7 @@ package systray
 
 import (
 	"fmt"
+	"github.com/broderickhyman/albiondata-client/client"
 	"os"
 
 	"github.com/broderickhyman/albiondata-client/icon"
@@ -46,7 +47,12 @@ func onExit() {
 }
 
 func onReady() {
-	hideConsole()
+	// Don't hide the console automatically
+	// Unless started from the scheduled task or with the parameter
+	// People think it is crashing
+	if client.ConfigGlobal.Minimize {
+		hideConsole()
+	}
 	systray.SetIcon(icon.Data)
 	systray.SetTitle("Albion Data Client")
 	systray.SetTooltip("Albion Data Client")

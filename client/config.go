@@ -1,19 +1,19 @@
 package client
 
 type config struct {
-	PublicIngestBaseUrls  string
-	PrivateIngestBaseUrls string
+	AllowedWSHosts        []string
+	Debug                 bool
 	DisableUpload         bool
+	EnableWebsockets      bool
+	ListenDevices         string
+	LogLevel              string
+	LogToFile             bool
+	Minimize              bool
+	Offline               bool
 	OfflinePath           string
 	RecordPath            string
-	Offline               bool
-	Debug                 bool
-	LogToFile             bool
-	LogLevel              string
-	VersionDump           bool
-	ListenDevices         string
-	EnableWebsockets      bool
-	AllowedWSHosts        []string
+	PrivateIngestBaseUrls string
+	PublicIngestBaseUrls  string
 }
 
 var ConfigGlobal = &config{
