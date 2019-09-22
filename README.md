@@ -21,6 +21,15 @@ This client monitors local network traffic, identifies UDP packets
 that contain relevant data for Albion Online, and ships the information
 off to a central NATS server that anyone can subscribe to.
 
+[Client download stats](https://www.somsubhra.com/github-release-stats/?username=broderickhyman&repository=albiondata-client)
+
+### Contributing
+This process is run on a [DigitalOcean Droplet](https://www.digitalocean.com) in order to ensure almost perfect uptime and high performance for the users. If you find this project beneficial to you then please consider a donation, thanks!!
+
+[Become a Patron on Patreon!](https://www.patreon.com/bePatron?u=10422119)
+
+[![ko-fi](https://www.ko-fi.com/img/donate_sm.png)](https://ko-fi.com/E1E5K69V)
+
 # Contributions
 Many thanks to the original developers:
 - [Regner](https://github.com/Regner)
