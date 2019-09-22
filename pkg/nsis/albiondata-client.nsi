@@ -150,7 +150,7 @@ Section $(TEXT_SecBase) SecBase
   CreateShortCut "$DESKTOP\${PACKAGE_NAME}.lnk" "$INSTDIR\${PACKAGE_EXE}"
 
 ; Create Task to run the Client as Admin on Logon
-  Exec 'c:\Windows\System32\schtasks.exe /Create /SC ONLOGON /RL HIGHEST /TN "Albion Data Client" /TR "\"$INSTDIR\albiondata-client.exe\" -minimize"'
+  Exec 'c:\Windows\System32\schtasks.exe /Create /F /SC ONLOGON /RL HIGHEST /TN "Albion Data Client" /TR "\"$INSTDIR\albiondata-client.exe\" -minimize"'
 
 SectionEnd
 
