@@ -74,6 +74,11 @@ func sendMsgToPublicUploaders(upload interface{}, topic string, state *albionSta
 }
 
 func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, state *albionState) {
+	if ConfigGlobal.DisableUpload {
+		log.Info("Upload is disabled.")
+		return
+	}
+
 	// TODO: Re-enable this when issue #14 is fixed
 	// Will personalize with blanks for now in order to allow people to see the format
 	// if state.CharacterName == "" || state.CharacterId == "" {
@@ -90,7 +95,9 @@ func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, stat
 		return
 	}
 
-	sendMsgToUploaders(data, topic, dis.privateUploaders)
+	if len(dis.privateUploaders) > 0 {
+		sendMsgToUploaders(data, topic, dis.privateUploaders)
+	}
 
 	// If websockets are enabled, send the data there too
 	if ConfigGlobal.EnableWebsockets {

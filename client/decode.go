@@ -2,19 +2,19 @@ package client
 
 import (
 	"encoding/hex"
-	"reflect"
-
 	"github.com/broderickhyman/albiondata-client/lib"
 	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/mitchellh/mapstructure"
+	"reflect"
+	"strconv"
 )
 
-func decodeRequest(params map[string]interface{}) (operation operation, err error) {
-	if _, ok := params["253"]; !ok {
+func decodeRequest(params map[uint8]interface{}) (operation operation, err error) {
+	if _, ok := params[253]; !ok {
 		return nil, nil
 	}
 
-	code := params["253"].(int16)
+	code := params[253].(int16)
 
 	switch OperationType(code) {
 	case opGetGameServerByCluster:
@@ -38,12 +38,12 @@ func decodeRequest(params map[string]interface{}) (operation operation, err erro
 	return operation, err
 }
 
-func decodeResponse(params map[string]interface{}) (operation operation, err error) {
-	if _, ok := params["253"]; !ok {
+func decodeResponse(params map[uint8]interface{}) (operation operation, err error) {
+	if _, ok := params[253]; !ok {
 		return nil, nil
 	}
 
-	code := params["253"].(int16)
+	code := params[253].(int16)
 
 	switch OperationType(code) {
 	case opJoin:
@@ -71,12 +71,12 @@ func decodeResponse(params map[string]interface{}) (operation operation, err err
 	return operation, err
 }
 
-func decodeEvent(params map[string]interface{}) (event operation, err error) {
-	if _, ok := params["252"]; !ok {
+func decodeEvent(params map[uint8]interface{}) (event operation, err error) {
+	if _, ok := params[252]; !ok {
 		return nil, nil
 	}
 
-	eventType := params["252"].(int16)
+	eventType := params[252].(int16)
 
 	switch eventType {
 	// case evRespawn: //TODO: confirm this eventCode (old 77)
@@ -92,7 +92,7 @@ func decodeEvent(params map[string]interface{}) (event operation, err error) {
 	return event, err
 }
 
-func decodeParams(params interface{}, operation operation) error {
+func decodeParams(params map[uint8]interface{}, operation operation) error {
 	convertGameObjects := func(from reflect.Type, to reflect.Type, v interface{}) (interface{}, error) {
 		if from == reflect.TypeOf([]int8{}) && to == reflect.TypeOf(lib.CharacterID("")) {
 			log.Debug("Parsing character ID from mixed-endian UUID")
@@ -113,7 +113,15 @@ func decodeParams(params interface{}, operation operation) error {
 		return err
 	}
 
-	err = decoder.Decode(params)
+	// Decided that the maps were easier to work with in most places with uint8 keys
+	// Therefore we have to convert to a string map in order for the decode to work here
+	// Should be negligible performance loss
+	stringMap := make(map[string]interface{})
+	for k, v := range params {
+		stringMap[strconv.Itoa(int(k))] = v
+	}
+
+	err = decoder.Decode(stringMap)
 
 	return err
 }
