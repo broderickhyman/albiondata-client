@@ -2,11 +2,12 @@ package client
 
 import (
 	"encoding/hex"
+	"reflect"
+	"strconv"
+
 	"github.com/broderickhyman/albiondata-client/lib"
 	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/mitchellh/mapstructure"
-	"reflect"
-	"strconv"
 )
 
 func decodeRequest(params map[uint8]interface{}) (operation operation, err error) {
