@@ -8,8 +8,8 @@ import (
 type operationAuctionGetItemAverageStats struct {
 	ItemID      uint32        `mapstructure:"1"`
 	Quality     uint8         `mapstructure:"2"`
-	Enchantment uint32        `mapstructure:"4"`
 	Timescale   lib.Timescale `mapstructure:"3"`
+	Enchantment uint32        `mapstructure:"4"`
 	MessageID   uint64        `mapstructure:"255"`
 }
 
@@ -47,10 +47,6 @@ func (op operationAuctionGetItemAverageStatsResponse) Process(state *albionState
 	for i := range op.ItemAmounts {
 
 		history := &lib.MarketHistory{}
-		history.AlbionID = mhInfo.albionId
-		history.LocationID = state.LocationId
-		history.QualityLevel = mhInfo.quality
-		history.Timescale = mhInfo.timescale
 		history.ItemAmount = op.ItemAmounts[i]
 		history.SilverAmount = op.SilverAmounts[i]
 		history.Timestamp = op.Timestamps[i]
@@ -58,14 +54,18 @@ func (op operationAuctionGetItemAverageStatsResponse) Process(state *albionState
 	}
 
 	if len(histories) < 1 {
-		log.Info("Auction Stats Reponse - no history\n\n")
+		log.Info("Auction Stats Response - no history\n\n")
 		return
 	}
 
 	upload := lib.MarketHistoriesUpload{
-		Histories: histories,
+		AlbionID:     mhInfo.albionId,
+		LocationID:   state.LocationId,
+		QualityLevel: mhInfo.quality,
+		Timescale:    mhInfo.timescale,
+		Histories:    histories,
 	}
 
-	log.Infof("Sending %d item average stats to ingest for albionID %d", len(histories), histories[0].AlbionID)
+	log.Infof("Sending %d item average stats to ingest for albionID %d", len(histories), mhInfo.albionId)
 	sendMsgToPublicUploaders(upload, lib.NatsMarketHistoriesIngest, state)
 }

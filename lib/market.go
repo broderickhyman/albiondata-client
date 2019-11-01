@@ -70,7 +70,7 @@ func (m *MarketExpiryNotification) Type() MarketNotificationType {
 
 type MarketNotificationUpload struct {
 	PrivateUpload
-	Type         MarketNotificationType `json: "NotificationType"`
+	Type         MarketNotificationType `json:"NotificationType"`
 	Notification MarketNotification     `json:"Notification"`
 }
 
