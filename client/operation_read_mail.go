@@ -37,7 +37,6 @@ func (op operationReadMail) Process(state *albionState) {
 		Notification: notification,
 	}
 
-	log.Info("Sending a market notification to private ingest")
 	sendMsgToPrivateUploaders(&upload, lib.NatsMarketNotifications, state)
 }
 

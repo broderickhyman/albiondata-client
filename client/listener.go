@@ -1,6 +1,7 @@
 package client
 
 import (
+	"encoding/base64"
 	"encoding/gob"
 	"fmt"
 	"io"
@@ -168,39 +169,53 @@ func (l *listener) processPacket(packet gopacket.Packet) {
 }
 
 func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
-	msg, _ := command.ReliableMessage()
-	params := photon.DecodeReliableMessage(msg)
-
 	// Record all photon commands even if the params did not parse correctly
 	if ConfigGlobal.RecordPath != "" {
 		l.router.recordPhotonCommand <- *command
 	}
 
+	msg, err := command.ReliableMessage()
+	if err != nil {
+		log.Debugf("Could not decode reliable message: %v - %v", err, base64.StdEncoding.EncodeToString(command.Data))
+		return
+	}
+	params := photon.DecodeReliableMessage(msg)
+	if params == nil {
+		log.Debugf("ERROR: Could not decode params: [%d] (%d) (%d) %v", msg.Type, msg.ParamaterCount, len(msg.Data), base64.StdEncoding.EncodeToString(msg.Data))
+		return
+	}
+
 	var operation operation
-	var err error
 
 	switch msg.Type {
 	case photon.OperationRequest:
 		operation, err = decodeRequest(params)
-		if params != nil && params["253"] != nil {
-			log.Debugf("OperationRequest: %v - %v", params["253"].(int16), params)
+		if params[253] != nil {
+			log.Debugf("OperationRequest: %v - %v", params[253].(int16), params)
+		} else {
+			log.Debugf("OperationRequest: ERROR - %v", params)
 		}
 	case photon.OperationResponse:
 		operation, err = decodeResponse(params)
-		if params != nil && params["253"] != nil {
-			log.Debugf("OperationResponse: %v - %v", params["253"].(int16), params)
+		if params[253] != nil {
+			log.Debugf("OperationResponse: %v - %v", params[253].(int16), params)
+		} else {
+			log.Debugf("OperationResponse: ERROR - %v", params)
 		}
 	case photon.EventDataType:
 		operation, err = decodeEvent(params)
-		if params != nil && params["252"] != nil {
-			log.Debugf("EventDataType: %v - %v", params["252"].(int16), params)
+		if params[252] != nil {
+			log.Debugf("EventDataType: %v - %v", params[252].(int16), params)
+		} else {
+			log.Debugf("EventDataType: ERROR - %v", params)
 		}
-		//  default:
-		//    log.Debugf("[%d] (%d) %s (%d)", msg.Type, msg.ParamaterCount, msg.Data, len(msg.Data))
+	default:
+		err = fmt.Errorf("unsupported message type: %v, data: %v", msg.Type, base64.StdEncoding.EncodeToString(msg.Data))
 	}
 
 	if err != nil {
-		log.Debugf("Error while decoding an event or operation: %v", err)
+		log.Debugf("Error while decoding an event or operation: %v - params: %v", err, params)
+		operation = nil
 	}
 
 	if operation != nil {

@@ -27,11 +27,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:30381f8d573526f949ecb35b91216d79bf249ed3a2c7a82193fe0198ff4fac98"
+  digest = "1:3f7360159290cd6768af6db0ace0c42919716bdbfb29754a286508f71674d3aa"
   name = "github.com/broderickhyman/photon_spectator"
   packages = ["."]
   pruneopts = ""
-  revision = "1a69dca80f7c719801384a61fc9765a3a1e383cf"
+  revision = "67a6eabae86dbb2816a1768356aaea1dc7f95187"
 
 [[projects]]
   digest = "1:197f25352dfa4d336e099f3300eade87b04b534c4ae96e41f0fe7644d2b19f3c"
