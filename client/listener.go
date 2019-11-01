@@ -209,8 +209,8 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 		} else {
 			log.Debugf("EventDataType: ERROR - %v", params)
 		}
-	default:
-		err = fmt.Errorf("unsupported message type: %v, data: %v", msg.Type, base64.StdEncoding.EncodeToString(msg.Data))
+		//default:
+		//err = fmt.Errorf("unsupported message type: %v, data: %v", msg.Type, base64.StdEncoding.EncodeToString(msg.Data))
 	}
 
 	if err != nil {
