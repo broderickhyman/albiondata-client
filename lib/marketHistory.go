@@ -38,7 +38,7 @@ type MarketHistory struct {
 	// For this reason, we'll be safe and use the largest expected values.
 }
 
-// StringArray for MarketHistory, duh
+// StringArray for MarketHistory
 func (m *MarketHistory) StringArray() []string {
 	return []string{
 		fmt.Sprintf("%d", m.ItemAmount),
@@ -48,8 +48,8 @@ func (m *MarketHistory) StringArray() []string {
 }
 
 type MarketHistoriesUpload struct {
-	AlbionID     uint32           `json:"AlbionID"`
-	LocationID   int              `json:"LocationId"`
+	AlbionId     uint32           `json:"AlbionId"`
+	LocationId   int              `json:"LocationId"`
 	QualityLevel uint8            `json:"QualityLevel"`
 	Timescale    Timescale        `json:"Timescale"`
 	Histories    []*MarketHistory `json:"MarketHistories"`

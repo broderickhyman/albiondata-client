@@ -59,8 +59,8 @@ func (op operationAuctionGetItemAverageStatsResponse) Process(state *albionState
 	}
 
 	upload := lib.MarketHistoriesUpload{
-		AlbionID:     mhInfo.albionId,
-		LocationID:   state.LocationId,
+		AlbionId:     mhInfo.albionId,
+		LocationId:   state.LocationId,
 		QualityLevel: mhInfo.quality,
 		Timescale:    mhInfo.timescale,
 		Histories:    histories,
