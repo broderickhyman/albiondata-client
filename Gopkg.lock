@@ -148,14 +148,6 @@
   revision = "1a2aa715ae412f434ae0bbb833442d14880cab8a"
 
 [[projects]]
-  digest = "1:ad92aa49f34cbc3546063c7eb2cabb55ee2278b72842eda80e2a20a8a06a8d73"
-  name = "github.com/google/uuid"
-  packages = ["."]
-  pruneopts = ""
-  revision = "0cd6bf5da1e1c83f8b45653022c74f71af0538a4"
-  version = "v1.1.1"
-
-[[projects]]
   digest = "1:09aa5dd1332b93c96bde671bafb053249dc813febf7d5ca84e8f382ba255d67d"
   name = "github.com/gorilla/websocket"
   packages = ["."]
@@ -453,7 +445,6 @@
     "github.com/google/gopacket",
     "github.com/google/gopacket/layers",
     "github.com/google/gopacket/pcap",
-    "github.com/google/uuid",
     "github.com/gorilla/websocket",
     "github.com/mattn/go-colorable",
     "github.com/mitchellh/go-ps",

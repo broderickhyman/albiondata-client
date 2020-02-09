@@ -1,6 +1,8 @@
 package client
 
 import (
+	"sort"
+
 	"github.com/broderickhyman/albiondata-client/lib"
 	"github.com/broderickhyman/albiondata-client/log"
 )
@@ -57,6 +59,11 @@ func (op operationAuctionGetItemAverageStatsResponse) Process(state *albionState
 		log.Info("Auction Stats Response - no history\n\n")
 		return
 	}
+
+	// Sort history by descending time so the newest is always first in the list
+	sort.SliceStable(histories, func(i, j int) bool {
+		return histories[i].Timestamp > histories[j].Timestamp
+	})
 
 	upload := lib.MarketHistoriesUpload{
 		AlbionId:     mhInfo.albionId,
