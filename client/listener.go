@@ -175,12 +175,12 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 	}
 
 	msg, err := command.ReliableMessage()
-	if err != nil {
+	if err != nil && !ConfigGlobal.DebugIgnoreDecodingErrors {
 		log.Debugf("Could not decode reliable message: %v - %v", err, base64.StdEncoding.EncodeToString(command.Data))
 		return
 	}
 	params := photon.DecodeReliableMessage(msg)
-	if params == nil {
+	if params == nil && !ConfigGlobal.DebugIgnoreDecodingErrors {
 		log.Debugf("ERROR: Could not decode params: [%d] (%d) (%d) %v", msg.Type, msg.ParamaterCount, len(msg.Data), base64.StdEncoding.EncodeToString(msg.Data))
 		return
 	}
@@ -191,29 +191,41 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 	case photon.OperationRequest:
 		operation, err = decodeRequest(params)
 		if params[253] != nil {
-			log.Debugf("OperationRequest: %v - %v", params[253].(int16), params)
-		} else {
+			number := params[253].(int16)
+			_, exists := ConfigGlobal.DebugOperations[int(number)]
+			if exists || ConfigGlobal.DebugOperationsString == "" {
+				log.Debugf("OperationRequest: [%v]%v - %v", number, OperationType(number), params)
+			}
+		} else if !ConfigGlobal.DebugIgnoreDecodingErrors {
 			log.Debugf("OperationRequest: ERROR - %v", params)
 		}
 	case photon.OperationResponse:
 		operation, err = decodeResponse(params)
 		if params[253] != nil {
-			log.Debugf("OperationResponse: %v - %v", params[253].(int16), params)
-		} else {
+			number := params[253].(int16)
+			_, exists := ConfigGlobal.DebugOperations[int(number)]
+			if exists || ConfigGlobal.DebugOperationsString == "" {
+				log.Debugf("OperationResponse: [%v]%v - %v", number, OperationType(number), params)
+			}
+		} else if !ConfigGlobal.DebugIgnoreDecodingErrors {
 			log.Debugf("OperationResponse: ERROR - %v", params)
 		}
 	case photon.EventDataType:
 		operation, err = decodeEvent(params)
 		if params[252] != nil {
-			log.Debugf("EventDataType: %v - %v", params[252].(int16), params)
-		} else {
+			number := params[252].(int16)
+			_, exists := ConfigGlobal.DebugEvents[int(number)]
+			if exists || ConfigGlobal.DebugEventsString == "" {
+				log.Debugf("EventDataType: [%v]%v - %v", number, EventType(number), params)
+			}
+		} else if !ConfigGlobal.DebugIgnoreDecodingErrors {
 			log.Debugf("EventDataType: ERROR - %v", params)
 		}
 		//default:
 		//err = fmt.Errorf("unsupported message type: %v, data: %v", msg.Type, base64.StdEncoding.EncodeToString(msg.Data))
 	}
 
-	if err != nil {
+	if err != nil && !ConfigGlobal.DebugIgnoreDecodingErrors {
 		log.Debugf("Error while decoding an event or operation: %v - params: %v", err, params)
 		operation = nil
 	}

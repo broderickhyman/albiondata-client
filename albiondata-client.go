@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"strconv"
 	"strings"
 	"time"
 
@@ -75,14 +76,14 @@ func init() {
 		&client.ConfigGlobal.PublicIngestBaseUrls,
 		"i",
 		"nats://public:thenewalbiondata@www.albion-online-data.com:4222",
-		"Base URL to send PUBLIC data to, can be 'nats://', 'http://' or 'noop' and can have multiple uploaders comma separated.",
+		"Base URL to send PUBLIC data to, can be 'nats://', 'http://' or 'noop' and can have multiple uploaders. Comma separated.",
 	)
 
 	flag.StringVar(
 		&client.ConfigGlobal.PrivateIngestBaseUrls,
 		"p",
 		"",
-		"Base URL to send PRIVATE data to, can be 'nats://', 'http://' or 'noop' and can have multiple uploaders comma separated.",
+		"Base URL to send PRIVATE data to, can be 'nats://', 'http://' or 'noop' and can have multiple uploaders. Comma separated.",
 	)
 
 	flag.StringVar(
@@ -91,6 +92,27 @@ func init() {
 		"",
 		"Enable recording commands to a file for debugging later.",
 	)
+
+	flag.StringVar(
+		&client.ConfigGlobal.DebugEventsString,
+		"events",
+		"",
+		"List of event names to output messages when debugging. Comma separated.",
+	)
+
+	flag.StringVar(
+		&client.ConfigGlobal.DebugOperationsString,
+		"operations",
+		"",
+		"List of operation names to output messages when debugging. Comma separated.",
+	)
+
+	flag.BoolVar(
+		&client.ConfigGlobal.DebugIgnoreDecodingErrors,
+		"ignore-decode-errors",
+		true,
+		"Ignore the decoding errors when debugging",
+	)
 }
 
 func main() {
@@ -98,6 +120,25 @@ func main() {
 
 	if client.ConfigGlobal.Debug {
 		client.ConfigGlobal.LogLevel = "DEBUG"
+	}
+	client.ConfigGlobal.DebugEvents = make(map[int]bool)
+	if client.ConfigGlobal.DebugEventsString != "" {
+		for _, event := range strings.Split(client.ConfigGlobal.DebugEventsString, ",") {
+			number, err := strconv.Atoi(event)
+			if err == nil {
+				client.ConfigGlobal.DebugEvents[number] = true
+			}
+		}
+	}
+
+	client.ConfigGlobal.DebugOperations = make(map[int]bool)
+	if client.ConfigGlobal.DebugOperationsString != "" {
+		for _, operation := range strings.Split(client.ConfigGlobal.DebugOperationsString, ",") {
+			number, err := strconv.Atoi(operation)
+			if err == nil {
+				client.ConfigGlobal.DebugOperations[number] = true
+			}
+		}
 	}
 
 	level, err := logrus.ParseLevel(strings.ToLower(client.ConfigGlobal.LogLevel))
@@ -134,24 +175,16 @@ func startUpdater() {
 		)
 
 		go func() {
-			for {
-				maxTries := 6
-				for i := 0; i < maxTries; i++ {
-					err := u.BackgroundUpdater()
-					if err != nil {
-						if i == maxTries-1 {
-							log.Error(err.Error())
-						} else {
-							// Sleep and hope the network connects
-							time.Sleep(time.Second * 10)
-						}
-					} else {
-						break
-					}
+			maxTries := 2
+			for i := 0; i < maxTries; i++ {
+				err := u.BackgroundUpdater()
+				if err != nil {
+					log.Error(err.Error())
+					// Sleep and hope the network connects
+					time.Sleep(time.Second * 60)
+				} else {
+					break
 				}
-
-				// Check again in 2 hours
-				time.Sleep(time.Hour * 2)
 			}
 		}()
 	}
