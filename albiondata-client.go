@@ -97,20 +97,28 @@ func init() {
 		&client.ConfigGlobal.DebugEventsString,
 		"events",
 		"",
-		"List of event names to output messages when debugging. Comma separated.",
+		"List of event IDs to output messages when debugging. Comma separated.",
 	)
+
+	// TODO: Add this later
+	// flag.StringVar(
+	// 	&client.ConfigGlobal.DebugEventsBlacklistString,
+	// 	"events-ignore",
+	// 	"",
+	// 	"List of event names to output messages when debugging. Comma separated.",
+	// )
 
 	flag.StringVar(
 		&client.ConfigGlobal.DebugOperationsString,
 		"operations",
 		"",
-		"List of operation names to output messages when debugging. Comma separated.",
+		"List of operation IDs to output messages when debugging. Comma separated.",
 	)
 
 	flag.BoolVar(
 		&client.ConfigGlobal.DebugIgnoreDecodingErrors,
 		"ignore-decode-errors",
-		true,
+		false,
 		"Ignore the decoding errors when debugging",
 	)
 }
@@ -180,6 +188,7 @@ func startUpdater() {
 				err := u.BackgroundUpdater()
 				if err != nil {
 					log.Error(err.Error())
+					log.Info("Will try again in 60 seconds. You may need to run the client as Administrator.")
 					// Sleep and hope the network connects
 					time.Sleep(time.Second * 60)
 				} else {

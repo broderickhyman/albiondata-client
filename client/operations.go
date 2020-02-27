@@ -385,11 +385,14 @@ const (
 	opInitHideoutAttackCancel                 OperationType = 374
 	opHideoutFillNutrition                    OperationType = 375
 	opHideoutGetInfo                          OperationType = 376
-	opHideoutSetTribute                       OperationType = 377
-	opOpenWorldAttackScheduleStart            OperationType = 378
-	opOpenWorldAttackScheduleCancel           OperationType = 379
-	opOpenWorldAttackConquerStart             OperationType = 380
-	opOpenWorldAttackConquerCancel            OperationType = 381
-	opGetOpenWorldAttackDetails               OperationType = 382
-	opGetNextOpenWorldAttackScheduleTime      OperationType = 383
+	opHideoutGetOwnerInfo                     OperationType = 377
+	opHideoutSetTribute                       OperationType = 378
+	opOpenWorldAttackScheduleStart            OperationType = 379
+	opOpenWorldAttackScheduleCancel           OperationType = 380
+	opOpenWorldAttackConquerStart             OperationType = 381
+	opOpenWorldAttackConquerCancel            OperationType = 382
+	opGetOpenWorldAttackDetails               OperationType = 383
+	opGetNextOpenWorldAttackScheduleTime      OperationType = 384
+	opRecoverVaultFromHideout                 OperationType = 385
+	opGetGuildEnergyDrainInfo                 OperationType = 386
 )
