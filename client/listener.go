@@ -214,8 +214,8 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 		operation, err = decodeEvent(params)
 		if params[252] != nil {
 			number := params[252].(int16)
-			_, exists := ConfigGlobal.DebugEvents[int(number)]
-			if exists || ConfigGlobal.DebugEventsString == "" {
+			toDebug, exists := ConfigGlobal.DebugEvents[int(number)]
+			if (exists && toDebug) || (!exists && ConfigGlobal.DebugEventsString == "") {
 				log.Debugf("EventDataType: [%v]%v - %v", number, EventType(number), params)
 			}
 		} else if !ConfigGlobal.DebugIgnoreDecodingErrors {
