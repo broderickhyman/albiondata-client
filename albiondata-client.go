@@ -100,13 +100,12 @@ func init() {
 		"List of event IDs to output messages when debugging. Comma separated.",
 	)
 
-	// TODO: Add this later
-	// flag.StringVar(
-	// 	&client.ConfigGlobal.DebugEventsBlacklistString,
-	// 	"events-ignore",
-	// 	"",
-	// 	"List of event names to output messages when debugging. Comma separated.",
-	// )
+	flag.StringVar(
+		&client.ConfigGlobal.DebugEventsBlacklistStrings,
+		"events-ignore",
+		"",
+		"List of blacklisted event IDs to output messages when debugging. Comma separated.",
+	)
 
 	flag.StringVar(
 		&client.ConfigGlobal.DebugOperationsString,
@@ -135,6 +134,14 @@ func main() {
 			number, err := strconv.Atoi(event)
 			if err == nil {
 				client.ConfigGlobal.DebugEvents[number] = true
+			}
+		}
+	}
+	if client.ConfigGlobal.DebugEventsBlacklistStrings != "" {
+		for _, event := range strings.Split(client.ConfigGlobal.DebugEventsBlacklistStrings, ",") {
+			number, err := strconv.Atoi(event)
+			if err == nil {
+				client.ConfigGlobal.DebugEvents[number] = false
 			}
 		}
 	}
