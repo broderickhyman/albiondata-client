@@ -40,9 +40,7 @@ func (client *Client) Run() {
 
 	if ConfigGlobal.DebugEventsBlacklistStrings != "" {
 		for number, _ := range ConfigGlobal.DebugEvents {
-			if ConfigGlobal.DebugEvents[number] == false {
-				log.Debugf("Ignoring event: [%v]%v", number, EventType(number))
-			}
+			log.Debugf("Ignoring event: [%v]%v", number, EventType(number))
 		}
 	}
 
