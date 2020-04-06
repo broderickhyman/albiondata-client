@@ -97,21 +97,28 @@ func init() {
 		&client.ConfigGlobal.DebugEventsString,
 		"events",
 		"",
-		"List of event IDs to output messages when debugging. Comma separated.",
+		"Whitelist of event IDs to output messages when debugging. Comma separated.",
 	)
 
 	flag.StringVar(
-		&client.ConfigGlobal.DebugEventsBlacklistStrings,
+		&client.ConfigGlobal.DebugEventsBlacklistString,
 		"events-ignore",
 		"",
-		"List of blacklisted event IDs to output messages when debugging. Comma separated.",
+		"Blacklist of event IDs to hide messages when debugging. Comma separated.",
 	)
 
 	flag.StringVar(
 		&client.ConfigGlobal.DebugOperationsString,
 		"operations",
 		"",
-		"List of operation IDs to output messages when debugging. Comma separated.",
+		"Whitelist of operation IDs to output messages when debugging. Comma separated.",
+	)
+
+	flag.StringVar(
+		&client.ConfigGlobal.DebugOperationsBlacklistString,
+		"operations-ignore",
+		"",
+		"Blacklist of operation IDs to hide messages when debugging. Comma separated.",
 	)
 
 	flag.BoolVar(
@@ -137,8 +144,8 @@ func main() {
 			}
 		}
 	}
-	if client.ConfigGlobal.DebugEventsBlacklistStrings != "" {
-		for _, event := range strings.Split(client.ConfigGlobal.DebugEventsBlacklistStrings, ",") {
+	if client.ConfigGlobal.DebugEventsBlacklistString != "" {
+		for _, event := range strings.Split(client.ConfigGlobal.DebugEventsBlacklistString, ",") {
 			number, err := strconv.Atoi(event)
 			if err == nil {
 				client.ConfigGlobal.DebugEvents[number] = false
@@ -152,6 +159,15 @@ func main() {
 			number, err := strconv.Atoi(operation)
 			if err == nil {
 				client.ConfigGlobal.DebugOperations[number] = true
+			}
+		}
+	}
+
+	if client.ConfigGlobal.DebugOperationsBlacklistString != "" {
+		for _, operation := range strings.Split(client.ConfigGlobal.DebugOperationsBlacklistString, ",") {
+			number, err := strconv.Atoi(operation)
+			if err == nil {
+				client.ConfigGlobal.DebugOperations[number] = false
 			}
 		}
 	}

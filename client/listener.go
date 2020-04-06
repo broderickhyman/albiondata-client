@@ -192,8 +192,8 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 		operation, err = decodeRequest(params)
 		if params[253] != nil {
 			number := params[253].(int16)
-			_, exists := ConfigGlobal.DebugOperations[int(number)]
-			if exists || ConfigGlobal.DebugOperationsString == "" {
+			shouldDebug, exists := ConfigGlobal.DebugOperations[int(number)]
+			if (exists && shouldDebug) || (!exists && ConfigGlobal.DebugOperationsString == "") {
 				log.Debugf("OperationRequest: [%v]%v - %v", number, OperationType(number), params)
 			}
 		} else if !ConfigGlobal.DebugIgnoreDecodingErrors {
@@ -203,8 +203,8 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 		operation, err = decodeResponse(params)
 		if params[253] != nil {
 			number := params[253].(int16)
-			_, exists := ConfigGlobal.DebugOperations[int(number)]
-			if exists || ConfigGlobal.DebugOperationsString == "" {
+			shouldDebug, exists := ConfigGlobal.DebugOperations[int(number)]
+			if (exists && shouldDebug) || (!exists && ConfigGlobal.DebugOperationsString == "") {
 				log.Debugf("OperationResponse: [%v]%v - %v", number, OperationType(number), params)
 			}
 		} else if !ConfigGlobal.DebugIgnoreDecodingErrors {
@@ -214,8 +214,8 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 		operation, err = decodeEvent(params)
 		if params[252] != nil {
 			number := params[252].(int16)
-			_, exists := ConfigGlobal.DebugEvents[int(number)]
-			if exists || ConfigGlobal.DebugEventsString == "" {
+			shouldDebug, exists := ConfigGlobal.DebugEvents[int(number)]
+			if (exists && shouldDebug) || (!exists && ConfigGlobal.DebugEventsString == "") {
 				log.Debugf("EventDataType: [%v]%v - %v", number, EventType(number), params)
 			}
 		} else if !ConfigGlobal.DebugIgnoreDecodingErrors {

@@ -38,10 +38,22 @@ func (client *Client) Run() {
 	log.Info("This is a third-party application and is in no way affiliated with Sandbox Interactive or Albion Online.")
 	log.Info("Additional parameters can listed by calling this file with the -h parameter.")
 
-	if ConfigGlobal.DebugEventsBlacklistStrings != "" {
-		for number, _ := range ConfigGlobal.DebugEvents {
-			log.Debugf("Ignoring event: [%v]%v", number, EventType(number))
+	// Looping through map keys is purposefully random by design in Go
+	for number, shouldDebug := range ConfigGlobal.DebugEvents {
+		verb := "Ignoring"
+		if shouldDebug {
+			verb = "Showing"
 		}
+		log.Debugf("[%v] event: [%v]%v", verb, number, EventType(number))
+	}
+
+	// Looping through map keys is purposefully random by design in Go
+	for number, shouldDebug := range ConfigGlobal.DebugOperations {
+		verb := "Ignoring"
+		if shouldDebug {
+			verb = "Showing"
+		}
+		log.Debugf("[%v] operation: [%v]%v", verb, number, OperationType(number))
 	}
 
 	createDispatcher()
