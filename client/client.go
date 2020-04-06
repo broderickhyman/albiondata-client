@@ -38,6 +38,14 @@ func (client *Client) Run() {
 	log.Info("This is a third-party application and is in no way affiliated with Sandbox Interactive or Albion Online.")
 	log.Info("Additional parameters can listed by calling this file with the -h parameter.")
 
+	if ConfigGlobal.DebugEventsBlacklistStrings != "" {
+		for number, _ := range ConfigGlobal.DebugEvents {
+			if ConfigGlobal.DebugEvents[number] == false {
+				log.Debugf("Ignoring event: [%v]%v", number, EventType(number))
+			}
+		}
+	}
+
 	createDispatcher()
 
 	if ConfigGlobal.Offline {
