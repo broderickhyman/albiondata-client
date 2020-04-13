@@ -43,8 +43,8 @@ Downloads can be found here: https://github.com/broderickhyman/albiondata-client
 
 1. Download the latest `update-darwin-amd64.gz` file from [the Releases page](https://github.com/broderickhyman/albiondata-client/releases)
 2. Unzip that file from the Finder or with `gunzip update-darwin-amd64.gz`
-3. The unzipped `update-darwin-amd64` file is a Golang binary file. You'll need to make this file executable so it can be run directly. You can do this from your Terminal with: `chmod +x update-darwin-amd64`
-4. Run the client from your Terminal with `./update-darwin-amd64`
+3. The unzipped `albiondata-client` file is a Golang binary file. You'll need to make this file executable so it can be run directly. You can do this from your Terminal with: `chmod +x albiondata-client`
+4. Run the client from your Terminal with `./albiondata-client`
 
 # Related Projects
 - [albiondata-deduper-dotNet](https://github.com/BroderickHyman/albiondata-deduper-dotNet)
