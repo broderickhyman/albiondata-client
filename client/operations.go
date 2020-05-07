@@ -8,391 +8,396 @@ type operation interface {
 type OperationType uint16
 
 const (
-	opUnused                                  OperationType = 0
-	opPing                                    OperationType = 1
-	opJoin                                    OperationType = 2
-	opCreateAccount                           OperationType = 3
-	opLogin                                   OperationType = 4
-	opSendCrashLog                            OperationType = 5
-	opSendTraceRoute                          OperationType = 6
-	opSendGamePingInfo                        OperationType = 7
-	opCreateCharacter                         OperationType = 8
-	opDeleteCharacter                         OperationType = 9
-	opSelectCharacter                         OperationType = 10
-	opRedeemKeycode                           OperationType = 11
-	opGetGameServerByCluster                  OperationType = 12
-	opGetActiveSubscription                   OperationType = 13
-	opGetShopPurchaseUrl                      OperationType = 14
-	opGetBuyTrialDetails                      OperationType = 15
-	opGetReferralSeasonDetails                OperationType = 16
-	opGetReferralLink                         OperationType = 17
-	opGetAvailableTrialKeys                   OperationType = 18
-	opGetShopTilesForCategory                 OperationType = 19
-	opMove                                    OperationType = 20
-	opAttackStart                             OperationType = 21
-	opCastStart                               OperationType = 22
-	opCastCancel                              OperationType = 23
-	opTerminateToggleSpell                    OperationType = 24
-	opChannelingCancel                        OperationType = 25
-	opAttackBuildingStart                     OperationType = 26
-	opInventoryDestroyItem                    OperationType = 27
-	opInventoryMoveItem                       OperationType = 28
-	opInventoryRecoverItem                    OperationType = 29
-	opInventoryRecoverAllItems                OperationType = 30
-	opInventorySplitStack                     OperationType = 31
-	opInventorySplitStackInto                 OperationType = 32
-	opGetClusterData                          OperationType = 33
-	opChangeCluster                           OperationType = 34
-	opConsoleCommand                          OperationType = 35
-	opChatMessage                             OperationType = 36
-	opReportClientError                       OperationType = 37
-	opRegisterToObject                        OperationType = 38
-	opUnRegisterFromObject                    OperationType = 39
-	opCraftBuildingChangeSettings             OperationType = 40
-	opCraftBuildingTakeMoney                  OperationType = 41
-	opRepairBuildingChangeSettings            OperationType = 42
-	opRepairBuildingTakeMoney                 OperationType = 43
-	opActionBuildingChangeSettings            OperationType = 44
-	opHarvestStart                            OperationType = 45
-	opHarvestCancel                           OperationType = 46
-	opTakeSilver                              OperationType = 47
-	opActionOnBuildingStart                   OperationType = 48
-	opActionOnBuildingCancel                  OperationType = 49
-	opItemRerollQualityStart                  OperationType = 50
-	opItemRerollQualityCancel                 OperationType = 51
-	opInstallResourceStart                    OperationType = 52
-	opInstallResourceCancel                   OperationType = 53
-	opInstallSilver                           OperationType = 54
-	opBuildingFillNutrition                   OperationType = 55
-	opBuildingChangeRenovationState           OperationType = 56
-	opBuildingBuySkin                         OperationType = 57
-	opBuildingClaim                           OperationType = 58
-	opBuildingGiveup                          OperationType = 59
-	opBuildingNutritionSilverStorageDeposit   OperationType = 60
-	opBuildingNutritionSilverStorageWithdraw  OperationType = 61
-	opBuildingNutritionSilverRewardSet        OperationType = 62
-	opConstructionSiteCreate                  OperationType = 63
-	opPlaceableObjectPlace                    OperationType = 64
-	opPlaceableObjectPlaceCancel              OperationType = 65
-	opPlaceableObjectPickup                   OperationType = 66
-	opFurnitureObjectUse                      OperationType = 67
-	opFarmableHarvest                         OperationType = 68
-	opFarmableFinishGrownItem                 OperationType = 69
-	opFarmableDestroy                         OperationType = 70
-	opFarmableGetProduct                      OperationType = 71
-	opFarmableFill                            OperationType = 72
-	opTearDownConstructionSite                OperationType = 73
-	opCastleGateUse                           OperationType = 74
-	opAuctionCreateOffer                      OperationType = 75
-	opAuctionCreateRequest                    OperationType = 76
-	opAuctionGetOffers                        OperationType = 77
-	opAuctionGetRequests                      OperationType = 78
-	opAuctionBuyOffer                         OperationType = 79
-	opAuctionAbortAuction                     OperationType = 80
-	opAuctionModifyAuction                    OperationType = 81
-	opAuctionAbortOffer                       OperationType = 82
-	opAuctionAbortRequest                     OperationType = 83
-	opAuctionSellRequest                      OperationType = 84
-	opAuctionGetFinishedAuctions              OperationType = 85
-	opAuctionFetchAuction                     OperationType = 86
-	opAuctionGetMyOpenOffers                  OperationType = 87
-	opAuctionGetMyOpenRequests                OperationType = 88
-	opAuctionGetMyOpenAuctions                OperationType = 89
-	opAuctionGetItemsAverage                  OperationType = 90
-	opAuctionGetItemAverageStats              OperationType = 91
-	opAuctionGetItemAverageValue              OperationType = 92
-	opContainerOpen                           OperationType = 93
-	opContainerClose                          OperationType = 94
-	opContainerManageSubContainer             OperationType = 95
-	opRespawn                                 OperationType = 96
-	opSuicide                                 OperationType = 97
-	opJoinGuild                               OperationType = 98
-	opLeaveGuild                              OperationType = 99
-	opCreateGuild                             OperationType = 100
-	opInviteToGuild                           OperationType = 101
-	opDeclineGuildInvitation                  OperationType = 102
-	opKickFromGuild                           OperationType = 103
-	opDuellingChallengePlayer                 OperationType = 104
-	opDuellingAcceptChallenge                 OperationType = 105
-	opDuellingDenyChallenge                   OperationType = 106
-	opChangeClusterTax                        OperationType = 107
-	opClaimTerritory                          OperationType = 108
-	opGiveUpTerritory                         OperationType = 109
-	opChangeTerritoryAccessRights             OperationType = 110
-	opGetMonolithInfo                         OperationType = 111
-	opGetClaimInfo                            OperationType = 112
-	opGetAttackInfo                           OperationType = 113
-	opGetTerritorySeasonPoints                OperationType = 114
-	opGetAttackSchedule                       OperationType = 115
-	opScheduleAttack                          OperationType = 116
-	opGetMatches                              OperationType = 117
-	opGetMatchDetails                         OperationType = 118
-	opJoinMatch                               OperationType = 119
-	opLeaveMatch                              OperationType = 120
-	opChangeChatSettings                      OperationType = 121
-	opLogoutStart                             OperationType = 122
-	opLogoutCancel                            OperationType = 123
-	opClaimOrbStart                           OperationType = 124
-	opClaimOrbCancel                          OperationType = 125
-	opMatchLootChestOpeningStart              OperationType = 126
-	opMatchLootChestOpeningCancel             OperationType = 127
-	opDepositToGuildAccount                   OperationType = 128
-	opWithdrawalFromAccount                   OperationType = 129
-	opChangeGuildPayUpkeepFlag                OperationType = 130
-	opChangeGuildTax                          OperationType = 131
-	opGetMyTerritories                        OperationType = 132
-	opMorganaCommand                          OperationType = 133
-	opGetServerInfo                           OperationType = 134
-	opInviteMercenaryToMatch                  OperationType = 135
-	opSubscribeToCluster                      OperationType = 136
-	opAnswerMercenaryInvitation               OperationType = 137
-	opGetCharacterEquipment                   OperationType = 138
-	opGetCharacterSteamAchievements           OperationType = 139
-	opGetCharacterStats                       OperationType = 140
-	opGetKillHistoryDetails                   OperationType = 141
-	opLearnMasteryLevel                       OperationType = 142
-	opReSpecAchievement                       OperationType = 143
-	opChangeAvatar                            OperationType = 144
-	opGetRankings                             OperationType = 145
-	opGetRank                                 OperationType = 146
-	opGetGvgSeasonRankings                    OperationType = 147
-	opGetGvgSeasonRank                        OperationType = 148
-	opGetGvgSeasonHistoryRankings             OperationType = 149
-	opGetGvgSeasonGuildMemberHistory          OperationType = 150
-	opKickFromGvGMatch                        OperationType = 151
-	opGetChestLogs                            OperationType = 152
-	opGetAccessRightLogs                      OperationType = 153
-	opGetGuildAccountLogs                     OperationType = 154
-	opGetGuildAccountLogsLargeAmount          OperationType = 155
-	opInviteToPlayerTrade                     OperationType = 156
-	opPlayerTradeCancel                       OperationType = 157
-	opPlayerTradeInvitationAccept             OperationType = 158
-	opPlayerTradeAddItem                      OperationType = 159
-	opPlayerTradeRemoveItem                   OperationType = 160
-	opPlayerTradeAcceptTrade                  OperationType = 161
-	opPlayerTradeSetSilverOrGold              OperationType = 162
-	opSendMiniMapPing                         OperationType = 163
-	opStuck                                   OperationType = 164
-	opBuyRealEstate                           OperationType = 165
-	opClaimRealEstate                         OperationType = 166
-	opGiveUpRealEstate                        OperationType = 167
-	opChangeRealEstateOutline                 OperationType = 168
-	opGetMailInfos                            OperationType = 169
-	opReadMail                                OperationType = 170
-	opSendNewMail                             OperationType = 171
-	opDeleteMail                              OperationType = 172
-	opClaimAttachmentFromMail                 OperationType = 173
-	opUpdateLfgInfo                           OperationType = 174
-	opGetLfgInfos                             OperationType = 175
-	opGetMyGuildLfgInfo                       OperationType = 176
-	opGetLfgDescriptionText                   OperationType = 177
-	opLfgApplyToGuild                         OperationType = 178
-	opAnswerLfgGuildApplication               OperationType = 179
-	opRegisterChatPeer                        OperationType = 180
-	opSendChatMessage                         OperationType = 181
-	opJoinChatChannel                         OperationType = 182
-	opLeaveChatChannel                        OperationType = 183
-	opSendWhisperMessage                      OperationType = 184
-	opSay                                     OperationType = 185
-	opPlayEmote                               OperationType = 186
-	opStopEmote                               OperationType = 187
-	opGetClusterMapInfo                       OperationType = 188
-	opAccessRightsChangeSettings              OperationType = 189
-	opMount                                   OperationType = 190
-	opMountCancel                             OperationType = 191
-	opBuyJourney                              OperationType = 192
-	opSetSaleStatusForEstate                  OperationType = 193
-	opResolveGuildOrPlayerName                OperationType = 194
-	opGetRespawnInfos                         OperationType = 195
-	opMakeHome                                OperationType = 196
-	opLeaveHome                               OperationType = 197
-	opResurrectionReply                       OperationType = 198
-	opAllianceCreate                          OperationType = 199
-	opAllianceDisband                         OperationType = 200
-	opAllianceGetMemberInfos                  OperationType = 201
-	opAllianceInvite                          OperationType = 202
-	opAllianceAnswerInvitation                OperationType = 203
-	opAllianceCancelInvitation                OperationType = 204
-	opAllianceKickGuild                       OperationType = 205
-	opAllianceLeave                           OperationType = 206
-	opAllianceChangeGoldPaymentFlag           OperationType = 207
-	opAllianceGetDetailInfo                   OperationType = 208
-	opGetIslandInfos                          OperationType = 209
-	opAbandonMyIsland                         OperationType = 210
-	opBuyMyIsland                             OperationType = 211
-	opBuyGuildIsland                          OperationType = 212
-	opAbandonGuildIsland                      OperationType = 213
-	opUpgradeMyIsland                         OperationType = 214
-	opUpgradeGuildIsland                      OperationType = 215
-	opMoveMyIsland                            OperationType = 216
-	opMoveGuildIsland                         OperationType = 217
-	opTerritoryFillNutrition                  OperationType = 218
-	opTeleportBack                            OperationType = 219
-	opPartyInvitePlayer                       OperationType = 220
-	opPartyAnswerInvitation                   OperationType = 221
-	opPartyLeave                              OperationType = 222
-	opPartyKickPlayer                         OperationType = 223
-	opPartyMakeLeader                         OperationType = 224
-	opPartyChangeLootSetting                  OperationType = 225
-	opPartyMarkObject                         OperationType = 226
-	opPartySetRole                            OperationType = 227
-	opGetGuildMOTD                            OperationType = 228
-	opSetGuildMOTD                            OperationType = 229
-	opExitEnterStart                          OperationType = 230
-	opExitEnterCancel                         OperationType = 231
-	opQuestGiverRequest                       OperationType = 232
-	opGoldMarketGetBuyOffer                   OperationType = 233
-	opGoldMarketGetBuyOfferFromSilver         OperationType = 234
-	opGoldMarketGetSellOffer                  OperationType = 235
-	opGoldMarketGetSellOfferFromSilver        OperationType = 236
-	opGoldMarketBuyGold                       OperationType = 237
-	opGoldMarketSellGold                      OperationType = 238
-	opGoldMarketCreateSellOrder               OperationType = 239
-	opGoldMarketCreateBuyOrder                OperationType = 240
-	opGoldMarketGetInfos                      OperationType = 241
-	opGoldMarketCancelOrder                   OperationType = 242
-	opGoldMarketGetAverageInfo                OperationType = 243
-	opSiegeCampClaimStart                     OperationType = 244
-	opSiegeCampClaimCancel                    OperationType = 245
-	opTreasureChestUsingStart                 OperationType = 246
-	opTreasureChestUsingCancel                OperationType = 247
-	opUseLootChest                            OperationType = 248
-	opUseShrine                               OperationType = 249
-	opLaborerStartJob                         OperationType = 250
-	opLaborerTakeJobLoot                      OperationType = 251
-	opLaborerDismiss                          OperationType = 252
-	opLaborerMove                             OperationType = 253
-	opLaborerBuyItem                          OperationType = 254
-	opLaborerUpgrade                          OperationType = 255
-	opBuyPremium                              OperationType = 256
-	opBuyTrial                                OperationType = 257
-	opRealEstateGetAuctionData                OperationType = 258
-	opRealEstateBidOnAuction                  OperationType = 259
-	opGetSiegeCampCooldown                    OperationType = 260
-	opFriendInvite                            OperationType = 261
-	opFriendAnswerInvitation                  OperationType = 262
-	opFriendCancelnvitation                   OperationType = 263
-	opFriendRemove                            OperationType = 264
-	opInventoryStack                          OperationType = 265
-	opInventorySort                           OperationType = 266
-	opEquipmentItemChangeSpell                OperationType = 267
-	opExpeditionRegister                      OperationType = 268
-	opExpeditionRegisterCancel                OperationType = 269
-	opJoinExpedition                          OperationType = 270
-	opDeclineExpeditionInvitation             OperationType = 271
-	opVoteStart                               OperationType = 272
-	opVoteDoVote                              OperationType = 273
-	opRatingDoRate                            OperationType = 274
-	opEnteringExpeditionStart                 OperationType = 275
-	opEnteringExpeditionCancel                OperationType = 276
-	opActivateExpeditionCheckPoint            OperationType = 277
-	opArenaRegister                           OperationType = 278
-	opArenaRegisterCancel                     OperationType = 279
-	opArenaLeave                              OperationType = 280
-	opJoinArenaMatch                          OperationType = 281
-	opDeclineArenaInvitation                  OperationType = 282
-	opEnteringArenaStart                      OperationType = 283
-	opEnteringArenaCancel                     OperationType = 284
-	opArenaCustomMatch                        OperationType = 285
-	opArenaCustomMatchCreate                  OperationType = 286
-	opUpdateCharacterStatement                OperationType = 287
-	opBoostFarmable                           OperationType = 288
-	opGetStrikeHistory                        OperationType = 289
-	opUseFunction                             OperationType = 290
-	opUsePortalEntrance                       OperationType = 291
-	opResetPortalBinding                      OperationType = 292
-	opQueryPortalBinding                      OperationType = 293
-	opClaimPaymentTransaction                 OperationType = 294
-	opChangeUseFlag                           OperationType = 295
-	opClientPerformanceStats                  OperationType = 296
-	opExtendedHardwareStats                   OperationType = 297
-	opClientLowMemoryWarning                  OperationType = 298
-	opTerritoryClaimStart                     OperationType = 299
-	opTerritoryClaimCancel                    OperationType = 300
-	opRequestAppStoreProducts                 OperationType = 301
-	opVerifyProductPurchase                   OperationType = 302
-	opQueryGuildPlayerStats                   OperationType = 303
-	opQueryAllianceGuildStats                 OperationType = 304
-	opTrackAchievements                       OperationType = 305
-	opSetAchievementsAutoLearn                OperationType = 306
-	opDepositItemToGuildCurrency              OperationType = 307
-	opWithdrawalItemFromGuildCurrency         OperationType = 308
-	opAuctionSellSpecificItemRequest          OperationType = 309
-	opFishingStart                            OperationType = 310
-	opFishingCasting                          OperationType = 311
-	opFishingCast                             OperationType = 312
-	opFishingCatch                            OperationType = 313
-	opFishingPull                             OperationType = 314
-	opFishingGiveLine                         OperationType = 315
-	opFishingFinish                           OperationType = 316
-	opFishingCancel                           OperationType = 317
-	opCreateGuildAccessTag                    OperationType = 318
-	opDeleteGuildAccessTag                    OperationType = 319
-	opRenameGuildAccessTag                    OperationType = 320
-	opFlagGuildAccessTagGuildPermission       OperationType = 321
-	opAssignGuildAccessTag                    OperationType = 322
-	opRemoveGuildAccessTagFromPlayer          OperationType = 323
-	opModifyGuildAccessTagEditors             OperationType = 324
-	opRequestPublicAccessTags                 OperationType = 325
-	opChangeAccessTagPublicFlag               OperationType = 326
-	opUpdateGuildAccessTag                    OperationType = 327
-	opSteamStartMicrotransaction              OperationType = 328
-	opSteamFinishMicrotransaction             OperationType = 329
-	opSteamIdHasActiveAccount                 OperationType = 330
-	opCheckEmailAccountState                  OperationType = 331
-	opLinkAccountToSteamId                    OperationType = 332
-	opBuyGvgSeasonBooster                     OperationType = 333
-	opChangeFlaggingPrepare                   OperationType = 334
-	opOverCharge                              OperationType = 335
-	opOverChargeEnd                           OperationType = 336
-	opRequestTrusted                          OperationType = 337
-	opChangeGuildLogo                         OperationType = 338
-	opPartyFinderRegisterForUpdates           OperationType = 339
-	opPartyFinderUnregisterForUpdates         OperationType = 340
-	opPartyFinderEnlistNewPartySearch         OperationType = 341
-	opPartyFinderDeletePartySearch            OperationType = 342
-	opPartyFinderChangePartySearch            OperationType = 343
-	opPartyFinderChangeRole                   OperationType = 344
-	opPartyFinderApplyForGroup                OperationType = 345
-	opPartyFinderAcceptOrDeclineApplyForGroup OperationType = 346
-	opPartyFinderGetEquipmentSnapshot         OperationType = 347
-	opPartyFinderRegisterApplicants           OperationType = 348
-	opPartyFinderUnregisterApplicants         OperationType = 349
-	opPartyFinderFulltextSearch               OperationType = 350
-	opPartyFinderRequestEquipmentSnapshot     OperationType = 351
-	opGetPersonalSeasonTrackerData            OperationType = 352
-	opUseConsumableFromInventory              OperationType = 353
-	opClaimPersonalSeasonReward               OperationType = 354
-	opEasyAntiCheatMessageToServer            OperationType = 355
-	opSetNextTutorialState                    OperationType = 356
-	opAddPlayerToMuteList                     OperationType = 357
-	opRemovePlayerFromMuteList                OperationType = 358
-	opProductShopUserEvent                    OperationType = 359
-	opGetVanityUnlocks                        OperationType = 360
-	opBuyVanityUnlocks                        OperationType = 361
-	opGetMountSkins                           OperationType = 362
-	opSetMountSkin                            OperationType = 363
-	opSetWardrobe                             OperationType = 364
-	opChangeCustomization                     OperationType = 365
-	opSetFavoriteIsland                       OperationType = 366
-	opGetGuildChallengePoints                 OperationType = 367
-	opTravelToHideout                         OperationType = 368
-	opSmartQueueJoin                          OperationType = 369
-	opSmartQueueLeave                         OperationType = 370
-	opSmartQueueSelectSpawnCluster            OperationType = 371
-	opUpgradeHideout                          OperationType = 372
-	opInitHideoutAttackStart                  OperationType = 373
-	opInitHideoutAttackCancel                 OperationType = 374
-	opHideoutFillNutrition                    OperationType = 375
-	opHideoutGetInfo                          OperationType = 376
-	opHideoutGetOwnerInfo                     OperationType = 377
-	opHideoutSetTribute                       OperationType = 378
-	opOpenWorldAttackScheduleStart            OperationType = 379
-	opOpenWorldAttackScheduleCancel           OperationType = 380
-	opOpenWorldAttackConquerStart             OperationType = 381
-	opOpenWorldAttackConquerCancel            OperationType = 382
-	opGetOpenWorldAttackDetails               OperationType = 383
-	opGetNextOpenWorldAttackScheduleTime      OperationType = 384
-	opRecoverVaultFromHideout                 OperationType = 385
-	opGetGuildEnergyDrainInfo                 OperationType = 386
+	opUnused OperationType = iota
+	opPing
+	opJoin
+	opCreateAccount
+	opLogin
+	opSendCrashLog
+	opSendTraceRoute
+	opSendVfxStats
+	opSendGamePingInfo
+	opCreateCharacter
+	opDeleteCharacter
+	opSelectCharacter
+	opRedeemKeycode
+	opGetGameServerByCluster
+	opGetActiveSubscription
+	opGetShopPurchaseUrl
+	opGetBuyTrialDetails
+	opGetReferralSeasonDetails
+	opGetReferralLink
+	opGetAvailableTrialKeys
+	opGetShopTilesForCategory
+	opMove
+	opAttackStart
+	opCastStart
+	opCastCancel
+	opTerminateToggleSpell
+	opChannelingCancel
+	opAttackBuildingStart
+	opInventoryDestroyItem
+	opInventoryMoveItem
+	opInventoryRecoverItem
+	opInventoryRecoverAllItems
+	opInventorySplitStack
+	opInventorySplitStackInto
+	opGetClusterData
+	opChangeCluster
+	opConsoleCommand
+	opChatMessage
+	opReportClientError
+	opRegisterToObject
+	opUnRegisterFromObject
+	opCraftBuildingChangeSettings
+	opCraftBuildingTakeMoney
+	opRepairBuildingChangeSettings
+	opRepairBuildingTakeMoney
+	opActionBuildingChangeSettings
+	opHarvestStart
+	opHarvestCancel
+	opTakeSilver
+	opActionOnBuildingStart
+	opActionOnBuildingCancel
+	opItemRerollQualityStart
+	opItemRerollQualityCancel
+	opInstallResourceStart
+	opInstallResourceCancel
+	opInstallSilver
+	opBuildingFillNutrition
+	opBuildingChangeRenovationState
+	opBuildingBuySkin
+	opBuildingClaim
+	opBuildingGiveup
+	opBuildingNutritionSilverStorageDeposit
+	opBuildingNutritionSilverStorageWithdraw
+	opBuildingNutritionSilverRewardSet
+	opConstructionSiteCreate
+	opPlaceableObjectPlace
+	opPlaceableObjectPlaceCancel
+	opPlaceableObjectPickup
+	opFurnitureObjectUse
+	opFarmableHarvest
+	opFarmableFinishGrownItem
+	opFarmableDestroy
+	opFarmableGetProduct
+	opFarmableFill
+	opTearDownConstructionSite
+	opCastleGateUse
+	opAuctionCreateOffer
+	opAuctionCreateRequest
+	opAuctionGetOffers
+	opAuctionGetRequests
+	opAuctionBuyOffer
+	opAuctionAbortAuction
+	opAuctionModifyAuction
+	opAuctionAbortOffer
+	opAuctionAbortRequest
+	opAuctionSellRequest
+	opAuctionGetFinishedAuctions
+	opAuctionGetFinishedAuctionsCount
+	opAuctionFetchAuction
+	opAuctionGetMyOpenOffers
+	opAuctionGetMyOpenRequests
+	opAuctionGetMyOpenAuctions
+	opAuctionGetItemsAverage
+	opAuctionGetItemAverageStats
+	opAuctionGetItemAverageValue
+	opContainerOpen
+	opContainerClose
+	opContainerManageSubContainer
+	opRespawn
+	opSuicide
+	opJoinGuild
+	opLeaveGuild
+	opCreateGuild
+	opInviteToGuild
+	opDeclineGuildInvitation
+	opKickFromGuild
+	opDuellingChallengePlayer
+	opDuellingAcceptChallenge
+	opDuellingDenyChallenge
+	opChangeClusterTax
+	opClaimTerritory
+	opGiveUpTerritory
+	opChangeTerritoryAccessRights
+	opGetMonolithInfo
+	opGetClaimInfo
+	opGetAttackInfo
+	opGetTerritorySeasonPoints
+	opGetAttackSchedule
+	opScheduleAttack
+	opGetMatches
+	opGetMatchDetails
+	opJoinMatch
+	opLeaveMatch
+	opChangeChatSettings
+	opLogoutStart
+	opLogoutCancel
+	opClaimOrbStart
+	opClaimOrbCancel
+	opMatchLootChestOpeningStart
+	opMatchLootChestOpeningCancel
+	opDepositToGuildAccount
+	opWithdrawalFromAccount
+	opChangeGuildPayUpkeepFlag
+	opChangeGuildTax
+	opGetMyTerritories
+	opMorganaCommand
+	opGetServerInfo
+	opInviteMercenaryToMatch
+	opSubscribeToCluster
+	opAnswerMercenaryInvitation
+	opGetCharacterEquipment
+	opGetCharacterSteamAchievements
+	opGetCharacterStats
+	opGetKillHistoryDetails
+	opLearnMasteryLevel
+	opReSpecAchievement
+	opChangeAvatar
+	opGetRankings
+	opGetRank
+	opGetGvgSeasonRankings
+	opGetGvgSeasonRank
+	opGetGvgSeasonHistoryRankings
+	opGetGvgSeasonGuildMemberHistory
+	opKickFromGvGMatch
+	opGetChestLogs
+	opGetAccessRightLogs
+	opGetGuildAccountLogs
+	opGetGuildAccountLogsLargeAmount
+	opInviteToPlayerTrade
+	opPlayerTradeCancel
+	opPlayerTradeInvitationAccept
+	opPlayerTradeAddItem
+	opPlayerTradeRemoveItem
+	opPlayerTradeAcceptTrade
+	opPlayerTradeSetSilverOrGold
+	opSendMiniMapPing
+	opStuck
+	opBuyRealEstate
+	opClaimRealEstate
+	opGiveUpRealEstate
+	opChangeRealEstateOutline
+	opGetMailInfos
+	opGetMailCount
+	opReadMail
+	opSendNewMail
+	opDeleteMail
+	opMarkMailUnread
+	opClaimAttachmentFromMail
+	opUpdateLfgInfo
+	opGetLfgInfos
+	opGetMyGuildLfgInfo
+	opGetLfgDescriptionText
+	opLfgApplyToGuild
+	opAnswerLfgGuildApplication
+	opRegisterChatPeer
+	opSendChatMessage
+	opJoinChatChannel
+	opLeaveChatChannel
+	opSendWhisperMessage
+	opSay
+	opPlayEmote
+	opStopEmote
+	opGetClusterMapInfo
+	opAccessRightsChangeSettings
+	opMount
+	opMountCancel
+	opBuyJourney
+	opSetSaleStatusForEstate
+	opResolveGuildOrPlayerName
+	opGetRespawnInfos
+	opMakeHome
+	opLeaveHome
+	opResurrectionReply
+	opAllianceCreate
+	opAllianceDisband
+	opAllianceGetMemberInfos
+	opAllianceInvite
+	opAllianceAnswerInvitation
+	opAllianceCancelInvitation
+	opAllianceKickGuild
+	opAllianceLeave
+	opAllianceChangeGoldPaymentFlag
+	opAllianceGetDetailInfo
+	opGetIslandInfos
+	opAbandonMyIsland
+	opBuyMyIsland
+	opBuyGuildIsland
+	opAbandonGuildIsland
+	opUpgradeMyIsland
+	opUpgradeGuildIsland
+	opMoveMyIsland
+	opMoveGuildIsland
+	opTerritoryFillNutrition
+	opTeleportBack
+	opPartyInvitePlayer
+	opPartyAnswerInvitation
+	opPartyLeave
+	opPartyKickPlayer
+	opPartyMakeLeader
+	opPartyChangeLootSetting
+	opPartyMarkObject
+	opPartySetRole
+	opGetGuildMOTD
+	opSetGuildMOTD
+	opExitEnterStart
+	opExitEnterCancel
+	opQuestGiverRequest
+	opGoldMarketGetBuyOffer
+	opGoldMarketGetBuyOfferFromSilver
+	opGoldMarketGetSellOffer
+	opGoldMarketGetSellOfferFromSilver
+	opGoldMarketBuyGold
+	opGoldMarketSellGold
+	opGoldMarketCreateSellOrder
+	opGoldMarketCreateBuyOrder
+	opGoldMarketGetInfos
+	opGoldMarketCancelOrder
+	opGoldMarketGetAverageInfo
+	opSiegeCampClaimStart
+	opSiegeCampClaimCancel
+	opTreasureChestUsingStart
+	opTreasureChestUsingCancel
+	opUseLootChest
+	opUseShrine
+	opLaborerStartJob
+	opLaborerTakeJobLoot
+	opLaborerDismiss
+	opLaborerMove
+	opLaborerBuyItem
+	opLaborerUpgrade
+	opBuyPremium
+	opBuyTrial
+	opRealEstateGetAuctionData
+	opRealEstateBidOnAuction
+	opGetSiegeCampCooldown
+	opFriendInvite
+	opFriendAnswerInvitation
+	opFriendCancelnvitation
+	opFriendRemove
+	opInventoryStack
+	opInventorySort
+	opEquipmentItemChangeSpell
+	opExpeditionRegister
+	opExpeditionRegisterCancel
+	opJoinExpedition
+	opDeclineExpeditionInvitation
+	opVoteStart
+	opVoteDoVote
+	opRatingDoRate
+	opEnteringExpeditionStart
+	opEnteringExpeditionCancel
+	opActivateExpeditionCheckPoint
+	opArenaRegister
+	opArenaRegisterCancel
+	opArenaLeave
+	opJoinArenaMatch
+	opDeclineArenaInvitation
+	opEnteringArenaStart
+	opEnteringArenaCancel
+	opArenaCustomMatch
+	opArenaCustomMatchCreate
+	opUpdateCharacterStatement
+	opBoostFarmable
+	opGetStrikeHistory
+	opUseFunction
+	opUsePortalEntrance
+	opResetPortalBinding
+	opQueryPortalBinding
+	opClaimPaymentTransaction
+	opChangeUseFlag
+	opClientPerformanceStats
+	opExtendedHardwareStats
+	opClientLowMemoryWarning
+	opTerritoryClaimStart
+	opTerritoryClaimCancel
+	opRequestAppStoreProducts
+	opVerifyProductPurchase
+	opQueryGuildPlayerStats
+	opQueryAllianceGuildStats
+	opTrackAchievements
+	opSetAchievementsAutoLearn
+	opDepositItemToGuildCurrency
+	opWithdrawalItemFromGuildCurrency
+	opAuctionSellSpecificItemRequest
+	opFishingStart
+	opFishingCasting
+	opFishingCast
+	opFishingCatch
+	opFishingPull
+	opFishingGiveLine
+	opFishingFinish
+	opFishingCancel
+	opCreateGuildAccessTag
+	opDeleteGuildAccessTag
+	opRenameGuildAccessTag
+	opFlagGuildAccessTagGuildPermission
+	opAssignGuildAccessTag
+	opRemoveGuildAccessTagFromPlayer
+	opModifyGuildAccessTagEditors
+	opRequestPublicAccessTags
+	opChangeAccessTagPublicFlag
+	opUpdateGuildAccessTag
+	opSteamStartMicrotransaction
+	opSteamFinishMicrotransaction
+	opSteamIdHasActiveAccount
+	opCheckEmailAccountState
+	opLinkAccountToSteamId
+	opBuyGvgSeasonBooster
+	opChangeFlaggingPrepare
+	opOverCharge
+	opOverChargeEnd
+	opRequestTrusted
+	opChangeGuildLogo
+	opPartyFinderRegisterForUpdates
+	opPartyFinderUnregisterForUpdates
+	opPartyFinderEnlistNewPartySearch
+	opPartyFinderDeletePartySearch
+	opPartyFinderChangePartySearch
+	opPartyFinderChangeRole
+	opPartyFinderApplyForGroup
+	opPartyFinderAcceptOrDeclineApplyForGroup
+	opPartyFinderGetEquipmentSnapshot
+	opPartyFinderRegisterApplicants
+	opPartyFinderUnregisterApplicants
+	opPartyFinderFulltextSearch
+	opPartyFinderRequestEquipmentSnapshot
+	opGetPersonalSeasonTrackerData
+	opUseConsumableFromInventory
+	opClaimPersonalSeasonReward
+	opEasyAntiCheatMessageToServer
+	opSetNextTutorialState
+	opAddPlayerToMuteList
+	opRemovePlayerFromMuteList
+	opProductShopUserEvent
+	opGetVanityUnlocks
+	opBuyVanityUnlocks
+	opGetMountSkins
+	opSetMountSkin
+	opSetWardrobe
+	opChangeCustomization
+	opSetFavoriteIsland
+	opGetGuildChallengePoints
+	opTravelToHideout
+	opSmartQueueJoin
+	opSmartQueueLeave
+	opSmartQueueSelectSpawnCluster
+	opUpgradeHideout
+	opInitHideoutAttackStart
+	opInitHideoutAttackCancel
+	opHideoutFillNutrition
+	opHideoutGetInfo
+	opHideoutGetOwnerInfo
+	opHideoutSetTribute
+	opOpenWorldAttackScheduleStart
+	opOpenWorldAttackScheduleCancel
+	opOpenWorldAttackConquerStart
+	opOpenWorldAttackConquerCancel
+	opGetOpenWorldAttackDetails
+	opGetNextOpenWorldAttackScheduleTime
+	opRecoverVaultFromHideout
+	opGetGuildEnergyDrainInfo
+	opChannelingUpdate
 )
