@@ -27,7 +27,7 @@ func (op operationAuctionGetItemAverageStats) Process(state *albionState) {
 }
 
 type operationAuctionGetItemAverageStatsResponse struct {
-	ItemAmounts   []uint64 `mapstructure:"0"`
+	ItemAmounts   []int64 `mapstructure:"0"`
 	SilverAmounts []uint64 `mapstructure:"1"`
 	Timestamps    []uint64 `mapstructure:"2"`
 	MessageID     int      `mapstructure:"255"`
@@ -47,7 +47,12 @@ func (op operationAuctionGetItemAverageStatsResponse) Process(state *albionState
 
 	// TODO can we make this safer? Right now we just assume all the arrays are the same length as the number of item amounts
 	for i := range op.ItemAmounts {
-
+		// sometimes opAuctionGetItemAverageStats receives negative item amounts
+		// they make no sense and so are dropped
+		if op.ItemAmounts[i] < 0 {
+			log.Infof("Market History - Ignoring negative item amount %d for %d silver on %d", op.ItemAmounts[i], op.SilverAmounts[i], op.Timestamps[i])
+			continue
+		}
 		history := &lib.MarketHistory{}
 		history.ItemAmount = op.ItemAmounts[i]
 		history.SilverAmount = op.SilverAmounts[i]
