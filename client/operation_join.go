@@ -11,8 +11,8 @@ type operationJoinResponse struct {
 	CharacterID   lib.CharacterID `mapstructure:"1"`
 	CharacterName string          `mapstructure:"2"`
 	Location      string          `mapstructure:"8"`
-	GuildID       lib.CharacterID `mapstructure:"46"`
-	GuildName     string          `mapstructure:"50"`
+	GuildID       lib.CharacterID `mapstructure:"47"`
+	GuildName     string          `mapstructure:"51"`
 }
 
 //CharacterPartsJSON string          `mapstructure:"6"`
