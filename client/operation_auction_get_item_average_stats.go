@@ -27,7 +27,7 @@ func (op operationAuctionGetItemAverageStats) Process(state *albionState) {
 }
 
 type operationAuctionGetItemAverageStatsResponse struct {
-	ItemAmounts   []int64 `mapstructure:"0"`
+	ItemAmounts   []int64  `mapstructure:"0"`
 	SilverAmounts []uint64 `mapstructure:"1"`
 	Timestamps    []uint64 `mapstructure:"2"`
 	MessageID     int      `mapstructure:"255"`

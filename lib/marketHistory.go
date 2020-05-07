@@ -31,7 +31,7 @@ func (scale Timescale) String() string {
 // These values come over the wire with indexes aligned, but are likely not sorted by time.
 // Their sizes also value based on need as mentioned below.
 type MarketHistory struct {
-	ItemAmount   int64 `json:"ItemAmount"`
+	ItemAmount   int64  `json:"ItemAmount"`
 	SilverAmount uint64 `json:"SilverAmount"`
 	Timestamp    uint64 `json:"Timestamp"`
 	// even for the same parameter type, array type will differ depending on the size of the data values being sent.
