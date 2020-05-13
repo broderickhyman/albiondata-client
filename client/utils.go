@@ -45,11 +45,11 @@ func diffIntSets(a []int, b []int) ([]int, []int) {
 
 	var addedSparse = intsets.Sparse{}
 	addedSparse.Difference(&bSparse, &aSparse)
-	var addedSlice []int = addedSparse.AppendTo(make([]int, 0))
+	var addedSlice = addedSparse.AppendTo(make([]int, 0))
 
 	var removedSparse = intsets.Sparse{}
 	removedSparse.Difference(&aSparse, &bSparse)
-	var removedSlice []int = removedSparse.AppendTo(make([]int, 0))
+	var removedSlice = removedSparse.AppendTo(make([]int, 0))
 
 	var added = make([]int, addedSparse.Len())
 	var removed = make([]int, removedSparse.Len())

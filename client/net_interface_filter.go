@@ -5,7 +5,7 @@ import (
 )
 
 // Mac Address parts to look for, and identify non physical devices. There may be more, update me!
-var macAddrPartsToFilter []string = []string{
+var macAddrPartsToFilter = []string{
 	"ac:de:48:00:11:22", // Mac OS touchbar (en5)
 	"00:03:FF",          // Microsoft Hyper-V, Virtual Server, Virtual PC
 	"0A:00:27",          // VirtualBox
