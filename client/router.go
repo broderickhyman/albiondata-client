@@ -31,7 +31,7 @@ func (r *Router) run() {
 	if ConfigGlobal.RecordPath != "" {
 		file, err := os.Create(ConfigGlobal.RecordPath)
 		if err != nil {
-			log.Errorf("Could not open commands output file ", err)
+			log.Error("Could not open commands output file ", err)
 		} else {
 			encoder = gob.NewEncoder(file)
 		}
@@ -44,7 +44,7 @@ func (r *Router) run() {
 			if file != nil {
 				err := file.Close()
 				if err != nil {
-					log.Errorf("Could not close commands output file ", err)
+					log.Error("Could not close commands output file ", err)
 				}
 			}
 			return
@@ -54,7 +54,7 @@ func (r *Router) run() {
 			if encoder != nil {
 				err := encoder.Encode(command)
 				if err != nil {
-					log.Errorf("Could not encode command ", err)
+					log.Error("Could not encode command ", err)
 				}
 			}
 		}
