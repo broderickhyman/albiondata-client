@@ -11,14 +11,17 @@ import (
 
 var version string
 
+//Client struct base
 type Client struct {
 }
 
+//NewClient return a new Client instance
 func NewClient(_version string) *Client {
 	version = _version
 	return &Client{}
 }
 
+//Run starts client settings and run
 func (client *Client) Run() {
 	if ConfigGlobal.LogToFile {
 		log.SetFormatter(&logrus.TextFormatter{DisableTimestamp: true, DisableSorting: true, ForceColors: false})
