@@ -16,7 +16,7 @@ type operationAuctionGetItemAverageStats struct {
 }
 
 func (op operationAuctionGetItemAverageStats) Process(state *albionState) {
-	var index = op.MessageID % CACHE_SIZE
+	var index = op.MessageID % CacheSize
 	mhInfo := marketHistoryInfo{
 		albionId:  op.ItemID,
 		timescale: op.Timescale,
@@ -34,7 +34,7 @@ type operationAuctionGetItemAverageStatsResponse struct {
 }
 
 func (op operationAuctionGetItemAverageStatsResponse) Process(state *albionState) {
-	var index = op.MessageID % CACHE_SIZE
+	var index = op.MessageID % CacheSize
 	var mhInfo = state.marketHistoryIDLookup[index]
 	log.Debugf("Market History - Loaded itemID %d from cache at index %d", mhInfo.albionId, index)
 	log.Debug("Got response to GetItemAverageStats operation for the itemID[", mhInfo.albionId, "] of quality: ", mhInfo.quality, " and on the timescale: ", mhInfo.timescale)
