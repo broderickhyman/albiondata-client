@@ -53,7 +53,7 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
-// Client is a middleman between the websocket connection and the hub.
+// WSClient is a middleman between the websocket connection and the hub.
 type WSClient struct {
 	hub *WSHub
 

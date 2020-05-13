@@ -4,7 +4,7 @@
 
 package client
 
-// hub maintains the set of active clients and broadcasts messages to the
+// WSHub maintains the set of active clients and broadcasts messages to the
 // clients.
 type WSHub struct {
 	// Registered clients.
