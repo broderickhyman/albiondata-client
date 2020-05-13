@@ -4,6 +4,7 @@ type operation interface {
 	Process(state *albionState)
 }
 
+//OperationType used to identify operation types
 //go:generate stringer -type=OperationType
 type OperationType uint16
 

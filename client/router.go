@@ -8,6 +8,7 @@ import (
 	photon "github.com/broderickhyman/photon_spectator"
 )
 
+//Router struct definitions
 type Router struct {
 	albionstate         *albionState
 	newOperation        chan operation

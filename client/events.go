@@ -1,5 +1,6 @@
 package client
 
+//EventType used to identify event types
 //go:generate stringer -type=EventType
 type EventType uint16
 
