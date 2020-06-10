@@ -6,7 +6,8 @@ import (
 	"github.com/broderickhyman/albiondata-client/notification"
 )
 
-const CACHE_SIZE = 256
+//CacheSize limit size of messages in cache
+const CacheSize = 256
 
 type marketHistoryInfo struct {
 	albionId  uint32
@@ -23,8 +24,8 @@ type albionState struct {
 	// A lot of information is sent out but not contained in the response when requesting marketHistory (e.g. ID)
 	// This information is stored in marketHistoryInfo
 	// This array acts as a type of cache for that info
-	// The index is the message number (param255) % CACHE_SIZE
-	marketHistoryIDLookup [CACHE_SIZE]marketHistoryInfo
+	// The index is the message number (param255) % CacheSize
+	marketHistoryIDLookup [CacheSize]marketHistoryInfo
 	// TODO could this be improved?!
 }
 

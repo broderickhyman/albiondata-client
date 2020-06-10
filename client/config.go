@@ -23,6 +23,7 @@ type config struct {
 	PublicIngestBaseUrls           string
 }
 
+//ConfigGlobal global config data
 var ConfigGlobal = &config{
 	LogLevel: "INFO",
 }

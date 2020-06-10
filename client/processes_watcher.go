@@ -22,15 +22,15 @@ func (pw *processesWatcher) run() {
 	log.Debug("Watching processes for Albion to start...")
 
 	for {
-		var process_string string
+		var processName string
 
 		if runtime.GOOS == "windows" {
-			process_string = "Albion-Online.exe"
+			processName = "Albion-Online.exe"
 		} else {
-			process_string = "Albion-Online"
+			processName = "Albion-Online"
 		}
 
-		current := findProcess(process_string)
+		current := findProcess(processName)
 
 		added, removed := diffIntSets(pw.knownAlbions, current)
 

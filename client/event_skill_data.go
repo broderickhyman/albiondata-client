@@ -19,7 +19,7 @@ func (event eventSkillData) Process(state *albionState) {
 
 	skills := []*lib.Skill{}
 
-	for k, _ := range event.SkillIds {
+	for k := range event.SkillIds {
 		skill := &lib.Skill{}
 		skill.ID = event.SkillIds[k]
 		skill.Level = event.Levels[k]

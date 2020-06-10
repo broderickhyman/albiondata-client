@@ -79,7 +79,7 @@ func (l *listener) startOfflineCommandGob(path string) {
 	var decoder *gob.Decoder
 	file, err := os.Open(path)
 	if err != nil {
-		log.Errorf("Could not open commands input file ", err)
+		log.Error("Could not open commands input file ", err)
 	} else {
 		decoder = gob.NewDecoder(file)
 	}
@@ -95,7 +95,7 @@ func (l *listener) startOfflineCommandGob(path string) {
 				if err == io.EOF {
 					break
 				}
-				log.Errorf("Could not decode command ", err)
+				log.Error("Could not decode command ", err)
 				continue
 			}
 			l.commands <- *command
@@ -103,7 +103,7 @@ func (l *listener) startOfflineCommandGob(path string) {
 
 		err = file.Close()
 		if err != nil {
-			log.Errorf("Could not close commands input file ", err)
+			log.Error("Could not close commands input file ", err)
 		}
 		log.Info("All offline commands should processed now.")
 	}()
