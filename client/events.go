@@ -191,6 +191,7 @@ const (
 	evFurnitureObjectCheatProviderInfo
 	evFarmableObjectInfo
 	evNewUnreadMails
+	evUnknown187
 	evGuildLogoObjectUpdate
 	evStartLogout
 	evNewChatChannels
