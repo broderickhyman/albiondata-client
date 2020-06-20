@@ -50,7 +50,7 @@ func (op operationAuctionGetItemAverageStatsResponse) Process(state *albionState
 		// sometimes opAuctionGetItemAverageStats receives negative item amounts
 		// they make no sense and so are dropped
 		if op.ItemAmounts[i] < 0 {
-			log.Infof("Market History - Ignoring negative item amount %d for %d silver on %d", op.ItemAmounts[i], op.SilverAmounts[i], op.Timestamps[i])
+			log.Debugf("Market History - Ignoring negative item amount %d for %d silver on %d", op.ItemAmounts[i], op.SilverAmounts[i], op.Timestamps[i])
 			continue
 		}
 		history := &lib.MarketHistory{}
