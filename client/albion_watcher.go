@@ -1,7 +1,6 @@
 package client
 
 import (
-	"strings"
 	"time"
 
 	"github.com/broderickhyman/albiondata-client/log"
@@ -27,12 +26,8 @@ func newAlbionProcessWatcher(pid int) *albionProcessWatcher {
 
 func (apw *albionProcessWatcher) run() {
 	log.Printf("Watching Albion process with PID \"%d\"...", apw.pid)
-	if ConfigGlobal.ListenDevices != "" {
-		apw.devices = strings.Split(ConfigGlobal.ListenDevices, ",")
-	} else {
-		apw.devices = getAllPhysicalInterface()
-		log.Debugf("Will listen to these devices: %v", apw.devices)
-	}
+	apw.devices = getAllPhysicalInterface()
+	log.Debugf("Will listen to these devices: %v", apw.devices)
 	go apw.r.run()
 
 	for {

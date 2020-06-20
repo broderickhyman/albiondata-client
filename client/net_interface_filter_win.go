@@ -4,9 +4,12 @@ package client
 
 import (
 	"os"
+	"strings"
 	"syscall"
 	"unicode/utf16"
 	"unsafe"
+
+	"github.com/broderickhyman/albiondata-client/log"
 
 	"golang.org/x/sys/windows"
 )
@@ -89,13 +92,34 @@ func getAllPhysicalInterface() []string {
 
 	var outInterfaces []string
 
+	devices := strings.Split(strings.ReplaceAll(strings.ToLower(ConfigGlobal.ListenDevices), "-", ":"), ",")
+
 	for _, pa := range aa {
 		mac := physicalAddrToString(pa.PhysicalAddress)
+		deviceFound := false
+		if len(devices) > 0 {
+			for _, device := range devices {
+				if strings.HasPrefix(strings.ToLower(mac), device) {
+					deviceFound = true
+					break
+				}
+			}
+			if !deviceFound {
+				continue
+			}
+		}
 		name := "\\Device\\NPF_" + bytePtrToString(pa.AdapterName)
 
 		if pa.IfType != uint32(IF_TYPE_SOFTWARE_LOOPBACK) && pa.IfType != uint32(IF_TYPE_TUNNEL) &&
 			pa.OperStatus == uint32(IfOperStatusUp) && isPhysicalInterface(mac) {
 			outInterfaces = append(outInterfaces, name)
+		}
+	}
+	if len(outInterfaces) == 0 {
+		if len(devices) > 0 {
+			log.Fatal("Mac address was not found")
+		} else {
+			log.Fatal("Could not find a network interface")
 		}
 	}
 
