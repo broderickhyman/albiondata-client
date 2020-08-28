@@ -234,13 +234,6 @@
   version = "v0.0.8"
 
 [[projects]]
-  digest = "1:1dee6133ab829c8559a39031ad1e0e3538e4a7b34d3e0509d1fc247737e928c1"
-  name = "github.com/mitchellh/go-ps"
-  packages = ["."]
-  pruneopts = ""
-  revision = "4fdf99ab29366514c69ccccddab5dc58b8d84062"
-
-[[projects]]
   digest = "1:bcc46a0fbd9e933087bef394871256b5c60269575bb661935874729c65bbbf60"
   name = "github.com/mitchellh/mapstructure"
   packages = ["."]
@@ -298,17 +291,6 @@
   pruneopts = ""
   revision = "728039f679cbcd4f6a54e080d2219a4c4928c546"
   version = "v1.4.0"
-
-[[projects]]
-  digest = "1:840624f947e3ab889ca883433b414d5c72550c5a94aad3a9acd3b8a4c3da56b7"
-  name = "github.com/shirou/gopsutil"
-  packages = [
-    "internal/common",
-    "net",
-  ]
-  pruneopts = ""
-  revision = "d573c8e3f1c5337585b0e285214e80df7429d8b5"
-  source = "https://github.com/gradiuscypher/gopsutil.git"
 
 [[projects]]
   digest = "1:956f655c87b7255c6b1ae6c203ebb0af98cf2a13ef2507e34c9bf1c0332ac0f5"
@@ -398,14 +380,6 @@
   version = "v0.3.2"
 
 [[projects]]
-  branch = "master"
-  digest = "1:c8d449a31e4cee29c2418a05f939294d3884822785eb8d3527dac9fb96788f79"
-  name = "golang.org/x/tools"
-  packages = ["container/intsets"]
-  pruneopts = ""
-  revision = "a101b041ded4588cfeb96c45f394050221b40f11"
-
-[[projects]]
   branch = "v0"
   digest = "1:7875aa52db70d816c8d8553cf7a9bc6f823234c56a749b60fa0e1792deb99a40"
   name = "gopkg.in/inconshreveable/go-update.v0"
@@ -447,13 +421,10 @@
     "github.com/google/gopacket/pcap",
     "github.com/gorilla/websocket",
     "github.com/mattn/go-colorable",
-    "github.com/mitchellh/go-ps",
     "github.com/mitchellh/mapstructure",
     "github.com/nats-io/go-nats",
-    "github.com/shirou/gopsutil/net",
     "github.com/spf13/viper",
     "golang.org/x/sys/windows",
-    "golang.org/x/tools/container/intsets",
     "gopkg.in/toast.v1",
   ]
   solver-name = "gps-cdcl"
