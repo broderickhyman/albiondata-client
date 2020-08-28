@@ -158,6 +158,13 @@ func (l *listener) processPacket(packet gopacket.Packet) {
 		switch command.Type {
 		case photon.SendReliableType:
 			l.onReliableCommand(&command)
+		case photon.SendUnreliableType:
+			var s = make([]byte, len(command.Data)-4)
+			copy(s, command.Data[4:])
+			command.Data = s
+			command.Length -= 4
+			command.Type = 6
+			l.onReliableCommand(&command)
 		case photon.SendReliableFragmentType:
 			msg, _ := command.ReliableFragment()
 			result := l.fragments.Offer(msg)
@@ -221,8 +228,8 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 		} else if !ConfigGlobal.DebugIgnoreDecodingErrors {
 			log.Debugf("EventDataType: ERROR - %v", params)
 		}
-		//default:
-		//err = fmt.Errorf("unsupported message type: %v, data: %v", msg.Type, base64.StdEncoding.EncodeToString(msg.Data))
+	default:
+		err = fmt.Errorf("unsupported message type: %v, data: %v", msg.Type, base64.StdEncoding.EncodeToString(msg.Data))
 	}
 
 	if err != nil && !ConfigGlobal.DebugIgnoreDecodingErrors {
