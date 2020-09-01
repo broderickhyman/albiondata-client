@@ -413,4 +413,19 @@ const (
 	evNewHomeObject
 	evHideoutObjectUpdate
 	evUpdateInfamy
+	evUnknown408
+	evUnknown409
+	evUnknown410
+	evUnknown411
+	evUnknown412
+	evUnknown413
+	evUnknown414
+	evUnknown415
+	evUnknown416
+	evUnknown417
+	evUnknown418
+	evUnknown419
+	evUnknown420
+	evUnknown421
+	evUnknown422
 )
