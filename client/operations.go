@@ -5,10 +5,10 @@ type operation interface {
 }
 
 // Notes:
-//   2020-08-31 (@phendryx): opAuctionGetItemsAverage removed from op codes 
-//			     based on public suggested changes and 
+//   2020-08-31 (@phendryx): opAuctionGetItemsAverage removed from op codes
+//			     based on public suggested changes and
 //               @marleythemongolianmoose's findings:
-//               "MarleyTheMongolianMoose: AuctionGetItemsAverage == 92 == kind 
+//               "MarleyTheMongolianMoose: AuctionGetItemsAverage == 92 == kind
 //               of looks like it disappears in the new one"
 
 //OperationType used to identify operation types
