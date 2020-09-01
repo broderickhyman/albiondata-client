@@ -4,6 +4,13 @@ type operation interface {
 	Process(state *albionState)
 }
 
+// Notes:
+//   2020-08-31 (@phendryx): opAuctionGetItemsAverage removed from op codes
+//			     based on public suggested changes and
+//               @marleythemongolianmoose's findings:
+//               "MarleyTheMongolianMoose: AuctionGetItemsAverage == 92 == kind
+//               of looks like it disappears in the new one"
+
 //OperationType used to identify operation types
 //go:generate stringer -type=OperationType
 type OperationType uint16
@@ -101,7 +108,6 @@ const (
 	opAuctionGetMyOpenOffers
 	opAuctionGetMyOpenRequests
 	opAuctionGetMyOpenAuctions
-	opAuctionGetItemsAverage
 	opAuctionGetItemAverageStats
 	opAuctionGetItemAverageValue
 	opContainerOpen
