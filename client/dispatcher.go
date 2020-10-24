@@ -3,11 +3,10 @@ package client
 import (
 	"encoding/json"
 	"net/http"
-
 	"strings"
 
-	"github.com/broderickhyman/albiondata-client/lib"
-	"github.com/broderickhyman/albiondata-client/log"
+	"github.com/albiondata-client/lib"
+	"github.com/albiondata-client/log"
 )
 
 type dispatcher struct {
@@ -78,7 +77,6 @@ func sendMsgToPrivateUploaders(upload lib.PersonalizedUpload, topic string, stat
 		log.Info("Upload is disabled.")
 		return
 	}
-
 	// TODO: Re-enable this when issue #14 is fixed
 	// Will personalize with blanks for now in order to allow people to see the format
 	// if state.CharacterName == "" || state.CharacterId == "" {

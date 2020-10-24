@@ -18,6 +18,21 @@
   version = "v3.6.1"
 
 [[projects]]
+  digest = "1:c58319e442204ff2ef0b2228d966c23fe46d82e74944a06ec47a05ecd6a60b8f"
+  name = "github.com/broderickhyman/albiondata-client"
+  packages = [
+    "client",
+    "icon",
+    "lib",
+    "log",
+    "notification",
+    "systray",
+  ]
+  pruneopts = ""
+  revision = "10b2fcefad9179f6be369b5a75c6829fe4958528"
+  version = "0.0.31"
+
+[[projects]]
   branch = "master"
   digest = "1:6e75988417aa891d9c18fbbfb3469f03e789b3994fdbcb3dc6489ef17b021d1f"
   name = "github.com/broderickhyman/go-githubupdate"
@@ -437,6 +452,12 @@
   analyzer-version = 1
   input-imports = [
     "github.com/Sirupsen/logrus",
+    "github.com/broderickhyman/albiondata-client/client",
+    "github.com/broderickhyman/albiondata-client/icon",
+    "github.com/broderickhyman/albiondata-client/lib",
+    "github.com/broderickhyman/albiondata-client/log",
+    "github.com/broderickhyman/albiondata-client/notification",
+    "github.com/broderickhyman/albiondata-client/systray",
     "github.com/broderickhyman/go-githubupdate/updater",
     "github.com/broderickhyman/photon_spectator",
     "github.com/ctcpip/notifize",

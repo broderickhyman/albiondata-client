@@ -6,10 +6,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/albiondata-client/client"
+
 	"github.com/Sirupsen/logrus"
-	"github.com/broderickhyman/albiondata-client/client"
-	"github.com/broderickhyman/albiondata-client/log"
-	"github.com/broderickhyman/albiondata-client/systray"
+	"github.com/albiondata-client/log"
+	"github.com/albiondata-client/systray"
 	"github.com/broderickhyman/go-githubupdate/updater"
 	"github.com/spf13/viper"
 )
@@ -33,7 +34,7 @@ func init() {
 	flag.BoolVar(
 		&client.ConfigGlobal.Debug,
 		"debug",
-		false,
+		true,
 		"Enable debug logging.",
 	)
 
@@ -54,7 +55,7 @@ func init() {
 	flag.BoolVar(
 		&client.ConfigGlobal.LogToFile,
 		"output-file",
-		false,
+		true,
 		"Enable logging to file.",
 	)
 
@@ -96,7 +97,7 @@ func init() {
 	flag.StringVar(
 		&client.ConfigGlobal.DebugEventsString,
 		"events",
-		"",
+		"172",
 		"Whitelist of event IDs to output messages when debugging. Comma separated.",
 	)
 
@@ -110,7 +111,7 @@ func init() {
 	flag.StringVar(
 		&client.ConfigGlobal.DebugOperationsString,
 		"operations",
-		"",
+		"172",
 		"Whitelist of operation IDs to output messages when debugging. Comma separated.",
 	)
 
