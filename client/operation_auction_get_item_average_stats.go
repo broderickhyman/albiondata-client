@@ -48,10 +48,16 @@ func (op operationAuctionGetItemAverageStatsResponse) Process(state *albionState
 	// TODO can we make this safer? Right now we just assume all the arrays are the same length as the number of item amounts
 	for i := range op.ItemAmounts {
 		// sometimes opAuctionGetItemAverageStats receives negative item amounts
-		// they make no sense and so are dropped
 		if op.ItemAmounts[i] < 0 {
-			log.Debugf("Market History - Ignoring negative item amount %d for %d silver on %d", op.ItemAmounts[i], op.SilverAmounts[i], op.Timestamps[i])
-			continue
+			if op.ItemAmounts[i] < -124 {
+				// still don't know what to do with these
+				log.Debugf("Market History - Ignoring negative item amount %d for %d silver on %d", op.ItemAmounts[i], op.SilverAmounts[i], op.Timestamps[i])
+				continue
+			}
+			// however these can be interpreted by adding them to 256
+			// TODO: make more sense of this, (perhaps there is a better way)
+			log.Debugf("Market History - Interpreting negative item amount %d as %d for %d silver on %d", op.ItemAmounts[i], 256+op.ItemAmounts[i], op.SilverAmounts[i], op.Timestamps[i])
+			op.ItemAmounts[i] = 256 + op.ItemAmounts[i]
 		}
 		history := &lib.MarketHistory{}
 		history.ItemAmount = op.ItemAmounts[i]
