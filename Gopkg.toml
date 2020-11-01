@@ -11,24 +11,11 @@
   branch = "master"
 
 [[constraint]]
-  name = "github.com/mitchellh/go-ps"
-  revision = "4fdf99ab29366514c69ccccddab5dc58b8d84062"
-
-[[constraint]]
   name = "github.com/mitchellh/mapstructure"
   revision = "3536a929edddb9a5b34bd6861dc4a9647cb459fe"
 
 [[constraint]]
   name = "github.com/broderickhyman/go-githubupdate"
-  branch = "master"
-
-[[constraint]]
-  name = "github.com/shirou/gopsutil"
-  source = "https://github.com/gradiuscypher/gopsutil.git"
-  revision = "d573c8e3f1c5337585b0e285214e80df7429d8b5"
-
-[[constraint]]
-  name = "golang.org/x/tools"
   branch = "master"
 
 [[constraint]]

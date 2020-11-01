@@ -64,7 +64,7 @@ func (client *Client) Run() {
 	if ConfigGlobal.Offline {
 		processOffline(ConfigGlobal.OfflinePath)
 	} else {
-		pw := newProcessWatcher()
-		pw.run()
+		apw := newAlbionProcessWatcher()
+		apw.run()
 	}
 }

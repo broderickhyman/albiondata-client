@@ -7,7 +7,6 @@ import (
 )
 
 type albionProcessWatcher struct {
-	pid       int
 	known     []int
 	devices   []string
 	listeners map[int][]*listener
@@ -15,9 +14,8 @@ type albionProcessWatcher struct {
 	r         *Router
 }
 
-func newAlbionProcessWatcher(pid int) *albionProcessWatcher {
+func newAlbionProcessWatcher() *albionProcessWatcher {
 	return &albionProcessWatcher{
-		pid:       pid,
 		listeners: make(map[int][]*listener),
 		quit:      make(chan bool),
 		r:         newRouter(),
@@ -25,7 +23,7 @@ func newAlbionProcessWatcher(pid int) *albionProcessWatcher {
 }
 
 func (apw *albionProcessWatcher) run() {
-	log.Printf("Watching Albion process with PID \"%d\"...", apw.pid)
+	log.Print("Watching Albion")
 	apw.devices = getAllPhysicalInterface()
 	log.Debugf("Will listen to these devices: %v", apw.devices)
 	go apw.r.run()
@@ -36,14 +34,16 @@ func (apw *albionProcessWatcher) run() {
 			apw.closeWatcher()
 			return
 		default:
-			apw.updateListeners()
+			if len(apw.listeners) == 0 {
+				apw.createListeners()
+			}
 			time.Sleep(time.Second)
 		}
 	}
 }
 
 func (apw *albionProcessWatcher) closeWatcher() {
-	log.Printf("Albion watcher closed for PID \"%d\"...", apw.pid)
+	log.Print("Albion watcher closed")
 
 	for port := range apw.listeners {
 		for _, l := range apw.listeners[port] {
@@ -54,24 +54,12 @@ func (apw *albionProcessWatcher) closeWatcher() {
 	}
 
 	apw.r.quit <- true
-
-	log.Printf("Albion watcher closed for PID \"%d\"...", apw.pid)
 }
 
-func (apw *albionProcessWatcher) updateListeners() {
-	current := getProcessPorts(apw.pid)
-	filtered := []int{}
-	for _, port := range current {
-		if port == 0 {
-			continue
-		}
+func (apw *albionProcessWatcher) createListeners() {
+	filtered := [1]int{5056} // keep overdesign to listen on many ports
 
-		filtered = append(filtered, port)
-	}
-
-	added, removed := diffIntSets(apw.known, filtered)
-
-	for _, port := range added {
+	for _, port := range filtered {
 		for _, device := range apw.devices {
 			l := newListener(apw.r)
 			go l.startOnline(device, port)
@@ -79,14 +67,4 @@ func (apw *albionProcessWatcher) updateListeners() {
 			apw.listeners[port] = append(apw.listeners[port], l)
 		}
 	}
-
-	for _, port := range removed {
-		for _, l := range apw.listeners[port] {
-			l.quit <- true
-		}
-
-		delete(apw.listeners, port)
-	}
-
-	apw.known = current
 }
