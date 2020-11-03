@@ -30,9 +30,13 @@ func (op operationJoinResponse) Process(state *albionState) {
 	}
 	log.Infof("Updating player location to %v.", op.Location)
 
+	if state.CharacterId != op.CharacterID {
+		log.Infof("Updating player ID to %v.", op.CharacterID)
+	}
 	state.CharacterId = op.CharacterID
-	log.Infof("Updating player ID to %v.", op.CharacterID)
 
+	if state.CharacterName != op.CharacterName {
+		log.Infof("Updating player to %v.", op.CharacterName)
+	}
 	state.CharacterName = op.CharacterName
-	log.Infof("Updating player to %v.", op.CharacterName)
 }
