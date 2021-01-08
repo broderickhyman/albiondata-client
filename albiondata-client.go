@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"github.com/broderickhyman/albiondata-client/client"
 	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/broderickhyman/albiondata-client/systray"
