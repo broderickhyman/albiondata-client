@@ -262,6 +262,7 @@ const (
 	opGoldMarketCreateBuyOrder
 	opGoldMarketGetInfos
 	opGoldMarketCancelOrder
+	opUnknown246
 	opGoldMarketGetAverageInfo
 	opSiegeCampClaimStart
 	opSiegeCampClaimCancel
