@@ -4,9 +4,9 @@ import (
 	"io"
 	"os"
 
-	"github.com/sirupsen/logrus"
 	"github.com/broderickhyman/albiondata-client/log"
 	colorable "github.com/mattn/go-colorable"
+	"github.com/sirupsen/logrus"
 )
 
 var version string

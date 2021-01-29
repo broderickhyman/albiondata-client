@@ -6,11 +6,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	"github.com/broderickhyman/albiondata-client/client"
 	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/broderickhyman/albiondata-client/systray"
 	"github.com/broderickhyman/go-githubupdate/updater"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
