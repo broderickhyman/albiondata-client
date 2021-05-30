@@ -5,6 +5,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 	"encoding/json"
 	"crypto/rand"
@@ -55,6 +56,28 @@ func (u *httpUploaderPow) getPow(target interface{}) {
 		return
 	}
 }
+
+// Prooves to the server that a pow was solved by submitting
+// the pow and the solution as a POST request
+func (u *httpUploaderPow) proovePow(pow Pow, solution string) {
+	fullURL := u.baseURL + "/pow"
+
+	resp, err := http.PostForm(fullURL, url.Values{
+		"key": {pow.Key},
+		"solution": {solution},
+	})
+
+	if err != nil {
+		log.Errorf("Error while prooving pow: %v", err)
+		return
+	}
+
+	if resp.StatusCode != 200 {
+		log.Errorf("HTTP Error while prooving pow. returned: %v", resp.StatusCode)
+		return
+	}
+}
+
 // Generates a random hex string e.g.: faa2743d9181dca5
 func randomHex(n int) (string, error) {
   bytes := make([]byte, n)
@@ -73,6 +96,9 @@ func toBinaryBytes(s string) string {
     return fmt.Sprintf("%s", buffer.Bytes())
 }
 
+// Solves a pow looping through possible solutions
+// until a correct one is found
+// returns the solution
 func solvePow(pow Pow) string {
 	solution := ""
 	for {
@@ -82,7 +108,7 @@ func solvePow(pow Pow) string {
 		bits := toBinaryBytes(hexstring)
 		if strings.HasPrefix(bits, pow.Wanted) {
 			log.Infof("SOLVED!")
-			solution = string(hexstring)
+			solution = randhex
 			break
 		}
 	}
@@ -92,11 +118,12 @@ func solvePow(pow Pow) string {
 func (u *httpUploaderPow) sendToIngest(body []byte, topic string) {
 	client := &http.Client{Transport: u.transport}
 
-	fullURL := u.baseURL + "/" + topic
-
 	pow := Pow{}
 	u.getPow(&pow)
 	solution := solvePow(pow)
+	u.proovePow(pow, solution)
+
+	fullURL := u.baseURL + "/" + topic + "/" + pow.Key
 
 	req, err := http.NewRequest("POST", fullURL, bytes.NewBuffer([]byte(body)))
 	if err != nil {
