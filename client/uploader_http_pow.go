@@ -103,10 +103,7 @@ func solvePow(pow Pow) string {
 	solution := ""
 	for {
 		randhex, _ := randomHex(8)
-		hash := sha256.Sum256([]byte("aod^" + randhex + "^" + pow.Key))
-		hexstring := fmt.Sprintf("%x", hash)
-		bits := toBinaryBytes(hexstring)
-		if strings.HasPrefix(bits, pow.Wanted) {
+		if strings.HasPrefix(toBinaryBytes(fmt.Sprintf("%x", sha256.Sum256([]byte("aod^" + randhex + "^" + pow.Key)))), pow.Wanted) {
 			log.Infof("SOLVED!")
 			solution = randhex
 			break
