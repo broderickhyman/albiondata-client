@@ -35,7 +35,6 @@ func createDispatcher() {
 
 func createUploaders(targets []string) []uploader {
 	var uploaders []uploader
-
 	for _, target := range targets {
 		if target == "" {
 			continue
@@ -45,7 +44,9 @@ func createUploaders(targets []string) []uploader {
 			continue
 		}
 
-		if target[0:4] == "http" {
+		if target[0:8] == "http+pow" {
+			uploaders = append(uploaders, newHTTPUploaderPow(target))
+		} else if target[0:4] == "http" {
 			uploaders = append(uploaders, newHTTPUploader(target))
 		} else if target[0:4] == "nats" {
 			uploaders = append(uploaders, newNATSUploader(target))
