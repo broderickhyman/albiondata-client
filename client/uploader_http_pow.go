@@ -17,8 +17,8 @@ type httpUploaderPow struct {
 }
 
 type Pow struct {
-	key  string  `json:"key"`
-	wanted  string  `json:"wanted"`
+	Key  string  `json:"key"`
+	Wanted  string  `json:"wanted"`
 }
 
 // newHTTPUploaderPow creates a new HTTP uploader
@@ -46,8 +46,11 @@ func (u *httpUploaderPow) getPow(target interface{}) {
 
 	defer resp.Body.Close()
 	json.NewDecoder(resp.Body).Decode(target)
+	if err != nil {
+		log.Errorf("Error in parsing Pow Get request: %v", err)
+		return
+	}
 }
-
 
 func (u *httpUploaderPow) sendToIngest(body []byte, topic string) {
 	client := &http.Client{Transport: u.transport}
@@ -56,8 +59,7 @@ func (u *httpUploaderPow) sendToIngest(body []byte, topic string) {
 
 	pow := Pow{}
 	u.getPow(&pow)
-	log.Infof("POW: %v, %v", pow.key, pow.wanted,)
-
+	log.Infof("POW: %v, %v", pow.Key, pow.Wanted,)
 
 	req, err := http.NewRequest("POST", fullURL, bytes.NewBuffer([]byte(body)))
 	if err != nil {
