@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"encoding/json"
 
 	"github.com/broderickhyman/albiondata-client/log"
 )
@@ -13,6 +14,11 @@ import (
 type httpUploaderPow struct {
 	baseURL   string
 	transport *http.Transport
+}
+
+type Pow struct {
+	key  string  `json:"key"`
+	wanted  string  `json:"wanted"`
 }
 
 // newHTTPUploaderPow creates a new HTTP uploader
@@ -23,10 +29,35 @@ func newHTTPUploaderPow(url string) uploader {
 	}
 }
 
+func (u *httpUploaderPow) getPow(target interface{}) {
+	log.Infof("GETTING POW")
+	fullURL := u.baseURL + "/pow"
+
+	resp, err := http.Get(fullURL)
+	if err != nil {
+		log.Errorf("Error in Pow Get request: %v", err)
+		return
+	}
+
+	if resp.StatusCode != 200 {
+		log.Errorf("Got bad response code: %v", resp.StatusCode)
+		return
+	}
+
+	defer resp.Body.Close()
+	json.NewDecoder(resp.Body).Decode(target)
+}
+
+
 func (u *httpUploaderPow) sendToIngest(body []byte, topic string) {
 	client := &http.Client{Transport: u.transport}
 
 	fullURL := u.baseURL + "/" + topic
+
+	pow := Pow{}
+	u.getPow(&pow)
+	log.Infof("POW: %v, %v", pow.key, pow.wanted,)
+
 
 	req, err := http.NewRequest("POST", fullURL, bytes.NewBuffer([]byte(body)))
 	if err != nil {
