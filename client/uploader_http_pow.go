@@ -7,6 +7,10 @@ import (
 	"net/http"
 	"strings"
 	"encoding/json"
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
 
 	"github.com/broderickhyman/albiondata-client/log"
 )
@@ -51,6 +55,39 @@ func (u *httpUploaderPow) getPow(target interface{}) {
 		return
 	}
 }
+// Generates a random hex string e.g.: faa2743d9181dca5
+func randomHex(n int) (string, error) {
+  bytes := make([]byte, n)
+  if _, err := rand.Read(bytes); err != nil {
+    return "", err
+  }
+  return hex.EncodeToString(bytes), nil
+}
+
+// Converts a string to bits e.g.: 0110011...
+func toBinaryBytes(s string) string {
+    var buffer bytes.Buffer
+    for i := 0; i < len(s); i++ {
+        fmt.Fprintf(&buffer, "%08b", s[i])
+    }
+    return fmt.Sprintf("%s", buffer.Bytes())
+}
+
+func solvePow(pow Pow) string {
+	solution := ""
+	for {
+		randhex, _ := randomHex(8)
+		hash := sha256.Sum256([]byte("aod^" + randhex + "^" + pow.Key))
+		hexstring := fmt.Sprintf("%x", hash)
+		bits := toBinaryBytes(hexstring)
+		if strings.HasPrefix(bits, pow.Wanted) {
+			log.Infof("SOLVED!")
+			solution = string(hexstring)
+			break
+		}
+	}
+	return solution
+}
 
 func (u *httpUploaderPow) sendToIngest(body []byte, topic string) {
 	client := &http.Client{Transport: u.transport}
@@ -59,7 +96,7 @@ func (u *httpUploaderPow) sendToIngest(body []byte, topic string) {
 
 	pow := Pow{}
 	u.getPow(&pow)
-	log.Infof("POW: %v, %v", pow.Key, pow.Wanted,)
+	solution := solvePow(pow)
 
 	req, err := http.NewRequest("POST", fullURL, bytes.NewBuffer([]byte(body)))
 	if err != nil {
