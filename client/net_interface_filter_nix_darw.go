@@ -13,7 +13,7 @@ func getAllPhysicalInterface() []string {
 	ifaces, err := net.Interfaces()
 
 	if err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 		return nil
 	}
 

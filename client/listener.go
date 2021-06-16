@@ -36,13 +36,13 @@ func newListener(router *Router) *listener {
 func (l *listener) startOnline(device string, port int) {
 	handle, err := pcap.OpenLive(device, 2048, false, pcap.BlockForever)
 	if err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 	}
 	l.handle = handle
 
 	err = l.handle.SetBPFFilter(fmt.Sprintf("tcp port %d || udp port %d", port, port))
 	if err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 	}
 
 	layers.RegisterUDPPortLayerType(layers.UDPPort(port), photon.PhotonLayerType)
@@ -56,8 +56,8 @@ func (l *listener) startOnline(device string, port int) {
 
 func (l *listener) startOfflinePcap(path string) {
 	handle, err := pcap.OpenOffline(path)
-	if err != err {
-		log.Fatalf("Problem creating offline source. Error: %v", err)
+	if err != nil {
+		log.Panicf("Problem creating offline source. Error: %v", err)
 	}
 	l.handle = handle
 
@@ -79,7 +79,7 @@ func (l *listener) startOfflineCommandGob(path string) {
 	var decoder *gob.Decoder
 	file, err := os.Open(path)
 	if err != nil {
-		log.Error("Could not open commands input file ", err)
+		log.Panic("Could not open commands input file ", err)
 	} else {
 		decoder = gob.NewDecoder(file)
 	}
@@ -182,13 +182,17 @@ func (l *listener) onReliableCommand(command *photon.PhotonCommand) {
 	}
 
 	msg, err := command.ReliableMessage()
-	if err != nil && !ConfigGlobal.DebugIgnoreDecodingErrors {
-		log.Debugf("Could not decode reliable message: %v - %v", err, base64.StdEncoding.EncodeToString(command.Data))
+	if err != nil {
+		if !ConfigGlobal.DebugIgnoreDecodingErrors {
+			log.Debugf("Could not decode reliable message: %v - %v", err, base64.StdEncoding.EncodeToString(command.Data))
+		}
 		return
 	}
 	params := photon.DecodeReliableMessage(msg)
-	if params == nil && !ConfigGlobal.DebugIgnoreDecodingErrors {
-		log.Debugf("ERROR: Could not decode params: [%d] (%d) (%d) %v", msg.Type, msg.ParamaterCount, len(msg.Data), base64.StdEncoding.EncodeToString(msg.Data))
+	if params == nil {
+		if !ConfigGlobal.DebugIgnoreDecodingErrors {
+			log.Debugf("ERROR: Could not decode params: [%d] (%d) (%d) %v", msg.Type, msg.ParamaterCount, len(msg.Data), base64.StdEncoding.EncodeToString(msg.Data))
+		}
 		return
 	}
 
