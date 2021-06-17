@@ -90,7 +90,6 @@ func getAllPhysicalInterface() ([]string, error) {
 	}
 
 	var outInterfaces []string
-
 	devices := strings.Split(strings.ReplaceAll(strings.ToLower(ConfigGlobal.ListenDevices), "-", ":"), ",")
 
 	for _, pa := range aa {
