@@ -58,10 +58,8 @@ The best way to get in touch with us is on the Albion Online Fansites Discord se
 
 # Developer Setup
 ### Mac/Linux Setup
-- Install [Dep](https://github.com/golang/dep)
-  - Any OS: `go get -u github.com/golang/dep/cmd/dep`
-  - Mac with Homebrew: `brew install dep`
-- Install dependencies using `dep ensure`
+- Install go
+- Build the project (Go modules will download automatically)
 
 ### Windows Setup
 [Windows Setup Guide](https://github.com/broderickhyman/albiondata-client/wiki/Building-in-Windows)

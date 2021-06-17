@@ -3,7 +3,7 @@ jobs:
   test:
     working_directory: /go/src/github.com/broderickhyman/albiondata-client
     docker:
-      - image: circleci/golang:1.14
+      - image: circleci/golang:1.16
     steps:
       - checkout
       - run: go get golang.org/x/tools/cmd/goimports
@@ -29,7 +29,7 @@ jobs:
   build_linux:
     working_directory: /go/src/github.com/broderickhyman/albiondata-client
     docker:
-      - image: circleci/golang:1.14
+      - image: circleci/golang:1.16
     steps:
       - checkout
       - run: make build-linux
@@ -57,7 +57,7 @@ jobs:
   deploy:
     working_directory: /tmp/workspace
     docker:
-      - image: circleci/golang:1.14
+      - image: circleci/golang:1.16
     steps:
       - attach_workspace:
           at: /tmp/workspace
