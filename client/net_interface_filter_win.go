@@ -3,13 +3,12 @@
 package client
 
 import (
+	"errors"
 	"os"
 	"strings"
 	"syscall"
 	"unicode/utf16"
 	"unsafe"
-
-	"github.com/broderickhyman/albiondata-client/log"
 
 	"golang.org/x/sys/windows"
 )
@@ -58,9 +57,6 @@ func bytePtrToString(p *uint8) string {
 }
 
 func physicalAddrToString(physAddr [8]byte) string {
-	if len(physAddr) == 0 {
-		return ""
-	}
 	buf := make([]byte, 0, len(physAddr)*3-1)
 	for i, b := range physAddr {
 		if i > 0 {
@@ -87,11 +83,13 @@ func cStringToString(cs *uint16) (s string) {
 }
 
 // Gets all physical interfaces based on filter results, ignoring all VM, Loopback and Tunnel interfaces.
-func getAllPhysicalInterface() []string {
-	aa, _ := adapterAddresses()
+func getAllPhysicalInterface() ([]string, error) {
+	aa, err := adapterAddresses()
+	if err != nil {
+		return nil, err
+	}
 
 	var outInterfaces []string
-
 	devices := strings.Split(strings.ReplaceAll(strings.ToLower(ConfigGlobal.ListenDevices), "-", ":"), ",")
 
 	for _, pa := range aa {
@@ -117,11 +115,11 @@ func getAllPhysicalInterface() []string {
 	}
 	if len(outInterfaces) == 0 {
 		if len(devices) > 0 {
-			log.Fatal("Mac address was not found")
+			return nil, errors.New("mac address was not found")
 		} else {
-			log.Fatal("Could not find a network interface")
+			return nil, errors.New("could not find a network interface")
 		}
 	}
 
-	return outInterfaces
+	return outInterfaces, nil
 }

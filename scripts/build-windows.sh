@@ -2,9 +2,6 @@
 
 set -eo pipefail
 
-go get -u github.com/golang/dep/cmd/dep
-dep ensure
-
 export CGO_CPPFLAGS="-I $GOPATH/src/github.com/broderickhyman/albiondata-client/thirdparty/WpdPack/Include/"
 export CGO_LDFLAGS="-L $GOPATH/src/github.com/broderickhyman/albiondata-client/thirdparty/WpdPack/Lib/x64/"
 export GOOS=windows

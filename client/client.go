@@ -22,7 +22,7 @@ func NewClient(_version string) *Client {
 }
 
 //Run starts client settings and run
-func (client *Client) Run() {
+func (client *Client) Run() error {
 	if ConfigGlobal.LogToFile {
 		log.SetFormatter(&logrus.TextFormatter{DisableTimestamp: true, DisableSorting: true, ForceColors: false})
 		f, err := os.OpenFile("albiondata-client-output.txt", os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0755)
@@ -65,6 +65,7 @@ func (client *Client) Run() {
 		processOffline(ConfigGlobal.OfflinePath)
 	} else {
 		apw := newAlbionProcessWatcher()
-		apw.run()
+		return apw.run()
 	}
+	return nil
 }

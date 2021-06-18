@@ -4,26 +4,22 @@ package client
 
 import (
 	"net"
-
-	"github.com/broderickhyman/albiondata-client/log"
 )
 
 // Gets all physical interfaces based on filter results, ignoring all VM, Loopback and Tunnel interfaces.
-func getAllPhysicalInterface() []string {
-	ifaces, err := net.Interfaces()
-
+func getAllPhysicalInterface() ([]string, error) {
+	interfaces, err := net.Interfaces()
 	if err != nil {
-		log.Fatal(err)
-		return nil
+		return nil, err
 	}
 
 	var outInterfaces []string
 
-	for _, element := range ifaces {
-		if element.Flags&net.FlagLoopback == 0 && element.Flags&net.FlagUp == 1 && isPhysicalInterface(element.HardwareAddr.String()) {
-			outInterfaces = append(outInterfaces, element.Name)
+	for _, _interface := range interfaces {
+		if _interface.Flags&net.FlagLoopback == 0 && _interface.Flags&net.FlagUp == 1 && isPhysicalInterface(_interface.HardwareAddr.String()) {
+			outInterfaces = append(outInterfaces, _interface.Name)
 		}
 	}
 
-	return outInterfaces
+	return outInterfaces, nil
 }

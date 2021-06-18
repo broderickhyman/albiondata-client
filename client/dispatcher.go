@@ -125,7 +125,7 @@ func runHTTPServer() {
 	err := http.ListenAndServe(":8099", nil)
 
 	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
+		log.Panic("ListenAndServe: ", err)
 	}
 }
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -193,7 +194,14 @@ func main() {
 	go systray.Run()
 
 	c := client.NewClient(version)
-	c.Run()
+	err = c.Run()
+	if err != nil {
+		log.Error(err)
+		log.Error("The program encountered an error. Press any key to close this window.")
+		var b = make([]byte, 1)
+		_, _ = os.Stdin.Read(b)
+	}
+
 }
 
 func startUpdater() {
