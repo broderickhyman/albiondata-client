@@ -77,6 +77,8 @@ func (u *httpUploaderPow) uploadWithPow(pow Pow, solution string, natsmsg []byte
 		log.Errorf("HTTP Error while prooving pow. returned: %v", resp.StatusCode)
 		return
 	}
+
+	log.Infof("Successfully sent ingest request to %v", u.baseURL)
 }
 
 // Generates a random hex string e.g.: faa2743d9181dca5
@@ -118,5 +120,4 @@ func (u *httpUploaderPow) sendToIngest(body []byte, topic string) {
 	u.getPow(&pow)
 	solution := solvePow(pow)
 	u.uploadWithPow(pow, solution, body, topic)
-	log.Infof("Successfully sent ingest request to %v", u.baseURL)
 }
