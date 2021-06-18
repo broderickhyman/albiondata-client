@@ -2,8 +2,6 @@ package client
 
 import (
 	"bytes"
-	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -35,7 +33,7 @@ func newHTTPUploaderPow(url string) uploader {
 }
 
 func (u *httpUploaderPow) getPow(target interface{}) {
-	log.Infof("GETTING POW")
+	log.Debugf("GETTING POW")
 	fullURL := u.baseURL + "/pow"
 
 	resp, err := http.Get(fullURL)
@@ -58,13 +56,16 @@ func (u *httpUploaderPow) getPow(target interface{}) {
 }
 
 // Prooves to the server that a pow was solved by submitting
-// the pow and the solution as a POST request
-func (u *httpUploaderPow) proovePow(pow Pow, solution string) {
-	fullURL := u.baseURL + "/pow"
+// the pow's key, the solution and a nats msg as a POST request
+// the topic becomes part of the URL
+func (u *httpUploaderPow) uploadWithPow(pow Pow, solution string, natsmsg []byte, topic string) {
+
+	fullURL := u.baseURL + "/pow/" + topic
 
 	resp, err := http.PostForm(fullURL, url.Values{
 		"key": {pow.Key},
 		"solution": {solution},
+		"natsmsg": {string(natsmsg)},
 	})
 
 	if err != nil {
@@ -104,7 +105,7 @@ func solvePow(pow Pow) string {
 	for {
 		randhex, _ := randomHex(8)
 		if strings.HasPrefix(toBinaryBytes(fmt.Sprintf("%x", sha256.Sum256([]byte("aod^" + randhex + "^" + pow.Key)))), pow.Wanted) {
-			log.Infof("SOLVED!")
+			log.Debugf("SOLVED!")
 			solution = randhex
 			break
 		}
@@ -113,38 +114,9 @@ func solvePow(pow Pow) string {
 }
 
 func (u *httpUploaderPow) sendToIngest(body []byte, topic string) {
-	client := &http.Client{Transport: u.transport}
-
 	pow := Pow{}
 	u.getPow(&pow)
 	solution := solvePow(pow)
-	u.proovePow(pow, solution)
-
-	fullURL := u.baseURL + "/" + topic + "/" + pow.Key
-
-	req, err := http.NewRequest("POST", fullURL, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		log.Errorf("Error while create new request: %v", err)
-		return
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Errorf("Error while sending ingest with data: %v", err)
-		return
-	}
-
-	if resp.StatusCode != 200 {
-		log.Errorf("Got bad response code: %v", resp.StatusCode)
-		return
-	}
-
-	// See: https://stackoverflow.com/questions/17948827/reusing-http-connections-in-golang
-	io.Copy(ioutil.Discard, resp.Body)
-
+	u.uploadWithPow(pow, solution, body, topic)
 	log.Infof("Successfully sent ingest request to %v", u.baseURL)
-
-	defer resp.Body.Close()
 }
