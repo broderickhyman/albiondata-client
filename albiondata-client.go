@@ -76,7 +76,7 @@ func init() {
 	flag.StringVar(
 		&client.ConfigGlobal.PublicIngestBaseUrls,
 		"i",
-		"nats://public:thenewalbiondata@www.albion-online-data.com:4222",
+		"http+pow://www.albion-online-data.com:4223",
 		"Base URL to send PUBLIC data to, can be 'nats://', 'http://' or 'noop' and can have multiple uploaders. Comma separated.",
 	)
 
