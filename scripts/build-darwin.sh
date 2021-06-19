@@ -13,7 +13,7 @@ export GOARCH=amd64 CGO_ENABLED=1
 go build -ldflags "-s -w -X main.version=$CIRCLE_TAG" albiondata-client.go
 
 
-gzip -9 albiondata-client
+gzip -k9 albiondata-client
 mv albiondata-client.gz update-darwin-amd64.gz
 
 
