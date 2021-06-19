@@ -27,7 +27,7 @@ mkdir -v ./scripts/$TEMP
 cp -v albiondata-client ./scripts/$TEMP/albiondata-client-executable
 cd scripts
 cp -v run.command ./$TEMP/run.command
-sudo chown -Rv ${USER}:${USER} ./$TEMP
+chown -Rv ${USER}:${USER} ./$TEMP
 chmod -v 777 ./$TEMP/*
 zip -v ../$ZIPNAME -r ./"$TEMP"
 
@@ -40,7 +40,7 @@ zip -v ../$ZIPNAME -r ./"$TEMP"
 # rm -rfv ./scripts/"$ZIPNAME"
 # mkdir -pv ./scripts/"$TEMP"/Contents/MacOS
 # cp -v albiondata-client-darwin-10.6-amd64 ./scripts/"$TEMP"/Contents/MacOS/"$APP_NAME"
-# sudo chown -Rv ${USER}:${USER} ./scripts/"$TEMP"
+# chown -Rv ${USER}:${USER} ./scripts/"$TEMP"
 # chmod -v 777 ./scripts/"$TEMP"/*
 
 # cd scripts
