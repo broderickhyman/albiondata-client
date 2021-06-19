@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-apt-get update && apt-get install -y libpcap-dev
+apt-get update && apt-get install -y libpcap-dev zip
 
 export OSXCROSS_NO_INCLUDE_PATH_WARNINGS=1
 export MACOSX_DEPLOYMENT_TARGET=10.6
