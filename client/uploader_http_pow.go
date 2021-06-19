@@ -2,15 +2,15 @@ package client
 
 import (
 	"bytes"
-	"net/http"
-	"net/url"
-	"strings"
-	"encoding/json"
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
+	"net/http"
+	"net/url"
 	"runtime"
+	"strings"
 
 	"github.com/broderickhyman/albiondata-client/log"
 )
@@ -21,20 +21,22 @@ type httpUploaderPow struct {
 }
 
 type Pow struct {
-	Key  string  `json:"key"`
-	Wanted  string  `json:"wanted"`
+	Key    string `json:"key"`
+	Wanted string `json:"wanted"`
 }
 
 // newHTTPUploaderPow creates a new HTTP uploader
 func newHTTPUploaderPow(url string) uploader {
 
 	// Limit to 25% of available cpu cores
-	procs := runtime.NumCPU()/4
-	if procs < 1 { procs = 1 }
+	procs := runtime.NumCPU() / 4
+	if procs < 1 {
+		procs = 1
+	}
 	runtime.GOMAXPROCS(procs)
 
 	return &httpUploaderPow{
-		baseURL: strings.Replace(url, "http+pow", "http", -1),
+		baseURL:   strings.Replace(url, "http+pow", "http", -1),
 		transport: &http.Transport{},
 	}
 }
@@ -70,9 +72,9 @@ func (u *httpUploaderPow) uploadWithPow(pow Pow, solution string, natsmsg []byte
 	fullURL := u.baseURL + "/pow/" + topic
 
 	resp, err := http.PostForm(fullURL, url.Values{
-		"key": {pow.Key},
+		"key":      {pow.Key},
 		"solution": {solution},
-		"natsmsg": {string(natsmsg)},
+		"natsmsg":  {string(natsmsg)},
 	})
 
 	if err != nil {
@@ -90,20 +92,20 @@ func (u *httpUploaderPow) uploadWithPow(pow Pow, solution string, natsmsg []byte
 
 // Generates a random hex string e.g.: faa2743d9181dca5
 func randomHex(n int) (string, error) {
-  bytes := make([]byte, n)
-  if _, err := rand.Read(bytes); err != nil {
-    return "", err
-  }
-  return hex.EncodeToString(bytes), nil
+	bytes := make([]byte, n)
+	if _, err := rand.Read(bytes); err != nil {
+		return "", err
+	}
+	return hex.EncodeToString(bytes), nil
 }
 
 // Converts a string to bits e.g.: 0110011...
 func toBinaryBytes(s string) string {
-    var buffer bytes.Buffer
-    for i := 0; i < len(s); i++ {
-        fmt.Fprintf(&buffer, "%08b", s[i])
-    }
-    return fmt.Sprintf("%s", buffer.Bytes())
+	var buffer bytes.Buffer
+	for i := 0; i < len(s); i++ {
+		fmt.Fprintf(&buffer, "%08b", s[i])
+	}
+	return fmt.Sprintf("%s", buffer.Bytes())
 }
 
 // Solves a pow looping through possible solutions
@@ -113,7 +115,7 @@ func solvePow(pow Pow) string {
 	solution := ""
 	for {
 		randhex, _ := randomHex(8)
-		if strings.HasPrefix(toBinaryBytes(fmt.Sprintf("%x", sha256.Sum256([]byte("aod^" + randhex + "^" + pow.Key)))), pow.Wanted) {
+		if strings.HasPrefix(toBinaryBytes(fmt.Sprintf("%x", sha256.Sum256([]byte("aod^"+randhex+"^"+pow.Key)))), pow.Wanted) {
 			log.Debugf("SOLVED!")
 			solution = randhex
 			break
