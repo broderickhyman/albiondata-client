@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/spf13/viper"
 )
 
@@ -32,12 +33,35 @@ type config struct {
 	NoCPULimit                     bool
 }
 
-//ConfigGlobal global config data
+//config global config data
 var ConfigGlobal = &config{
 	LogLevel: "INFO",
 }
 
-func ConfigSetup() {
+func (config *config) Setup() {
+	config.setupWebsocketFlags()
+	config.setupDebugFlags()
+	config.setupCommonFlags()
+
+	flag.Parse()
+
+	if config.Debug {
+		config.LogLevel = "DEBUG"
+	}
+
+	if config.OfflinePath != "" {
+		config.Offline = true
+		config.DisableUpload = true
+	}
+
+	if config.DisableUpload {
+		log.Info("Upload is disabled.")
+	}
+	config.setupDebugEvents()
+	config.setupDebugOperations()
+}
+
+func (config *config) setupWebsocketFlags() {
 	// Setup the config file and parse values
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")
@@ -48,53 +72,55 @@ func ConfigSetup() {
 		viper.Set("EnableWebsockets", false)
 	}
 
-	ConfigGlobal.EnableWebsockets = viper.GetBool("EnableWebsockets")
-	ConfigGlobal.AllowedWSHosts = viper.GetStringSlice("AllowedWebsocketHosts")
+	config.EnableWebsockets = viper.GetBool("EnableWebsockets")
+	config.AllowedWSHosts = viper.GetStringSlice("AllowedWebsocketHosts")
+}
 
+func (config *config) setupDebugFlags() {
 	flag.BoolVar(
-		&ConfigGlobal.Debug,
+		&config.Debug,
 		"debug",
 		false,
 		"Enable debug logging.",
 	)
 
 	flag.StringVar(
-		&ConfigGlobal.DebugEventsString,
+		&config.DebugEventsString,
 		"events",
 		"",
 		"Whitelist of event IDs to output messages when debugging. Comma separated.",
 	)
 
 	flag.StringVar(
-		&ConfigGlobal.DebugEventsBlacklistString,
+		&config.DebugEventsBlacklistString,
 		"events-ignore",
 		"",
 		"Blacklist of event IDs to hide messages when debugging. Comma separated.",
 	)
 
 	flag.StringVar(
-		&ConfigGlobal.DebugOperationsString,
+		&config.DebugOperationsString,
 		"operations",
 		"",
 		"Whitelist of operation IDs to output messages when debugging. Comma separated.",
 	)
 
 	flag.StringVar(
-		&ConfigGlobal.DebugOperationsBlacklistString,
+		&config.DebugOperationsBlacklistString,
 		"operations-ignore",
 		"",
 		"Blacklist of operation IDs to hide messages when debugging. Comma separated.",
 	)
 
 	flag.BoolVar(
-		&ConfigGlobal.DebugIgnoreDecodingErrors,
+		&config.DebugIgnoreDecodingErrors,
 		"ignore-decode-errors",
 		false,
 		"Ignore the decoding errors when debugging",
 	)
 
 	flag.BoolVar(
-		&ConfigGlobal.NoCPULimit,
+		&config.NoCPULimit,
 		"no-limit",
 		false,
 		"Use all available CPU cores",
@@ -104,63 +130,63 @@ func ConfigSetup() {
 
 func (config *config) setupCommonFlags() {
 	flag.BoolVar(
-		&ConfigGlobal.DisableUpload,
+		&config.DisableUpload,
 		"d",
 		false,
 		"If specified no attempts will be made to upload data to remote server.",
 	)
 
 	flag.StringVar(
-		&ConfigGlobal.ListenDevices,
+		&config.ListenDevices,
 		"l",
 		"",
 		"Listen on this comma separated devices instead of all available",
 	)
 
 	flag.BoolVar(
-		&ConfigGlobal.LogToFile,
+		&config.LogToFile,
 		"output-file",
 		false,
 		"Enable logging to file.",
 	)
 
 	flag.StringVar(
-		&ConfigGlobal.OfflinePath,
+		&config.OfflinePath,
 		"o",
 		"",
 		"Parses a local file instead of checking albion ports.",
 	)
 
 	flag.BoolVar(
-		&ConfigGlobal.Minimize,
+		&config.Minimize,
 		"minimize",
 		false,
 		"Automatically minimize the window.",
 	)
 
 	flag.StringVar(
-		&ConfigGlobal.PublicIngestBaseUrls,
+		&config.PublicIngestBaseUrls,
 		"i",
 		"http+pow://www.albion-online-data.com:4223",
 		"Base URL to send PUBLIC data to, can be 'nats://', 'http://' or 'noop' and can have multiple uploaders. Comma separated.",
 	)
 
 	flag.StringVar(
-		&ConfigGlobal.PrivateIngestBaseUrls,
+		&config.PrivateIngestBaseUrls,
 		"p",
 		"",
 		"Base URL to send PRIVATE data to, can be 'nats://', 'http://' or 'noop' and can have multiple uploaders. Comma separated.",
 	)
 
 	flag.StringVar(
-		&ConfigGlobal.RecordPath,
+		&config.RecordPath,
 		"record",
 		"",
 		"Enable recording commands to a file for debugging later.",
 	)
 }
 
-func (config *config) SetupDebugEvents() {
+func (config *config) setupDebugEvents() {
 	config.DebugEvents = make(map[int]bool)
 	if config.DebugEventsString != "" {
 		for _, event := range strings.Split(config.DebugEventsString, ",") {
@@ -181,7 +207,7 @@ func (config *config) SetupDebugEvents() {
 
 }
 
-func (config *config) SetupDebugOperations() {
+func (config *config) setupDebugOperations() {
 	config.DebugOperations = make(map[int]bool)
 	if config.DebugOperationsString != "" {
 		for _, operation := range strings.Split(config.DebugOperationsString, ",") {

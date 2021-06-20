@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"os"
 	"strings"
 	"time"
@@ -15,31 +14,16 @@ import (
 var version string
 
 func init() {
-
+	client.ConfigGlobal.Setup()
 }
 
 func main() {
-	flag.Parse()
-
-	if client.ConfigGlobal.Debug {
-		client.ConfigGlobal.LogLevel = "DEBUG"
-	}
-
-	if client.ConfigGlobal.OfflinePath != "" {
-		client.ConfigGlobal.Offline = true
-		client.ConfigGlobal.DisableUpload = true
-	}
-
-	if client.ConfigGlobal.DisableUpload {
-		log.Info("Upload is disabled.")
-	}
-
 	startUpdater()
 
 	go systray.Run()
 
 	c := client.NewClient(version)
-	err = c.Run()
+	err := c.Run()
 	if err != nil {
 		log.Error(err)
 		log.Error("The program encountered an error. Press any key to close this window.")
