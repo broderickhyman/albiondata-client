@@ -2,10 +2,14 @@ package client
 
 import (
 	"flag"
+	"io"
+	"os"
 	"strconv"
 	"strings"
 
 	"github.com/broderickhyman/albiondata-client/log"
+	"github.com/mattn/go-colorable"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -45,10 +49,6 @@ func (config *config) Setup() {
 
 	flag.Parse()
 
-	if config.Debug {
-		config.LogLevel = "DEBUG"
-	}
-
 	if config.OfflinePath != "" {
 		config.Offline = true
 		config.DisableUpload = true
@@ -57,6 +57,7 @@ func (config *config) Setup() {
 	if config.DisableUpload {
 		log.Info("Upload is disabled.")
 	}
+	config.setupLogs()
 	config.setupDebugEvents()
 	config.setupDebugOperations()
 }
@@ -186,6 +187,33 @@ func (config *config) setupCommonFlags() {
 	)
 }
 
+func (config *config) setupLogs() {
+	if config.Debug {
+		config.LogLevel = "DEBUG"
+	}
+
+	level, err := logrus.ParseLevel(strings.ToLower(config.LogLevel))
+	if err != nil {
+		log.Errorf("Error getting level: %v", err)
+	}
+
+	log.SetLevel(level)
+
+	if config.LogToFile {
+		log.SetFormatter(&logrus.TextFormatter{DisableTimestamp: true, DisableSorting: true, ForceColors: false})
+		f, err := os.OpenFile("albiondata-client-output.txt", os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0755)
+		if err == nil {
+			multiWriter := io.MultiWriter(os.Stdout, f)
+			log.SetOutput(multiWriter)
+		} else {
+			log.SetOutput(os.Stdout)
+		}
+	} else {
+		log.SetFormatter(&logrus.TextFormatter{FullTimestamp: true, DisableSorting: true, ForceColors: true})
+		log.SetOutput(colorable.NewColorableStdout())
+	}
+}
+
 func (config *config) setupDebugEvents() {
 	config.DebugEvents = make(map[int]bool)
 	if config.DebugEventsString != "" {
@@ -203,6 +231,15 @@ func (config *config) setupDebugEvents() {
 				config.DebugEvents[number] = false
 			}
 		}
+	}
+
+	// Looping through map keys is purposefully random by design in Go
+	for number, shouldDebug := range config.DebugEvents {
+		verb := "Ignoring"
+		if shouldDebug {
+			verb = "Showing"
+		}
+		log.Debugf("[%v] event: [%v]%v", verb, number, EventType(number))
 	}
 
 }
@@ -225,6 +262,15 @@ func (config *config) setupDebugOperations() {
 				config.DebugOperations[number] = false
 			}
 		}
+	}
+
+	// Looping through map keys is purposefully random by design in Go
+	for number, shouldDebug := range config.DebugOperations {
+		verb := "Ignoring"
+		if shouldDebug {
+			verb = "Showing"
+		}
+		log.Debugf("[%v] operation: [%v]%v", verb, number, OperationType(number))
 	}
 
 }
