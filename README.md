@@ -41,6 +41,13 @@ Downloads can be found here: https://github.com/broderickhyman/albiondata-client
 
 ## Running on Mac
 
+### Running from the Finder
+1. Download the latest `albiondata-client-amd64-mac.zip` file from [the Releases page](https://github.com/broderickhyman/albiondata-client/releases)
+2. Unzip that file from the Finder
+3. Enter the `albiondata-client` folder.
+4. Double click the `run.command` file. It will ask for your password for permissions reasons.
+
+### Running from the Terminal
 1. Download the latest `update-darwin-amd64.gz` file from [the Releases page](https://github.com/broderickhyman/albiondata-client/releases)
 2. Unzip that file from the Finder or with `gunzip update-darwin-amd64.gz`
 3. The unzipped `albiondata-client` file is a Golang binary file. You'll need to make this file executable so it can be run directly. You can do this from your Terminal with: `chmod +x albiondata-client`

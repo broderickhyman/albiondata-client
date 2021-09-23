@@ -50,10 +50,14 @@ jobs:
       - store_artifacts:
           path: /go/src/github.com/broderickhyman/albiondata-client/update-darwin-amd64.gz
           destination: update-darwin-amd64.gz
+      - store_artifacts:
+          path: /go/src/github.com/broderickhyman/albiondata-client/albiondata-client-amd64-mac.zip
+          destination: albiondata-client-amd64-mac.zip
       - persist_to_workspace:
           root: /go/src/github.com/broderickhyman/albiondata-client
           paths:
             - update-darwin-amd64.gz
+            - albiondata-client-amd64-mac.zip
   deploy:
     working_directory: /tmp/workspace
     docker:
