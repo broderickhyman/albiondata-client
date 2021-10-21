@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"runtime"
 	"strings"
 
 	"github.com/broderickhyman/albiondata-client/log"
@@ -26,6 +27,14 @@ type Pow struct {
 
 // newHTTPUploaderPow creates a new HTTP uploader
 func newHTTPUploaderPow(url string) uploader {
+
+	// Limit to 25% of available cpu cores
+	procs := runtime.NumCPU() / 4
+	if procs < 1 {
+		procs = 1
+	}
+	runtime.GOMAXPROCS(procs)
+
 	return &httpUploaderPow{
 		baseURL:   strings.Replace(url, "http+pow", "http", -1),
 		transport: &http.Transport{},
