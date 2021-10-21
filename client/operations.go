@@ -94,6 +94,7 @@ const (
 	opCastleGateUse
 	opAuctionCreateOffer
 	opAuctionCreateRequest
+	opUnknown78
 	opAuctionGetOffers
 	opAuctionGetRequests
 	opAuctionBuyOffer
@@ -263,7 +264,6 @@ const (
 	opGoldMarketGetInfos
 	opGoldMarketCancelOrder
 	opUnknown246
-	opUnknown247
 	opGoldMarketGetAverageInfo
 	opSiegeCampClaimStart
 	opSiegeCampClaimCancel
