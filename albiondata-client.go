@@ -128,6 +128,13 @@ func init() {
 		false,
 		"Ignore the decoding errors when debugging",
 	)
+
+	flag.BoolVar(
+		&client.ConfigGlobal.NoCPULimit,
+		"no-limit",
+		false,
+		"Use all available CPU cores",
+	)
 }
 
 func main() {
