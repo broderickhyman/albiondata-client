@@ -38,7 +38,6 @@ const (
 	opGetAvailableTrialKeys
 	opGetShopTilesForCategory
 	opMove
-	opAttackStart
 	opCastStart
 	opCastCancel
 	opTerminateToggleSpell
@@ -92,9 +91,8 @@ const (
 	opFarmableFill
 	opTearDownConstructionSite
 	opCastleGateUse
-	opAuctionCreateOffer
 	opAuctionCreateRequest
-	opUnknown78
+	opAuctionCreateOffer
 	opAuctionGetOffers
 	opAuctionGetRequests
 	opAuctionBuyOffer
@@ -263,6 +261,7 @@ const (
 	opGoldMarketCreateBuyOrder
 	opGoldMarketGetInfos
 	opGoldMarketCancelOrder
+	opUnknown245
 	opUnknown246
 	opGoldMarketGetAverageInfo
 	opSiegeCampClaimStart
