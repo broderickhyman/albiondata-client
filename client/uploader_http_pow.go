@@ -28,12 +28,14 @@ type Pow struct {
 // newHTTPUploaderPow creates a new HTTP uploader
 func newHTTPUploaderPow(url string) uploader {
 
-	// Limit to 25% of available cpu cores
-	procs := runtime.NumCPU() / 4
-	if procs < 1 {
-		procs = 1
+	if !ConfigGlobal.NoCPULimit {
+		// Limit to 25% of available cpu cores
+		procs := runtime.NumCPU() / 4
+		if procs < 1 {
+			procs = 1
+		}
+		runtime.GOMAXPROCS(procs)
 	}
-	runtime.GOMAXPROCS(procs)
 
 	return &httpUploaderPow{
 		baseURL:   strings.Replace(url, "http+pow", "http", -1),

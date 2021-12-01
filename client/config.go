@@ -21,6 +21,7 @@ type config struct {
 	RecordPath                     string
 	PrivateIngestBaseUrls          string
 	PublicIngestBaseUrls           string
+	NoCPULimit                     bool
 }
 
 //ConfigGlobal global config data
