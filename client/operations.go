@@ -88,7 +88,6 @@ const (
 	opFarmableFinishGrownItem
 	opFarmableDestroy
 	opFarmableGetProduct
-	opFarmableFill
 	opTearDownConstructionSite
 	opCastleGateUse
 	opAuctionCreateRequest
@@ -261,8 +260,8 @@ const (
 	opGoldMarketCreateBuyOrder
 	opGoldMarketGetInfos
 	opGoldMarketCancelOrder
+	opUnknown244
 	opUnknown245
-	opUnknown246
 	opGoldMarketGetAverageInfo
 	opSiegeCampClaimStart
 	opSiegeCampClaimCancel
