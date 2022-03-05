@@ -15,21 +15,24 @@ type operationReadMail struct {
 
 func (op operationReadMail) Process(state *albionState) {
 	log.Debug("Got ReadMail operation...")
+	var notification lib.MarketNotification
 
 	// split the mail body
 	body := strings.Split(op.Body, "|")
 
-	var notification lib.MarketNotification
-
-	_, err := strconv.Atoi(body[3])
-	if err != nil || len(body) != 4 {
-		// this is a expired buy or sell mail, we're not interested in
+	mailInfo := MailInfos.getMailInfo(op.ID)
+	if mailInfo == nil {
+		log.Info("Mail Info is not valid. Please transition zones or click at notification, so the mails can be loaded.")
 		return
 	}
 
-	// looks like this is a market sell or buy notification.
-	// need to opGetMailInfos to identify if is Buy or Sell.
-	notification = decodeSellNotification(op, body)
+	if mailInfo.OrderType == "MARKETPLACE_SELLORDER_FINISHED_SUMMARY" {
+		log.Debug("Read finished sell order.")
+		notification = decodeSellNotification(op, body)
+	} else if mailInfo.OrderType == "MARKETPLACE_SELLORDER_EXPIRED_SUMMARY" {
+		log.Debug("Read expired sell order.")
+		notification = decodeExpiryNotification(op, body)
+	}
 
 	if notification == nil {
 		return
@@ -46,7 +49,6 @@ func (op operationReadMail) Process(state *albionState) {
 func decodeSellNotification(op operationReadMail, body []string) lib.MarketNotification {
 	notification := &lib.MarketSellNotification{}
 	notification.MailID = op.ID
-	//notification.BuyerName = body[0]
 
 	amount, err := strconv.Atoi(body[0])
 	if err != nil {
@@ -81,6 +83,14 @@ func decodeExpiryNotification(op operationReadMail, body []string) lib.MarketNot
 
 	notification.Amount = amount
 	notification.ItemID = body[1]
+
+	price, err := strconv.Atoi(body[2])
+	if err != nil {
+		log.Error("Could not parse price in market sell notification ", err)
+		return nil
+	}
+
+	notification.Price = price / 10000
 
 	return notification
 }
