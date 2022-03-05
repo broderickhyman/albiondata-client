@@ -31,7 +31,7 @@ func (m *MarketOrder) StringArray() []string {
 }
 
 const (
-	SalesTax = 0.02
+	SalesTax = 0.03
 )
 
 type MarketNotificationType string
@@ -47,7 +47,6 @@ type MarketNotification interface {
 
 type MarketSellNotification struct {
 	MailID          int     `json:"Id"`
-	BuyerName       string  `json:"BuyerName"`
 	ItemID          string  `json:"ItemTypeId"`
 	Amount          int     `json:"Amount"`
 	Price           int     `json:"UnitPriceSilver"`
