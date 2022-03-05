@@ -47,7 +47,6 @@ type MarketNotification interface {
 
 type MarketSellNotification struct {
 	MailID          int     `json:"Id"`
-	BuyerName       string  `json:"BuyerName"`
 	ItemID          string  `json:"ItemTypeId"`
 	Amount          int     `json:"Amount"`
 	Price           int     `json:"UnitPriceSilver"`
@@ -58,6 +57,7 @@ type MarketExpiryNotification struct {
 	MailID int    `json:"Id"`
 	ItemID string `json:"ItemTypeId"`
 	Amount int    `json:"Amount"`
+	Price  int    `json:"UnitPriceSilver"`
 }
 
 func (m *MarketSellNotification) Type() MarketNotificationType {
