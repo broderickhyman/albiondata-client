@@ -57,6 +57,7 @@ type MarketExpiryNotification struct {
 	MailID int    `json:"Id"`
 	ItemID string `json:"ItemTypeId"`
 	Amount int    `json:"Amount"`
+	Sold   int    `json:"Sold"`
 	Price  int    `json:"UnitPriceSilver"`
 }
 

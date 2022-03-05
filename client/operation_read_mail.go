@@ -75,14 +75,17 @@ func decodeExpiryNotification(op operationReadMail, body []string) lib.MarketNot
 	notification := &lib.MarketExpiryNotification{}
 	notification.MailID = op.ID
 
-	amount, err := strconv.Atoi(body[0])
+	sold, err := strconv.Atoi(body[0])
 	if err != nil {
 		log.Error("Could not parse amount in market sell notification ", err)
 		return nil
 	}
 
-	notification.Amount = amount
-	notification.ItemID = body[1]
+	amount, err := strconv.Atoi(body[1])
+	if err != nil {
+		log.Error("Could not parse amount in market sell notification ", err)
+		return nil
+	}
 
 	price, err := strconv.Atoi(body[2])
 	if err != nil {
@@ -90,7 +93,10 @@ func decodeExpiryNotification(op operationReadMail, body []string) lib.MarketNot
 		return nil
 	}
 
+	notification.Amount = amount
+	notification.ItemID = body[1]
 	notification.Price = price / 10000
+	notification.Sold = sold
 
 	return notification
 }
