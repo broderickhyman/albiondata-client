@@ -32,8 +32,12 @@ func (m *MailInfo) StringArray() []string {
 		fmt.Sprintf("%d", m.ID),
 		m.LocationID,
 		m.OrderType,
-		time.Unix(m.Expires, 0).Format(time.RFC3339),
+		m.StringExpires(),
 	}
+}
+
+func (m *MailInfo) StringExpires() string {
+	return time.Unix(m.Expires, 0).Format(time.RFC3339)
 }
 
 type operationGetMailInfosResponse struct {
