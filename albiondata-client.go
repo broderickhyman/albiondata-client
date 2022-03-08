@@ -8,13 +8,14 @@ import (
 	"github.com/broderickhyman/albiondata-client/client"
 	"github.com/broderickhyman/albiondata-client/log"
 	"github.com/broderickhyman/albiondata-client/systray"
+
 	"github.com/broderickhyman/go-githubupdate/updater"
 )
 
 var version string
 
 func init() {
-	client.ConfigGlobal.Setup()
+	client.ConfigGlobal.SetupFlags()
 }
 
 func main() {

@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/broderickhyman/albiondata-client/log"
+
 	"github.com/mattn/go-colorable"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -42,7 +43,7 @@ var ConfigGlobal = &config{
 	LogLevel: "INFO",
 }
 
-func (config *config) Setup() {
+func (config *config) SetupFlags() {
 	config.setupWebsocketFlags()
 	config.setupDebugFlags()
 	config.setupCommonFlags()
@@ -58,8 +59,6 @@ func (config *config) Setup() {
 		log.Info("Upload is disabled.")
 	}
 	config.setupLogs()
-	config.setupDebugEvents()
-	config.setupDebugOperations()
 }
 
 func (config *config) setupWebsocketFlags() {

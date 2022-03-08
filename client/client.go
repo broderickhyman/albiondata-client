@@ -22,6 +22,9 @@ func (client *Client) Run() error {
 	log.Info("This is a third-party application and is in no way affiliated with Sandbox Interactive or Albion Online.")
 	log.Info("Additional parameters can listed by calling this file with the -h parameter.")
 
+	ConfigGlobal.setupDebugEvents()
+	ConfigGlobal.setupDebugOperations()
+
 	createDispatcher()
 
 	if ConfigGlobal.Offline {
