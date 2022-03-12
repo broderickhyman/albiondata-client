@@ -52,13 +52,13 @@ func (u *httpUploaderPow) getPow(target interface{}) {
 		log.Errorf("Error in Pow Get request: %v", err)
 		return
 	}
+	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
 		log.Errorf("Got bad response code: %v", resp.StatusCode)
 		return
 	}
 
-	defer resp.Body.Close()
 	json.NewDecoder(resp.Body).Decode(target)
 	if err != nil {
 		log.Errorf("Error in parsing Pow Get request: %v", err)
@@ -78,6 +78,7 @@ func (u *httpUploaderPow) uploadWithPow(pow Pow, solution string, natsmsg []byte
 		"solution": {solution},
 		"natsmsg":  {string(natsmsg)},
 	})
+	defer resp.Body.Close()
 
 	if err != nil {
 		log.Errorf("Error while prooving pow: %v", err)
