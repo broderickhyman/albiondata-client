@@ -59,6 +59,8 @@ func decodeResponse(params map[uint8]interface{}) (operation operation, err erro
 		operation = &operationAuctionGetRequestsResponse{}
 	case opAuctionGetItemAverageStats:
 		operation = &operationAuctionGetItemAverageStatsResponse{}
+	case opGetMailInfos:
+		operation = &operationGetMailInfosResponse{}
 	case opReadMail:
 		operation = &operationReadMail{}
 	case opGetClusterMapInfo:
