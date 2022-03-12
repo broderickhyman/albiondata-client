@@ -31,7 +31,7 @@ func (m *MarketOrder) StringArray() []string {
 }
 
 const (
-	SalesTax = 0.02
+	SalesTax = 0.03
 )
 
 type MarketNotificationType string
