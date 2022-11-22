@@ -18,6 +18,9 @@ var macAddrPartsToFilter = []string{
 	"00:0F:4B",          // Virtual Iron 4
 	"00:16:3E",          // Red Hat Xen, Oracle VM, XenSource, Novell Xen
 	"08:00:27",          // Sun xVM VirtualBox
+	"00:09:0F:FE:00",    // Fortinet Virtual Ethernet Adapter
+	"00:15:5D:8F:FC",    // Hyper-V Virtual Ethernet Adapter
+	"00:FF:30:39:D1",    // Juniper Network Connect Virtual Adapter
 }
 
 // Filters the possible physical interface address by comparing it to known popular VM Software adresses
