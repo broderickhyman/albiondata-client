@@ -11,7 +11,8 @@ type operation interface {
 //               "MarleyTheMongolianMoose: AuctionGetItemsAverage == 92 == kind
 //               of looks like it disappears in the new one"
 
-//OperationType used to identify operation types
+// OperationType used to identify operation types
+//
 //go:generate stringer -type=OperationType
 type OperationType uint16
 
@@ -89,7 +90,6 @@ const (
 	opFarmableDestroy
 	opFarmableGetProduct
 	opTearDownConstructionSite
-	opCastleGateUse
 	opAuctionCreateRequest
 	opAuctionCreateOffer
 	opAuctionGetOffers
