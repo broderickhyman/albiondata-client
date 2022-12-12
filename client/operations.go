@@ -105,7 +105,6 @@ const (
 	opAuctionGetMyOpenOffers
 	opAuctionGetMyOpenRequests
 	opAuctionGetMyOpenAuctions
-	opUnknown90
 	opAuctionGetItemAverageStats
 	opAuctionGetItemAverageValue
 	opContainerOpen
@@ -250,6 +249,7 @@ const (
 	opExitEnterStart
 	opExitEnterCancel
 	opQuestGiverRequest
+	opUnknown233
 	opGoldMarketGetBuyOffer
 	opGoldMarketGetBuyOfferFromSilver
 	opGoldMarketGetSellOffer
