@@ -105,7 +105,6 @@ const (
 	opAuctionGetMyOpenOffers
 	opAuctionGetMyOpenRequests
 	opAuctionGetMyOpenAuctions
-	opUnknown90
 	opAuctionGetItemAverageStats
 	opAuctionGetItemAverageValue
 	opContainerOpen
