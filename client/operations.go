@@ -249,6 +249,7 @@ const (
 	opExitEnterStart
 	opExitEnterCancel
 	opQuestGiverRequest
+	opUnknown233
 	opGoldMarketGetBuyOffer
 	opGoldMarketGetBuyOfferFromSilver
 	opGoldMarketGetSellOffer
