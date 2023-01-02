@@ -38,7 +38,7 @@ func startUpdater() {
 	if version != "" && !strings.Contains(version, "dev") {
 		u := updater.NewUpdater(
 			version,
-			"broderickhyman",
+			"ao-data",
 			"albiondata-client",
 			"update-",
 		)
